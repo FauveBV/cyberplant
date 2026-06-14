@@ -9,32 +9,54 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* --- tokens base --- */
-    --bg:#0a0a0a; --surface:#161616; --overlay:#191917;
-    --line:#ededed; --paper:#e6e1d4; --muted:#8a857c;
-    --blue:#1f3df0;            /* acento primario (relleno/borde) */
-    --signal:#d4380d;          /* rojo señal, uso mínimo (relleno) */
-    --moss:#5a6b4d;            /* terciario cálido (relleno) */
-    --mineral:#b8a888;         /* cálido (relleno) */
-    /* --- capa de color para TEXTO: contraste WCAG AA garantizado --- */
+    /* ===================== COLOR ===================== */
+    --bg:#0a0a0a; --surface:#161616; --overlay:#191917; --prev-bg:#0d0d0d;
+    --line:#ededed; --paper:#e6e1d4; --muted:#8a857c; --txt:#cfcfca;
+    --blue:#1f3df0;            /* acento de marca (relleno/borde) */
+    --signal:#d4380d; --moss:#5a6b4d; --mineral:#b8a888;
+    /* color de TEXTO con contraste WCAG AA */
     --c-blue-text:#5b78ff; --c-moss-text:#7d9169; --c-mineral-text:#b8a888; --c-signal-text:#f0532a;
-    /* --- variables derivadas: el eje tonal vive aquí --- */
-    --warmth:0;                /* 0 = frío/generativo · 100 = cálido/atmósfera */
-    --accent:var(--blue);
-    --grow:0;                  /* opacidad del sobrecrecimiento */
-    --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
-    --display:"Syne",system-ui,sans-serif;
-    --gut:24px;
-    --txt:#cfcfca;            /* texto de párrafo, derivado del modo */
-    --ease:cubic-bezier(.22,1,.36,1);   /* easing orgánico: arranca y se asienta como crecimiento */
+    --accent:var(--blue); --warmth:0; --grow:0;
+
+    /* ===================== TIPOGRAFÍA ===================== */
+    --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --font-display:"Syne",system-ui,sans-serif;
+    --mono:var(--font-mono); --display:var(--font-display);   /* alias en uso */
+    /* escala de tamaño (texto) */
+    --fs-3xs:10px; --fs-2xs:11px; --fs-xs:12px; --fs-sm:13px; --fs-md:14px; --fs-base:15px;
+    /* escala display (Syne, fluida) */
+    --fs-h1:clamp(40px,8.5vw,108px); --fs-h2:clamp(26px,4vw,46px); --fs-h3:18px;
+    --fs-thesis:clamp(20px,2.6vw,30px); --fs-specimen:clamp(48px,9vw,120px);
+    /* pesos */
+    --fw-light:300; --fw-regular:400; --fw-medium:500; --fw-semibold:600; --fw-bold:700; --fw-black:800;
+    /* interlineado */
+    --lh-specimen:.86; --lh-h1:.92; --lh-solid:1; --lh-display:1.18; --lh-body:1.55; --lh-loose:1.7;
+    /* tracking */
+    --tr-tightest:-.02em; --tr-tight:-.01em; --tr-normal:.01em; --tr-wide:.04em; --tr-wider:.06em;
+    --tr-caps:.08em; --tr-caps-lg:.1em; --tr-caps-xl:.14em; --tr-widest:.22em; --tr-mega:.3em;
+
+    /* ===================== ESPACIADO (base 4px) ===================== */
+    --sp-px:1px; --sp-1:2px; --sp-2:4px; --sp-3:6px; --sp-4:8px; --sp-5:12px;
+    --sp-6:16px; --sp-7:20px; --sp-8:24px; --sp-9:30px; --sp-10:36px;
+    --sp-11:42px; --sp-12:48px; --sp-14:64px; --sp-16:88px;
+    --space-section-top:calc(128px + 1em); --space-section-bottom:calc(128px + 0.5em);
+
+    /* ===================== BORDES / RADIOS ===================== */
+    --bw:1px; --radius-full:50%;
+
+    /* ===================== MOTION ===================== */
+    --ease:cubic-bezier(.22,1,.36,1);
+    --dur-fast:.2s; --dur:.3s; --dur-slow:.5s; --dur-slower:.6s;
+
+    /* ===================== LAYOUT ===================== */
+    --maxw:1180px; --gut:24px;
   }
 
   /* ===== LIGHT MODE — el polo cálido/papel del mismo sistema ===== */
   :root[data-theme="light"]{
-    --bg:#e6e1d4; --surface:#f1ecdf; --overlay:#ddd7c8;
-    --line:#14130e; --paper:#0a0a0a; --muted:#646055;
+    --bg:#e6e1d4; --surface:#f1ecdf; --overlay:#ddd7c8; --prev-bg:#efe8d8;
+    --line:#14130e; --paper:#0a0a0a; --muted:#646055; --txt:#403d33;
     --blue:#1f3df0; --signal:#c5350c; --moss:#566848; --mineral:#9b8b69;
-    --txt:#403d33;
     --c-blue-text:#1f3df0; --c-moss-text:#4c5d3f; --c-mineral-text:#6f6243; --c-signal-text:#b22f0b;
   }
   [data-theme="light"] body::before{mix-blend-mode:multiply; opacity:.05}
@@ -50,8 +72,8 @@
   html{scroll-behavior:smooth}
   body{
     background:var(--bg); color:var(--line);
-    font-family:var(--mono); font-weight:400; font-size:17.5px; line-height:1.55;
-    -webkit-font-smoothing:antialiased; letter-spacing:.01em;
+    font-family:var(--mono); font-weight:var(--fw-regular); font-size:var(--fs-base); line-height:var(--lh-body);
+    -webkit-font-smoothing:antialiased; letter-spacing:var(--tr-normal);
     overflow-x:hidden;
   }
 
@@ -85,41 +107,41 @@
     background-image:repeating-linear-gradient(to bottom, rgba(237,237,237,.05) 0 1px, transparent 1px 80px);
   }
 
-  .wrap{max-width:1180px; margin:0 auto; padding:0 var(--gut); position:relative; z-index:1}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 var(--gut); position:relative; z-index:1}
 
   /* --- barra superior fija --- */
   .topbar{
     position:fixed; top:0; left:0; right:0; z-index:9999;
     display:flex; justify-content:space-between; align-items:center;
-    padding:10px 18px; background:rgba(10,10,10,.78); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--overlay); font-size:13.75px; letter-spacing:.08em;
+    padding:var(--sp-4) var(--sp-6); background:rgba(10,10,10,.78); backdrop-filter:blur(8px);
+    border-bottom:var(--bw) solid var(--overlay); font-size:var(--fs-xs); letter-spacing:var(--tr-caps);
     text-transform:uppercase; color:var(--muted);
   }
-  .topbar b{color:var(--line); font-weight:600}
+  .topbar b{color:var(--line); font-weight:var(--fw-semibold)}
   .topbar .dot{color:var(--c-blue-text)}
   .gridbtn{
-    background:none; border:1px solid var(--overlay); color:var(--muted);
-    font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
-    padding:4px 10px; cursor:pointer; transition:.35s var(--ease);
+    background:none; border:var(--bw) solid var(--overlay); color:var(--muted);
+    font-family:var(--mono); font-size:var(--fs-3xs); letter-spacing:var(--tr-caps-lg); text-transform:uppercase;
+    padding:var(--sp-2) var(--sp-4); cursor:pointer; transition:.35s var(--ease);
   }
   .gridbtn:hover{border-color:var(--accent); color:var(--line)}
 
-  section{padding:calc(128px + 1em) 0 calc(128px + 0.5em); border-top:1px solid var(--overlay); position:relative}
+  section{padding:var(--space-section-top) 0 var(--space-section-bottom); border-top:var(--bw) solid var(--overlay); position:relative}
   section:first-of-type{border-top:none}
 
   /* --- etiqueta de fase (numeración expuesta) --- */
   .tag{
-    font-size:13.75px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted);
-    display:flex; align-items:center; gap:10px; margin-bottom:38px;
+    font-size:var(--fs-xs); letter-spacing:var(--tr-widest); text-transform:uppercase; color:var(--muted);
+    display:flex; align-items:center; gap:var(--sp-4); margin-bottom:var(--sp-10);
   }
   .tag::before{content:""; width:34px; height:1px; background:var(--accent)}
   .tag .n{color:var(--c-blue-text)}
 
-  h1{font-family:var(--display); font-weight:800; line-height:.92; letter-spacing:-.02em;
-     font-size:clamp(40px,8.5vw,108px); text-transform:uppercase;}
-  h2{font-family:var(--display); font-weight:700; font-size:clamp(26px,4vw,46px);
-     line-height:1; letter-spacing:-.01em; margin-bottom:30px; text-transform:uppercase;}
-  h3{font-family:var(--display); font-weight:600; font-size:18px; letter-spacing:.01em; margin-bottom:8px}
+  h1{font-family:var(--display); font-weight:var(--fw-black); line-height:var(--lh-h1); letter-spacing:var(--tr-tightest);
+     font-size:var(--fs-h1); text-transform:uppercase;}
+  h2{font-family:var(--display); font-weight:var(--fw-bold); font-size:var(--fs-h2);
+     line-height:var(--lh-solid); letter-spacing:var(--tr-tight); margin-bottom:var(--sp-9); text-transform:uppercase;}
+  h3{font-family:var(--display); font-weight:var(--fw-semibold); font-size:var(--fs-h3); letter-spacing:var(--tr-normal); margin-bottom:var(--sp-4)}
   p{max-width:62ch; color:var(--txt)}
   a{color:var(--c-blue-text); text-decoration:none}
   a:hover{text-decoration:underline}
@@ -130,7 +152,7 @@
   /* --- contenido solo para lectores de pantalla --- */
   .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .skip{position:fixed;left:10px;top:-60px;z-index:10000;background:var(--surface);color:var(--line);
-    border:1px solid var(--c-blue-text);padding:9px 16px;font-size:15px;letter-spacing:.06em;transition:top .2s}
+    border:var(--bw) solid var(--c-blue-text);padding:var(--sp-4) var(--sp-6);font-size:var(--fs-sm);letter-spacing:var(--tr-wider);transition:top .2s}
   .skip:focus{top:10px}
   /* --- respeta reducción de movimiento --- */
   @media (prefers-reduced-motion: reduce){
@@ -139,49 +161,49 @@
   }
 
   /* --- MASTHEAD --- */
-  .mast{padding-top:150px; padding-bottom:88px}
-  .mast .id{font-size:15px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); margin-bottom:30px}
+  .mast{padding-top:150px; padding-bottom:var(--sp-16)}
+  .mast .id{font-size:var(--fs-sm); letter-spacing:var(--tr-mega); text-transform:uppercase; color:var(--muted); margin-bottom:var(--sp-9)}
   .mast h1 .blue{color:var(--c-blue-text)}
   .thesis{
-    font-family:var(--display); font-weight:600; font-size:clamp(20px,2.6vw,30px);
-    line-height:1.18; letter-spacing:-.01em; color:var(--line); max-width:22ch; margin-top:44px;
+    font-family:var(--display); font-weight:var(--fw-semibold); font-size:var(--fs-thesis);
+    line-height:var(--lh-display); letter-spacing:var(--tr-tight); color:var(--line); max-width:22ch; margin-top:var(--sp-11);
   }
   .thesis em{font-style:italic; color:var(--c-blue-text)}
   .metaline{
-    display:flex; flex-wrap:wrap; gap:12px 34px; margin-top:62px; font-size:15px;
-    color:var(--muted); letter-spacing:.04em; border-top:1px solid var(--overlay); padding-top:18px;
+    display:flex; flex-wrap:wrap; gap:var(--sp-5) var(--sp-10); margin-top:var(--sp-14); font-size:var(--fs-sm);
+    color:var(--muted); letter-spacing:var(--tr-wide); border-top:var(--bw) solid var(--overlay); padding-top:var(--sp-6);
   }
-  .metaline span b{color:var(--line); font-weight:500}
+  .metaline span b{color:var(--line); font-weight:var(--fw-medium)}
 
   /* --- EJE TONAL interactivo --- */
-  .axisbox{background:var(--surface); border:1px solid var(--overlay); padding:42px}
-  .axislabels{display:flex; justify-content:space-between; font-size:13.75px;
-    text-transform:uppercase; letter-spacing:.14em; color:var(--muted); margin-bottom:14px}
+  .axisbox{background:var(--surface); border:var(--bw) solid var(--overlay); padding:var(--sp-11)}
+  .axislabels{display:flex; justify-content:space-between; font-size:var(--fs-xs);
+    text-transform:uppercase; letter-spacing:var(--tr-caps-xl); color:var(--muted); margin-bottom:var(--sp-6)}
   .axislabels .l{color:var(--c-blue-text)} .axislabels .r{color:var(--c-mineral-text)}
   input[type=range]{
     -webkit-appearance:none; width:100%; height:2px; background:linear-gradient(90deg,var(--blue),var(--moss),var(--mineral));
-    outline:none; margin:8px 0 22px;
+    outline:none; margin:var(--sp-4) 0 var(--sp-7);
   }
   input[type=range]::-webkit-slider-thumb{
     -webkit-appearance:none; width:16px; height:16px; background:var(--line);
     border:3px solid var(--bg); cursor:pointer; box-shadow:0 0 0 1px var(--accent);
   }
   input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--line);border:3px solid var(--bg);cursor:pointer}
-  .axisread{display:flex; gap:30px; flex-wrap:wrap; font-size:15px; color:var(--muted)}
+  .axisread{display:flex; gap:var(--sp-9); flex-wrap:wrap; font-size:var(--fs-sm); color:var(--muted)}
   .axisread b{color:var(--line)}
-  .swatchrow{display:flex; gap:0; margin-top:24px; height:46px; border:1px solid var(--overlay)}
+  .swatchrow{display:flex; gap:0; margin-top:var(--sp-8); height:46px; border:var(--bw) solid var(--overlay)}
   .swatchrow div{flex:1; transition:flex .5s var(--ease)}
 
   /* --- CLUSTERS --- */
-  .clusters{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--overlay);
-    border:1px solid var(--overlay)}
-  .cluster{background:var(--bg); padding:36px 30px 32px; min-height:248px; position:relative; overflow:hidden; transition:background .35s var(--ease)}
+  .clusters{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-px); background:var(--overlay);
+    border:var(--bw) solid var(--overlay)}
+  .cluster{background:var(--bg); padding:var(--sp-10) var(--sp-9) var(--sp-9); min-height:248px; position:relative; overflow:hidden; transition:background .35s var(--ease)}
   .cluster:hover{background:var(--surface)}
-  .cluster .num{font-size:13.75px; color:var(--muted); letter-spacing:.1em}
-  .cluster h3{margin-top:6px}
-  .cluster p{font-size:15.62px; color:var(--txt); max-width:none}
-  .cluster .prev{height:64px; margin:16px 0 4px; border:1px solid var(--overlay); position:relative; overflow:hidden; background:#0d0d0d}
-  .cluster .polo{position:absolute; top:18px; right:18px; font-size:12.5px; letter-spacing:.08em;
+  .cluster .num{font-size:var(--fs-xs); color:var(--muted); letter-spacing:var(--tr-caps-lg)}
+  .cluster h3{margin-top:var(--sp-3)}
+  .cluster p{font-size:var(--fs-md); color:var(--txt); max-width:none}
+  .cluster .prev{height:64px; margin:var(--sp-6) 0 var(--sp-2); border:var(--bw) solid var(--overlay); position:relative; overflow:hidden; background:var(--prev-bg)}
+  .cluster .polo{position:absolute; top:18px; right:18px; font-size:var(--fs-3xs); letter-spacing:var(--tr-caps);
     text-transform:uppercase; color:var(--muted)}
   .cluster .polo.cold{color:var(--muted)} .cluster .polo.warm{color:var(--c-moss-text)}
   /* previews puros CSS por cluster */
@@ -198,98 +220,98 @@
       radial-gradient(40% 80% at 80% 100%,#2d5f5a,transparent 70%); opacity:.75}
 
   /* --- TOKENS --- */
-  .tokens{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:18px}
-  .tok{border:1px solid var(--overlay); cursor:pointer; transition:.3s var(--ease); background:var(--surface);
+  .tokens{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:var(--sp-6)}
+  .tok{border:var(--bw) solid var(--overlay); cursor:pointer; transition:.3s var(--ease); background:var(--surface);
     font-family:inherit; text-align:left; width:100%; color:inherit; -webkit-appearance:none; appearance:none}
   .tok:hover{border-color:var(--accent); transform:translateY(-2px)}
   .tok:active{transform:translateY(0)}
   .tok .chip{height:62px}
-  .tok .meta{padding:9px 11px; display:flex; justify-content:space-between; align-items:baseline}
-  .tok .name{font-size:15px; color:var(--line); text-transform:uppercase; letter-spacing:.06em}
-  .tok .hex{font-size:13.75px; color:var(--muted)}
-  .tok .role{padding:0 11px 11px; font-size:13.12px; color:var(--muted)}
-  .copyhint{font-size:13.75px; color:var(--muted); margin-top:20px; max-width:70ch}
+  .tok .meta{padding:var(--sp-4) var(--sp-5); display:flex; justify-content:space-between; align-items:baseline}
+  .tok .name{font-size:var(--fs-sm); color:var(--line); text-transform:uppercase; letter-spacing:var(--tr-wider)}
+  .tok .hex{font-size:var(--fs-xs); color:var(--muted)}
+  .tok .role{padding:0 var(--sp-5) var(--sp-5); font-size:var(--fs-xs); color:var(--muted)}
+  .copyhint{font-size:var(--fs-xs); color:var(--muted); margin-top:var(--sp-7); max-width:70ch}
   .copyhint b{color:var(--c-blue-text)}
-  .scales{display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:36px}
-  .ramp{display:flex; height:40px; border:1px solid var(--overlay); margin-top:8px}
+  .scales{display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-9); margin-top:var(--sp-10)}
+  .ramp{display:flex; height:40px; border:var(--bw) solid var(--overlay); margin-top:var(--sp-4)}
   .ramp span{flex:1; display:block}
 
   /* --- TIPOGRAFÍA --- */
-  .typegrid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--overlay); border:1px solid var(--overlay)}
-  .typecell{background:var(--bg); padding:36px}
-  .specimen{font-family:var(--display); font-weight:800; font-size:clamp(48px,9vw,120px);
-    line-height:.86; letter-spacing:-.02em; position:relative; text-transform:uppercase;
+  .typegrid{display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-px); background:var(--overlay); border:var(--bw) solid var(--overlay)}
+  .typecell{background:var(--bg); padding:var(--sp-10)}
+  .specimen{font-family:var(--display); font-weight:var(--fw-black); font-size:var(--fs-specimen);
+    line-height:var(--lh-specimen); letter-spacing:var(--tr-tightest); position:relative; text-transform:uppercase;
     background-image:repeating-linear-gradient(to bottom,rgba(31,61,240,.18) 0 1px,transparent 1px 24px);
     background-size:100% 24px;}
-  .scale div{border-bottom:1px solid var(--overlay); padding:10px 0; display:flex; align-items:baseline; gap:16px}
-  .scale .px{font-size:12.5px; color:var(--muted); width:54px; flex:none}
+  .scale div{border-bottom:var(--bw) solid var(--overlay); padding:var(--sp-4) 0; display:flex; align-items:baseline; gap:var(--sp-6)}
+  .scale .px{font-size:var(--fs-3xs); color:var(--muted); width:54px; flex:none}
   .mono-spec{font-family:var(--mono)}
-  .label-sm{font-size:13.75px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:12px}
-  .pill{display:inline-block; font-size:12.5px; border:1px solid var(--c-blue-text); color:var(--c-blue-text);
-    padding:2px 8px; letter-spacing:.08em; text-transform:uppercase; margin-left:8px}
+  .label-sm{font-size:var(--fs-xs); letter-spacing:var(--tr-caps-xl); text-transform:uppercase; color:var(--muted); margin-bottom:var(--sp-5)}
+  .pill{display:inline-block; font-size:var(--fs-3xs); border:var(--bw) solid var(--c-blue-text); color:var(--c-blue-text);
+    padding:var(--sp-1) var(--sp-4); letter-spacing:var(--tr-caps); text-transform:uppercase; margin-left:var(--sp-4)}
 
   /* --- FIRMA: espiral --- */
-  .signature{display:grid; grid-template-columns:1fr 300px; gap:1px; background:var(--overlay); border:1px solid var(--overlay)}
+  .signature{display:grid; grid-template-columns:1fr 300px; gap:var(--sp-px); background:var(--overlay); border:var(--bw) solid var(--overlay)}
   #spiral{display:block; width:100%; height:480px; background:var(--bg)}
-  .ctrls{background:var(--surface); padding:30px}
-  .ctrl{margin-bottom:16px}
-  .ctrl label{display:flex; justify-content:space-between; font-size:13.75px; color:var(--muted);
-    text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px}
+  .ctrls{background:var(--surface); padding:var(--sp-9)}
+  .ctrl{margin-bottom:var(--sp-6)}
+  .ctrl label{display:flex; justify-content:space-between; font-size:var(--fs-xs); color:var(--muted);
+    text-transform:uppercase; letter-spacing:var(--tr-caps); margin-bottom:var(--sp-3)}
   .ctrl label b{color:var(--line)}
   .ctrl input[type=range]{margin:0; height:2px; background:var(--overlay)}
   .ctrl input[type=range]::-webkit-slider-thumb{box-shadow:0 0 0 1px var(--accent); width:13px; height:13px}
-  .btnrow{display:flex; gap:8px; margin-top:20px}
-  .btn{flex:1; background:var(--bg); border:1px solid var(--overlay); color:var(--line);
-    font-family:var(--mono); font-size:13.75px; letter-spacing:.08em; text-transform:uppercase;
-    padding:9px; cursor:pointer; transition:.3s var(--ease)}
+  .btnrow{display:flex; gap:var(--sp-4); margin-top:var(--sp-7)}
+  .btn{flex:1; background:var(--bg); border:var(--bw) solid var(--overlay); color:var(--line);
+    font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--tr-caps); text-transform:uppercase;
+    padding:var(--sp-4); cursor:pointer; transition:.3s var(--ease)}
   .btn:hover{border-color:var(--c-blue-text); color:var(--c-blue-text)}
-  .seedline{font-size:13.75px; color:var(--muted); margin-top:14px}
+  .seedline{font-size:var(--fs-xs); color:var(--muted); margin-top:var(--sp-6)}
   .seedline b{color:var(--line)}
 
   /* --- VENTANA OS (gap resuelto) --- */
-  .oswin{border:1px solid var(--overlay); background:var(--surface); max-width:760px}
-  .osbar{display:flex; align-items:center; gap:8px; padding:8px 12px; border-bottom:1px solid var(--overlay);
-    background:var(--overlay); font-size:13.75px; color:var(--muted)}
-  .osbar .dots{display:flex; gap:6px}
-  .osbar .dots i{width:9px; height:9px; border-radius:50%; display:block; background:var(--muted); opacity:.6}
+  .oswin{border:var(--bw) solid var(--overlay); background:var(--surface); max-width:760px}
+  .osbar{display:flex; align-items:center; gap:var(--sp-4); padding:var(--sp-4) var(--sp-5); border-bottom:var(--bw) solid var(--overlay);
+    background:var(--overlay); font-size:var(--fs-xs); color:var(--muted)}
+  .osbar .dots{display:flex; gap:var(--sp-3)}
+  .osbar .dots i{width:9px; height:9px; border-radius:var(--radius-full); display:block; background:var(--muted); opacity:.6}
   .osbar .dots i:first-child{background:var(--signal); opacity:.9}
-  .osbar .title{margin-left:6px; letter-spacing:.06em}
-  .osbody{padding:18px; font-size:15.62px; line-height:1.7; color:var(--txt); min-height:150px}
+  .osbar .title{margin-left:var(--sp-3); letter-spacing:var(--tr-wider)}
+  .osbody{padding:var(--sp-6); font-size:var(--fs-md); line-height:var(--lh-loose); color:var(--txt); min-height:150px}
   .osbody .prompt{color:var(--c-blue-text)} .osbody .ok{color:var(--c-moss-text)} .osbody .warn{color:var(--c-signal-text)}
   .osbody .cur{display:inline-block; width:8px; height:15px; background:var(--accent); vertical-align:middle;
     animation:blink 1.05s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
 
   /* --- PROCESO --- */
-  .flow{display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:var(--overlay); border:1px solid var(--overlay)}
-  .step{background:var(--bg); padding:26px 20px; position:relative}
-  .step .s{font-size:12.5px; color:var(--muted); letter-spacing:.1em}
-  .step h3{font-size:14px; margin:8px 0 6px}
-  .step p{font-size:14.38px; color:var(--txt); max-width:none}
+  .flow{display:grid; grid-template-columns:repeat(6,1fr); gap:var(--sp-px); background:var(--overlay); border:var(--bw) solid var(--overlay)}
+  .step{background:var(--bg); padding:var(--sp-8) var(--sp-7); position:relative}
+  .step .s{font-size:var(--fs-3xs); color:var(--muted); letter-spacing:var(--tr-caps-lg)}
+  .step h3{font-size:var(--fs-md); margin:var(--sp-4) 0 var(--sp-3)}
+  .step p{font-size:var(--fs-sm); color:var(--txt); max-width:none}
   .step.active{background:var(--surface)}
   .step.active::before{content:""; position:absolute; top:0; left:0; right:0; height:2px; background:var(--accent)}
   .step.active .s{color:var(--c-blue-text)}
 
   /* --- VARIABLES / inputs --- */
-  .vars{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--overlay); border:1px solid var(--overlay)}
-  .var{background:var(--bg); padding:32px}
+  .vars{display:grid; grid-template-columns:repeat(2,1fr); gap:var(--sp-px); background:var(--overlay); border:var(--bw) solid var(--overlay)}
+  .var{background:var(--bg); padding:var(--sp-9)}
   .var.new{background:var(--surface)}
-  .var h3{font-family:var(--mono); font-weight:600; font-size:16.25px; text-transform:uppercase; letter-spacing:.06em}
-  .var .src{font-size:13.75px; color:var(--muted); margin:2px 0 10px}
-  .var p{font-size:15.62px; color:var(--txt); max-width:none}
-  .var .badge{font-size:11.88px; letter-spacing:.1em; text-transform:uppercase; color:var(--bg);
-    background:var(--c-blue-text); padding:2px 7px; margin-left:8px}
+  .var h3{font-family:var(--mono); font-weight:var(--fw-semibold); font-size:var(--fs-md); text-transform:uppercase; letter-spacing:var(--tr-wider)}
+  .var .src{font-size:var(--fs-xs); color:var(--muted); margin:var(--sp-1) 0 var(--sp-4)}
+  .var p{font-size:var(--fs-md); color:var(--txt); max-width:none}
+  .var .badge{font-size:var(--fs-3xs); letter-spacing:var(--tr-caps-lg); text-transform:uppercase; color:var(--bg);
+    background:var(--c-blue-text); padding:var(--sp-1) var(--sp-3); margin-left:var(--sp-4)}
 
-  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-14); align-items:start}
 
   /* --- PENDIENTES --- */
-  ul.todo{list-style:none; border-top:1px solid var(--overlay)}
-  ul.todo li{border-bottom:1px solid var(--overlay); padding:14px 0; display:flex; gap:16px; font-size:16.25px; color:#cfcfca}
-  ul.todo li .k{color:var(--c-blue-text); font-weight:600; flex:none; width:30px}
-  ul.todo li .st{margin-left:auto; font-size:12.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted)}
+  ul.todo{list-style:none; border-top:var(--bw) solid var(--overlay)}
+  ul.todo li{border-bottom:var(--bw) solid var(--overlay); padding:var(--sp-6) 0; display:flex; gap:var(--sp-6); font-size:var(--fs-md); color:#cfcfca}
+  ul.todo li .k{color:var(--c-blue-text); font-weight:var(--fw-semibold); flex:none; width:30px}
+  ul.todo li .st{margin-left:auto; font-size:var(--fs-3xs); text-transform:uppercase; letter-spacing:var(--tr-caps-lg); color:var(--muted)}
 
   ul.todo li{color:var(--txt)}
-  footer{padding:60px 0 90px; color:var(--muted); font-size:15px; letter-spacing:.04em}
+  footer{padding:var(--sp-14) 0 var(--sp-16); color:var(--muted); font-size:var(--fs-sm); letter-spacing:var(--tr-wide)}
   footer b{color:var(--line)}
 
   @media(max-width:860px){
@@ -297,7 +319,7 @@
     .typegrid,.signature,.vars{grid-template-columns:1fr}
     #spiral{height:360px}
     .flow{grid-template-columns:1fr 1fr}
-    .grid2{grid-template-columns:1fr; gap:24px}
+    .grid2{grid-template-columns:1fr; gap:var(--sp-8)}
   }
   @media(max-width:520px){.clusters{grid-template-columns:1fr}}
   @media(max-width:860px){.scales{grid-template-columns:1fr}}
@@ -311,7 +333,7 @@
 <div class="topbar">
   <span><b>SISTEMA-IDENTIDAD</b> <span class="dot">/</span> v3 · cyberdeck</span>
   <span>FAUVE BELLENGER <span class="dot">·</span> producto + dirección visual</span>
-  <span style="display:flex; gap:8px">
+  <span style="display:flex; gap:var(--sp-4)">
     <button class="gridbtn" id="themeBtn" aria-label="Cambiar a modo oscuro">◑ dark</button>
     <button class="gridbtn" id="gridBtn" aria-pressed="false" aria-label="Mostrar grilla de maquetación">▦ grilla</button>
   </span>
@@ -337,7 +359,7 @@
     <div>
       <h2>Humano<br>↔ natural.</h2>
       <p>El eje opone lo <b style="color:var(--line)">humano/diseñado</b> —piedra, concreto, el gris y los cromas sintéticos que no existen en la naturaleza— a lo <b style="color:var(--line)">natural</b>: el verde y el azul, lo húmedo, la selva valdiviana. Mueve el control y el sistema migra de un polo al otro: acento, vegetación que invade los bordes y la morfología de la firma.</p>
-      <p style="margin-top:14px; font-size:15px; color:var(--muted)">Teoría de color (chroma audiovisual): todo vive en <b style="color:var(--line)">RGB</b> porque es pantalla. El verde/azul lee como natural; el gris y el espectro construido, como humano. Al pasar a impresión se remapea a CMYK.</p>
+      <p style="margin-top:var(--sp-6); font-size:var(--fs-sm); color:var(--muted)">Teoría de color (chroma audiovisual): todo vive en <b style="color:var(--line)">RGB</b> porque es pantalla. El verde/azul lee como natural; el gris y el espectro construido, como humano. Al pasar a impresión se remapea a CMYK.</p>
     </div>
     <div class="axisbox">
       <div class="axislabels"><span class="l">◄ humano / diseñado</span><span class="r">natural / valdiviana ►</span></div>
@@ -359,7 +381,7 @@
 <!-- CLUSTERS -->
 <section class="wrap" id="clusters">
   <div class="tag"><span class="n">02</span> Seis clusters — la síntesis del archivo visual</div>
-  <h2 style="margin-bottom:44px">El vocabulario</h2>
+  <h2 style="margin-bottom:var(--sp-11)">El vocabulario</h2>
   <div class="clusters">
     <div class="cluster"><div class="num">01</div><h3>Tipografía estructural</h3><div class="prev pv-type"></div><span class="polo cold">humano</span><p>El texto como arquitectura. Grilla visible, jerarquía explícita.</p></div>
     <div class="cluster"><div class="num">02</div><h3>Trazo y densidad</h3><div class="prev pv-trazo"></div><span class="polo cold">humano</span><p>Línea acumulada, blueprint acotado, concept art, ASCII.</p></div>
@@ -373,7 +395,7 @@
 <!-- TOKENS -->
 <section class="wrap" id="tokens">
   <div class="tag"><span class="n">03</span> Tokens — base monocroma, color quirúrgico</div>
-  <h2 style="margin-bottom:44px">Paleta</h2>
+  <h2 style="margin-bottom:var(--sp-11)">Paleta</h2>
   <div class="tokens" id="tokGrid"></div>
   <p class="copyhint">Base de alto contraste (negro→papel). Azul eléctrico como acento; rojo señal en uso mínimo; verdes activos como polo natural. Capa de color de texto con contraste AA garantizado. <b>Click en cualquier ficha para copiar el hex.</b></p>
   <div class="scales">
@@ -396,21 +418,21 @@
 <!-- TIPOGRAFÍA -->
 <section class="wrap" id="tipo">
   <div class="tag"><span class="n">04</span> Tipografía — mono base + display modular</div>
-  <h2 style="margin-bottom:44px">Voz</h2>
+  <h2 style="margin-bottom:var(--sp-11)">Voz</h2>
   <div class="typegrid">
     <div class="typecell">
       <div class="label-sm">Display · modular sobre grilla <span class="pill">candidata: Syne</span></div>
       <div class="specimen">Aa<br>Gg</div>
-      <p style="font-size:15px; color:var(--muted); margin-top:18px">Construida sobre módulos, no humanista. Coherente con "el texto como arquitectura". Pendiente de confirmación: lane elegido (experimental/modular), tipo concreto a validar.</p>
+      <p style="font-size:var(--fs-sm); color:var(--muted); margin-top:var(--sp-6)">Construida sobre módulos, no humanista. Coherente con "el texto como arquitectura". Pendiente de confirmación: lane elegido (experimental/modular), tipo concreto a validar.</p>
     </div>
     <div class="typecell">
       <div class="label-sm">Mono base · IBM Plex Mono / Iosevka</div>
       <div class="scale mono-spec">
-        <div><span class="px">700</span><span style="font-weight:700">Discovery cerrado</span></div>
-        <div><span class="px">500</span><span style="font-weight:500">Arquitectura / UX</span></div>
+        <div><span class="px">700</span><span style="font-weight:var(--fw-bold)">Discovery cerrado</span></div>
+        <div><span class="px">500</span><span style="font-weight:var(--fw-medium)">Arquitectura / UX</span></div>
         <div><span class="px">400</span><span>Sistema de diseño bloqueado en v3</span></div>
         <div><span class="px">400i</span><span style="font-style:italic">// el comentario también es diseño</span></div>
-        <div><span class="px">300</span><span style="font-weight:300; color:var(--muted)">$ git commit -m "tokens definitivos"</span></div>
+        <div><span class="px">300</span><span style="font-weight:var(--fw-light); color:var(--muted)">$ git commit -m "tokens definitivos"</span></div>
       </div>
     </div>
   </div>
@@ -419,7 +441,7 @@
 <!-- FIRMA -->
 <section class="wrap" id="firma">
   <div class="tag"><span class="n">05</span> Firma — crecimiento generativo</div>
-  <h2 style="margin-bottom:44px">El gesto que crece</h2>
+  <h2 style="margin-bottom:var(--sp-11)">El gesto que crece</h2>
   <div class="signature">
     <canvas id="spiral" role="img" aria-label="Firma generativa: tallos que crecen por un campo de flujo, del trazo geométrico al orgánico, en animación continua"></canvas>
     <div class="ctrls">
@@ -439,7 +461,7 @@
       <div class="seedline">semilla · <b id="seedVal">—</b><br><span style="color:var(--muted)">determinista · reproducible</span></div>
     </div>
   </div>
-  <p style="margin-top:16px; font-size:15px; color:var(--muted)">Ya no es una espiral fija: son <b style="color:var(--line)">tallos</b> que crecen por un campo de flujo. En <b style="color:var(--line)">humano</b> el trazo es rígido y gris; al subir <b style="color:var(--line)">morfología</b> el movimiento se vuelve orgánico —el grosor afina hacia la punta, el viento lo mece y lo ramifica como organismo situado— y la selva valdiviana (verde·azul) invade los bordes. El error (glitch RGB) queda a la vista: el sistema no esconde sus reglas. Exportable como wallpaper del deck.</p>
+  <p style="margin-top:var(--sp-6); font-size:var(--fs-sm); color:var(--muted)">Ya no es una espiral fija: son <b style="color:var(--line)">tallos</b> que crecen por un campo de flujo. En <b style="color:var(--line)">humano</b> el trazo es rígido y gris; al subir <b style="color:var(--line)">morfología</b> el movimiento se vuelve orgánico —el grosor afina hacia la punta, el viento lo mece y lo ramifica como organismo situado— y la selva valdiviana (verde·azul) invade los bordes. El error (glitch RGB) queda a la vista: el sistema no esconde sus reglas. Exportable como wallpaper del deck.</p>
 </section>
 
 <!-- VENTANA OS -->
@@ -449,7 +471,7 @@
     <div>
       <h2>El sistema,<br>llevado al equipo.</h2>
       <p>El equipo no usa un tema descargado: usa los mismos tokens del sistema, llevados de Figma a sus archivos de configuración —CSS real, dotfiles versionados en Git—. Según el uso (terminal, escritura, servidor o herramienta para pensar) cambia la interfaz, pero la identidad se mantiene.</p>
-      <p style="margin-top:14px; font-size:15px; color:var(--muted)">Componente "ventana" que simula el sistema operativo, ya prototipado →</p>
+      <p style="margin-top:var(--sp-6); font-size:var(--fs-sm); color:var(--muted)">Componente "ventana" que simula el sistema operativo, ya prototipado →</p>
     </div>
     <div class="oswin">
       <div class="osbar"><span class="dots"><i></i><i></i><i></i></span><span class="title">field-terminal — ~/deck</span></div>
@@ -467,7 +489,7 @@
 <!-- PROCESO -->
 <section class="wrap" id="proceso">
   <div class="tag"><span class="n">07</span> Proceso — el método expuesto</div>
-  <h2 style="margin-bottom:44px">Orden de trabajo</h2>
+  <h2 style="margin-bottom:var(--sp-11)">Orden de trabajo</h2>
   <div class="flow">
     <div class="step"><div class="s">FASE 00</div><h3>Contexto</h3><p>Netbook viejo → cyberdeck. Objetivo doble: enchilar la máquina y definir identidad propia.</p></div>
     <div class="step active"><div class="s">FASE 01</div><h3>Discovery</h3><p>Síntesis del archivo visual. Tesis, eje tonal, 6 clusters, tokens. Cerrando aquí.</p></div>
@@ -481,7 +503,7 @@
 <!-- VARIABLES -->
 <section class="wrap" id="variables">
   <div class="tag"><span class="n">08</span> Variables de entrada — el material que alimenta el sistema</div>
-  <h2 style="margin-bottom:44px">Fuentes</h2>
+  <h2 style="margin-bottom:var(--sp-11)">Fuentes</h2>
   <div class="vars">
     <div class="var new"><h3>Sobrecrecimiento <span class="badge">nueva variable</span></h3><div class="src">perfil Pinterest · imágenes sueltas, fuera de tableros</div><p>Entornos abandonados colmados de vegetación. Ancla el polo natural/orgánico: refuerza el cluster Atmósfera y los verdes valdivianos, y justifica la textura y el movimiento orgánico (campo de flujo, viento) como capa del sistema.</p></div>
     <div class="var"><h3>Corpus teórico</h3><div class="src">Base de datos · 16 textos de teoría del diseño</div><p>Diseño ontológico (Willis, Agre), soberanía tecnológica (Foglia), decolonialidad (Mignolo, Escobar), futuring y justicia (Fry, Costanza-Chock) y el linaje e[ad]/Amereida. Fundamenta el eje humano↔natural y la tesis de exponer las reglas: una identidad que piensa desde el sur y desde el lugar.</p></div>
@@ -491,7 +513,7 @@
 <!-- PENDIENTES -->
 <section class="wrap" id="pendientes">
   <div class="tag"><span class="n">09</span> Decisiones abiertas — qué falta bloquear</div>
-  <h2 style="margin-bottom:24px">Backlog del sistema</h2>
+  <h2 style="margin-bottom:var(--sp-8)">Backlog del sistema</h2>
   <ul class="todo">
     <li><span class="k">A</span><span>Tipografía display: confirmar el tipo concreto dentro del lane modular (Syne es la candidata propuesta).</span><span class="st">decisión</span></li>
     <li><span class="k">B</span><span>Camino del generador: congelar semilla y exportar lockscreen fijo (A) vs. portar a p5.js como pieza documentada (B).</span><span class="st">abierto</span></li>
