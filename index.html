@@ -10,12 +10,14 @@
 <style>
   :root{
     /* --- tokens base --- */
-    --bg:#0a0a0a; --surface:#161616; --overlay:#222220;
-    --line:#ededed; --paper:#e6e1d4; --muted:#6f6f6a;
-    --blue:#1f3df0;            /* acento primario */
-    --signal:#d4380d;          /* rojo señal, uso mínimo */
-    --moss:#5a6b4d;            /* terciario cálido */
-    --mineral:#b8a888;         /* cálido */
+    --bg:#0a0a0a; --surface:#161616; --overlay:#191917;
+    --line:#ededed; --paper:#e6e1d4; --muted:#8a857c;
+    --blue:#1f3df0;            /* acento primario (relleno/borde) */
+    --signal:#d4380d;          /* rojo señal, uso mínimo (relleno) */
+    --moss:#5a6b4d;            /* terciario cálido (relleno) */
+    --mineral:#b8a888;         /* cálido (relleno) */
+    /* --- capa de color para TEXTO: contraste WCAG AA garantizado --- */
+    --c-blue-text:#5b78ff; --c-moss-text:#7d9169; --c-mineral-text:#b8a888; --c-signal-text:#f0532a;
     /* --- variables derivadas: el eje tonal vive aquí --- */
     --warmth:0;                /* 0 = frío/generativo · 100 = cálido/atmósfera */
     --accent:var(--blue);
@@ -24,14 +26,16 @@
     --display:"Syne",system-ui,sans-serif;
     --gut:24px;
     --txt:#cfcfca;            /* texto de párrafo, derivado del modo */
+    --ease:cubic-bezier(.22,1,.36,1);   /* easing orgánico: arranca y se asienta como crecimiento */
   }
 
   /* ===== LIGHT MODE — el polo cálido/papel del mismo sistema ===== */
   :root[data-theme="light"]{
-    --bg:#e6e1d4; --surface:#f1ecdf; --overlay:#cdc4af;
-    --line:#14130e; --paper:#0a0a0a; --muted:#7b7669;
+    --bg:#e6e1d4; --surface:#f1ecdf; --overlay:#ddd7c8;
+    --line:#14130e; --paper:#0a0a0a; --muted:#646055;
     --blue:#1f3df0; --signal:#c5350c; --moss:#566848; --mineral:#9b8b69;
     --txt:#403d33;
+    --c-blue-text:#1f3df0; --c-moss-text:#4c5d3f; --c-mineral-text:#6f6243; --c-signal-text:#b22f0b;
   }
   [data-theme="light"] body::before{mix-blend-mode:multiply; opacity:.05}
   [data-theme="light"] .topbar{background:rgba(230,225,212,.8)}
@@ -46,7 +50,7 @@
   html{scroll-behavior:smooth}
   body{
     background:var(--bg); color:var(--line);
-    font-family:var(--mono); font-weight:400; font-size:14px; line-height:1.55;
+    font-family:var(--mono); font-weight:400; font-size:17.5px; line-height:1.55;
     -webkit-font-smoothing:antialiased; letter-spacing:.01em;
     overflow-x:hidden;
   }
@@ -60,11 +64,11 @@
   /* --- sobrecrecimiento orgánico: capa cálida que entra con --warmth --- */
   body::after{
     content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-    opacity:var(--grow); transition:opacity .4s ease;
+    opacity:var(--grow); transition:opacity .6s var(--ease);
     background:
-      radial-gradient(60% 50% at 12% 100%, rgba(90,107,77,.55), transparent 70%),
-      radial-gradient(50% 45% at 90% 92%, rgba(90,107,77,.4), transparent 70%),
-      radial-gradient(40% 30% at 70% 0%, rgba(184,168,136,.22), transparent 70%);
+      radial-gradient(60% 50% at 12% 100%, rgba(60,110,80,.55), transparent 70%),
+      radial-gradient(50% 45% at 90% 92%, rgba(45,95,90,.42), transparent 70%),
+      radial-gradient(40% 30% at 70% 0%, rgba(90,139,90,.20), transparent 70%);
   }
 
   /* --- grilla visible: el sistema expone sus reglas --- */
@@ -88,57 +92,72 @@
     position:fixed; top:0; left:0; right:0; z-index:9999;
     display:flex; justify-content:space-between; align-items:center;
     padding:10px 18px; background:rgba(10,10,10,.78); backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--overlay); font-size:11px; letter-spacing:.08em;
+    border-bottom:1px solid var(--overlay); font-size:13.75px; letter-spacing:.08em;
     text-transform:uppercase; color:var(--muted);
   }
   .topbar b{color:var(--line); font-weight:600}
-  .topbar .dot{color:var(--accent)}
+  .topbar .dot{color:var(--c-blue-text)}
   .gridbtn{
     background:none; border:1px solid var(--overlay); color:var(--muted);
-    font-family:var(--mono); font-size:10px; letter-spacing:.1em; text-transform:uppercase;
-    padding:4px 10px; cursor:pointer; transition:.2s;
+    font-family:var(--mono); font-size:12.5px; letter-spacing:.1em; text-transform:uppercase;
+    padding:4px 10px; cursor:pointer; transition:.35s var(--ease);
   }
   .gridbtn:hover{border-color:var(--accent); color:var(--line)}
 
-  section{padding:96px 0; border-top:1px solid var(--overlay); position:relative}
+  section{padding:calc(128px + 1em) 0 calc(128px + 0.5em); border-top:1px solid var(--overlay); position:relative}
   section:first-of-type{border-top:none}
 
   /* --- etiqueta de fase (numeración expuesta) --- */
   .tag{
-    font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted);
-    display:flex; align-items:center; gap:10px; margin-bottom:26px;
+    font-size:13.75px; letter-spacing:.22em; text-transform:uppercase; color:var(--muted);
+    display:flex; align-items:center; gap:10px; margin-bottom:38px;
   }
   .tag::before{content:""; width:34px; height:1px; background:var(--accent)}
-  .tag .n{color:var(--accent)}
+  .tag .n{color:var(--c-blue-text)}
 
   h1{font-family:var(--display); font-weight:800; line-height:.92; letter-spacing:-.02em;
      font-size:clamp(40px,8.5vw,108px); text-transform:uppercase;}
   h2{font-family:var(--display); font-weight:700; font-size:clamp(26px,4vw,46px);
-     line-height:1; letter-spacing:-.01em; margin-bottom:22px; text-transform:uppercase;}
+     line-height:1; letter-spacing:-.01em; margin-bottom:30px; text-transform:uppercase;}
   h3{font-family:var(--display); font-weight:600; font-size:18px; letter-spacing:.01em; margin-bottom:8px}
   p{max-width:62ch; color:var(--txt)}
-  a{color:var(--accent); text-decoration:none}
+  a{color:var(--c-blue-text); text-decoration:none}
+  a:hover{text-decoration:underline}
+  /* --- foco visible para navegación por teclado --- */
+  a:focus-visible, button:focus-visible, input:focus-visible, [tabindex]:focus-visible{
+    outline:2px solid var(--c-blue-text); outline-offset:3px; border-radius:1px;
+  }
+  /* --- contenido solo para lectores de pantalla --- */
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+  .skip{position:fixed;left:10px;top:-60px;z-index:10000;background:var(--surface);color:var(--line);
+    border:1px solid var(--c-blue-text);padding:9px 16px;font-size:15px;letter-spacing:.06em;transition:top .2s}
+  .skip:focus{top:10px}
+  /* --- respeta reducción de movimiento --- */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;
+      transition-duration:.001ms!important;scroll-behavior:auto!important}
+  }
 
   /* --- MASTHEAD --- */
-  .mast{padding-top:140px; padding-bottom:60px}
-  .mast .id{font-size:12px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); margin-bottom:30px}
-  .mast h1 .blue{color:var(--accent)}
+  .mast{padding-top:150px; padding-bottom:88px}
+  .mast .id{font-size:15px; letter-spacing:.3em; text-transform:uppercase; color:var(--muted); margin-bottom:30px}
+  .mast h1 .blue{color:var(--c-blue-text)}
   .thesis{
     font-family:var(--display); font-weight:600; font-size:clamp(20px,2.6vw,30px);
-    line-height:1.15; letter-spacing:-.01em; color:var(--line); max-width:20ch; margin-top:34px;
+    line-height:1.18; letter-spacing:-.01em; color:var(--line); max-width:22ch; margin-top:44px;
   }
-  .thesis em{font-style:italic; color:var(--accent)}
+  .thesis em{font-style:italic; color:var(--c-blue-text)}
   .metaline{
-    display:flex; flex-wrap:wrap; gap:8px 28px; margin-top:46px; font-size:12px;
+    display:flex; flex-wrap:wrap; gap:12px 34px; margin-top:62px; font-size:15px;
     color:var(--muted); letter-spacing:.04em; border-top:1px solid var(--overlay); padding-top:18px;
   }
   .metaline span b{color:var(--line); font-weight:500}
 
   /* --- EJE TONAL interactivo --- */
-  .axisbox{background:var(--surface); border:1px solid var(--overlay); padding:34px}
-  .axislabels{display:flex; justify-content:space-between; font-size:11px;
+  .axisbox{background:var(--surface); border:1px solid var(--overlay); padding:42px}
+  .axislabels{display:flex; justify-content:space-between; font-size:13.75px;
     text-transform:uppercase; letter-spacing:.14em; color:var(--muted); margin-bottom:14px}
-  .axislabels .l{color:var(--blue)} .axislabels .r{color:var(--mineral)}
+  .axislabels .l{color:var(--c-blue-text)} .axislabels .r{color:var(--c-mineral-text)}
   input[type=range]{
     -webkit-appearance:none; width:100%; height:2px; background:linear-gradient(90deg,var(--blue),var(--moss),var(--mineral));
     outline:none; margin:8px 0 22px;
@@ -148,22 +167,23 @@
     border:3px solid var(--bg); cursor:pointer; box-shadow:0 0 0 1px var(--accent);
   }
   input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--line);border:3px solid var(--bg);cursor:pointer}
-  .axisread{display:flex; gap:30px; flex-wrap:wrap; font-size:12px; color:var(--muted)}
+  .axisread{display:flex; gap:30px; flex-wrap:wrap; font-size:15px; color:var(--muted)}
   .axisread b{color:var(--line)}
   .swatchrow{display:flex; gap:0; margin-top:24px; height:46px; border:1px solid var(--overlay)}
-  .swatchrow div{flex:1; transition:flex .35s ease}
+  .swatchrow div{flex:1; transition:flex .5s var(--ease)}
 
   /* --- CLUSTERS --- */
   .clusters{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--overlay);
     border:1px solid var(--overlay)}
-  .cluster{background:var(--bg); padding:26px 22px 24px; min-height:230px; position:relative; overflow:hidden}
-  .cluster .num{font-size:11px; color:var(--muted); letter-spacing:.1em}
+  .cluster{background:var(--bg); padding:36px 30px 32px; min-height:248px; position:relative; overflow:hidden; transition:background .35s var(--ease)}
+  .cluster:hover{background:var(--surface)}
+  .cluster .num{font-size:13.75px; color:var(--muted); letter-spacing:.1em}
   .cluster h3{margin-top:6px}
-  .cluster p{font-size:12.5px; color:var(--txt); max-width:none}
+  .cluster p{font-size:15.62px; color:var(--txt); max-width:none}
   .cluster .prev{height:64px; margin:16px 0 4px; border:1px solid var(--overlay); position:relative; overflow:hidden; background:#0d0d0d}
-  .cluster .polo{position:absolute; top:18px; right:18px; font-size:10px; letter-spacing:.08em;
+  .cluster .polo{position:absolute; top:18px; right:18px; font-size:12.5px; letter-spacing:.08em;
     text-transform:uppercase; color:var(--muted)}
-  .cluster .polo.cold{color:var(--blue)} .cluster .polo.warm{color:var(--mineral)}
+  .cluster .polo.cold{color:var(--muted)} .cluster .polo.warm{color:var(--c-moss-text)}
   /* previews puros CSS por cluster */
   .pv-type{background:repeating-linear-gradient(to right,#1a1a1a 0 1px,transparent 1px 9px),
            repeating-linear-gradient(to bottom,#1a1a1a 0 1px,transparent 1px 9px)}
@@ -174,97 +194,102 @@
   .pv-carto{background-image:radial-gradient(circle at 30% 60%,transparent 6px,var(--moss) 6px 7px,transparent 7px),
       radial-gradient(circle at 70% 40%,transparent 10px,var(--mineral) 10px 11px,transparent 11px),
       linear-gradient(120deg,transparent 49%,var(--line) 49% 50%,transparent 50%); opacity:.6}
-  .pv-atm{background:radial-gradient(60% 120% at 50% 120%,var(--moss),transparent 70%),
-      radial-gradient(40% 80% at 80% 100%,var(--mineral),transparent 70%); opacity:.7}
+  .pv-atm{background:radial-gradient(60% 120% at 50% 120%,#3c6e50,transparent 70%),
+      radial-gradient(40% 80% at 80% 100%,#2d5f5a,transparent 70%); opacity:.75}
 
   /* --- TOKENS --- */
-  .tokens{display:grid; grid-template-columns:repeat(auto-fill,minmax(150px,1fr)); gap:12px}
-  .tok{border:1px solid var(--overlay); cursor:pointer; transition:.2s; background:var(--surface)}
-  .tok:hover{border-color:var(--accent)}
+  .tokens{display:grid; grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:18px}
+  .tok{border:1px solid var(--overlay); cursor:pointer; transition:.3s var(--ease); background:var(--surface);
+    font-family:inherit; text-align:left; width:100%; color:inherit; -webkit-appearance:none; appearance:none}
+  .tok:hover{border-color:var(--accent); transform:translateY(-2px)}
+  .tok:active{transform:translateY(0)}
   .tok .chip{height:62px}
   .tok .meta{padding:9px 11px; display:flex; justify-content:space-between; align-items:baseline}
-  .tok .name{font-size:12px; color:var(--line); text-transform:uppercase; letter-spacing:.06em}
-  .tok .hex{font-size:11px; color:var(--muted)}
-  .tok .role{padding:0 11px 11px; font-size:10.5px; color:var(--muted)}
-  .copyhint{font-size:11px; color:var(--muted); margin-top:14px}
-  .copyhint b{color:var(--accent)}
+  .tok .name{font-size:15px; color:var(--line); text-transform:uppercase; letter-spacing:.06em}
+  .tok .hex{font-size:13.75px; color:var(--muted)}
+  .tok .role{padding:0 11px 11px; font-size:13.12px; color:var(--muted)}
+  .copyhint{font-size:13.75px; color:var(--muted); margin-top:20px; max-width:70ch}
+  .copyhint b{color:var(--c-blue-text)}
+  .scales{display:grid; grid-template-columns:1fr 1fr; gap:32px; margin-top:36px}
+  .ramp{display:flex; height:40px; border:1px solid var(--overlay); margin-top:8px}
+  .ramp span{flex:1; display:block}
 
   /* --- TIPOGRAFÍA --- */
   .typegrid{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--overlay); border:1px solid var(--overlay)}
-  .typecell{background:var(--bg); padding:26px}
+  .typecell{background:var(--bg); padding:36px}
   .specimen{font-family:var(--display); font-weight:800; font-size:clamp(48px,9vw,120px);
     line-height:.86; letter-spacing:-.02em; position:relative; text-transform:uppercase;
     background-image:repeating-linear-gradient(to bottom,rgba(31,61,240,.18) 0 1px,transparent 1px 24px);
     background-size:100% 24px;}
   .scale div{border-bottom:1px solid var(--overlay); padding:10px 0; display:flex; align-items:baseline; gap:16px}
-  .scale .px{font-size:10px; color:var(--muted); width:54px; flex:none}
+  .scale .px{font-size:12.5px; color:var(--muted); width:54px; flex:none}
   .mono-spec{font-family:var(--mono)}
-  .label-sm{font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:12px}
-  .pill{display:inline-block; font-size:10px; border:1px solid var(--accent); color:var(--accent);
+  .label-sm{font-size:13.75px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:12px}
+  .pill{display:inline-block; font-size:12.5px; border:1px solid var(--c-blue-text); color:var(--c-blue-text);
     padding:2px 8px; letter-spacing:.08em; text-transform:uppercase; margin-left:8px}
 
   /* --- FIRMA: espiral --- */
   .signature{display:grid; grid-template-columns:1fr 300px; gap:1px; background:var(--overlay); border:1px solid var(--overlay)}
   #spiral{display:block; width:100%; height:480px; background:var(--bg)}
-  .ctrls{background:var(--surface); padding:24px}
+  .ctrls{background:var(--surface); padding:30px}
   .ctrl{margin-bottom:16px}
-  .ctrl label{display:flex; justify-content:space-between; font-size:11px; color:var(--muted);
+  .ctrl label{display:flex; justify-content:space-between; font-size:13.75px; color:var(--muted);
     text-transform:uppercase; letter-spacing:.08em; margin-bottom:6px}
   .ctrl label b{color:var(--line)}
   .ctrl input[type=range]{margin:0; height:2px; background:var(--overlay)}
   .ctrl input[type=range]::-webkit-slider-thumb{box-shadow:0 0 0 1px var(--accent); width:13px; height:13px}
   .btnrow{display:flex; gap:8px; margin-top:20px}
   .btn{flex:1; background:var(--bg); border:1px solid var(--overlay); color:var(--line);
-    font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase;
-    padding:9px; cursor:pointer; transition:.2s}
-  .btn:hover{border-color:var(--accent); color:var(--accent)}
-  .seedline{font-size:11px; color:var(--muted); margin-top:14px}
+    font-family:var(--mono); font-size:13.75px; letter-spacing:.08em; text-transform:uppercase;
+    padding:9px; cursor:pointer; transition:.3s var(--ease)}
+  .btn:hover{border-color:var(--c-blue-text); color:var(--c-blue-text)}
+  .seedline{font-size:13.75px; color:var(--muted); margin-top:14px}
   .seedline b{color:var(--line)}
 
   /* --- VENTANA OS (gap resuelto) --- */
   .oswin{border:1px solid var(--overlay); background:var(--surface); max-width:760px}
   .osbar{display:flex; align-items:center; gap:8px; padding:8px 12px; border-bottom:1px solid var(--overlay);
-    background:var(--overlay); font-size:11px; color:var(--muted)}
+    background:var(--overlay); font-size:13.75px; color:var(--muted)}
   .osbar .dots{display:flex; gap:6px}
   .osbar .dots i{width:9px; height:9px; border-radius:50%; display:block; background:var(--muted); opacity:.6}
   .osbar .dots i:first-child{background:var(--signal); opacity:.9}
   .osbar .title{margin-left:6px; letter-spacing:.06em}
-  .osbody{padding:18px; font-size:12.5px; line-height:1.7; color:var(--txt); min-height:150px}
-  .osbody .prompt{color:var(--accent)} .osbody .ok{color:var(--moss)} .osbody .warn{color:var(--signal)}
+  .osbody{padding:18px; font-size:15.62px; line-height:1.7; color:var(--txt); min-height:150px}
+  .osbody .prompt{color:var(--c-blue-text)} .osbody .ok{color:var(--c-moss-text)} .osbody .warn{color:var(--c-signal-text)}
   .osbody .cur{display:inline-block; width:8px; height:15px; background:var(--accent); vertical-align:middle;
     animation:blink 1.05s steps(1) infinite}
   @keyframes blink{50%{opacity:0}}
 
   /* --- PROCESO --- */
   .flow{display:grid; grid-template-columns:repeat(6,1fr); gap:1px; background:var(--overlay); border:1px solid var(--overlay)}
-  .step{background:var(--bg); padding:18px 14px; position:relative}
-  .step .s{font-size:10px; color:var(--muted); letter-spacing:.1em}
+  .step{background:var(--bg); padding:26px 20px; position:relative}
+  .step .s{font-size:12.5px; color:var(--muted); letter-spacing:.1em}
   .step h3{font-size:14px; margin:8px 0 6px}
-  .step p{font-size:11.5px; color:var(--txt); max-width:none}
+  .step p{font-size:14.38px; color:var(--txt); max-width:none}
   .step.active{background:var(--surface)}
   .step.active::before{content:""; position:absolute; top:0; left:0; right:0; height:2px; background:var(--accent)}
-  .step.active .s{color:var(--accent)}
+  .step.active .s{color:var(--c-blue-text)}
 
   /* --- VARIABLES / inputs --- */
   .vars{display:grid; grid-template-columns:repeat(2,1fr); gap:1px; background:var(--overlay); border:1px solid var(--overlay)}
-  .var{background:var(--bg); padding:22px}
+  .var{background:var(--bg); padding:32px}
   .var.new{background:var(--surface)}
-  .var h3{font-family:var(--mono); font-weight:600; font-size:13px; text-transform:uppercase; letter-spacing:.06em}
-  .var .src{font-size:11px; color:var(--muted); margin:2px 0 10px}
-  .var p{font-size:12.5px; color:var(--txt); max-width:none}
-  .var .badge{font-size:9.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--bg);
-    background:var(--accent); padding:2px 7px; margin-left:8px}
+  .var h3{font-family:var(--mono); font-weight:600; font-size:16.25px; text-transform:uppercase; letter-spacing:.06em}
+  .var .src{font-size:13.75px; color:var(--muted); margin:2px 0 10px}
+  .var p{font-size:15.62px; color:var(--txt); max-width:none}
+  .var .badge{font-size:11.88px; letter-spacing:.1em; text-transform:uppercase; color:var(--bg);
+    background:var(--c-blue-text); padding:2px 7px; margin-left:8px}
 
-  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:start}
 
   /* --- PENDIENTES --- */
   ul.todo{list-style:none; border-top:1px solid var(--overlay)}
-  ul.todo li{border-bottom:1px solid var(--overlay); padding:14px 0; display:flex; gap:16px; font-size:13px; color:#cfcfca}
-  ul.todo li .k{color:var(--accent); font-weight:600; flex:none; width:30px}
-  ul.todo li .st{margin-left:auto; font-size:10px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted)}
+  ul.todo li{border-bottom:1px solid var(--overlay); padding:14px 0; display:flex; gap:16px; font-size:16.25px; color:#cfcfca}
+  ul.todo li .k{color:var(--c-blue-text); font-weight:600; flex:none; width:30px}
+  ul.todo li .st{margin-left:auto; font-size:12.5px; text-transform:uppercase; letter-spacing:.1em; color:var(--muted)}
 
   ul.todo li{color:var(--txt)}
-  footer{padding:60px 0 90px; color:var(--muted); font-size:12px; letter-spacing:.04em}
+  footer{padding:60px 0 90px; color:var(--muted); font-size:15px; letter-spacing:.04em}
   footer b{color:var(--line)}
 
   @media(max-width:860px){
@@ -275,28 +300,31 @@
     .grid2{grid-template-columns:1fr; gap:24px}
   }
   @media(max-width:520px){.clusters{grid-template-columns:1fr}}
+  @media(max-width:860px){.scales{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="grid-overlay" id="gridOv"></div>
+<a class="skip" href="#main">Saltar al contenido</a>
+<div class="sr-only" id="live" aria-live="polite" aria-atomic="true"></div>
+<div class="grid-overlay" id="gridOv" aria-hidden="true"></div>
 
 <div class="topbar">
   <span><b>SISTEMA-IDENTIDAD</b> <span class="dot">/</span> v3 · cyberdeck</span>
   <span>FAUVE BELLENGER <span class="dot">·</span> producto + dirección visual</span>
   <span style="display:flex; gap:8px">
-    <button class="gridbtn" id="themeBtn">◑ dark</button>
-    <button class="gridbtn" id="gridBtn">▦ grilla</button>
+    <button class="gridbtn" id="themeBtn" aria-label="Cambiar a modo oscuro">◑ dark</button>
+    <button class="gridbtn" id="gridBtn" aria-pressed="false" aria-label="Mostrar grilla de maquetación">▦ grilla</button>
   </span>
 </div>
 
 <!-- MASTHEAD -->
-<header class="wrap mast">
+<header class="wrap mast" id="main" tabindex="-1">
   <div class="id">CL · 2026 · proyecto personal / pieza de portfolio</div>
-  <h1>Lo real<br>expone sus<br><span class="blue">reglas.</span></h1>
-  <p class="thesis">Cada registro muestra su proceso. Nada se oculta: la grilla, el error, el algoritmo y el <em>sobrecrecimiento</em> son el contenido, no el adorno.</p>
+  <h1>Mostrar las<br>reglas, no<br><span class="blue">esconderlas.</span></h1>
+  <p class="thesis">Identidad visual propia y situada: un sistema donde la grilla, el error y el algoritmo se <em>ven</em> —su textura y su movimiento— y construyen el lenguaje, en vez de decorarlo.</p>
   <div class="metaline">
     <span><b>Tesis</b> · sistema sobre ornamento</span>
-    <span><b>Eje</b> · frío/técnico ↔ cálido/atmósfera</span>
+    <span><b>Eje</b> · humano/diseñado ↔ natural/valdiviano</span>
     <span><b>Acento</b> · azul eléctrico #1f3df0</span>
     <span><b>Firma</b> · espiral ascendente generativa</span>
   </div>
@@ -304,25 +332,25 @@
 
 <!-- EJE TONAL -->
 <section class="wrap" id="eje">
-  <div class="tag"><span class="n">01</span> Eje tonal — el trabajo vive en el rango</div>
+  <div class="tag"><span class="n">01</span> Eje — lo humano y lo natural</div>
   <div class="grid2">
     <div>
-      <h2>No un punto.<br>Un rango.</h2>
-      <p>La identidad no se fija en un solo tono: se mueve entre lo frío/generativo (paramétrico, glitch, forma algorítmica) y lo cálido/atmosférico (niebla, sobrecrecimiento, lo orgánico). Mueve el control y el sistema entero se reacomoda: acento, color terciario y la capa de vegetación que invade los bordes.</p>
-      <p style="margin-top:14px; font-size:12px; color:var(--muted)">Decisión de esta sesión: <b style="color:var(--line)">tensión frío + orgánico activa</b>. Lo cálido no es decorativo, entra por los bordes.</p>
+      <h2>Humano<br>↔ natural.</h2>
+      <p>El eje opone lo <b style="color:var(--line)">humano/diseñado</b> —piedra, concreto, el gris y los cromas sintéticos que no existen en la naturaleza— a lo <b style="color:var(--line)">natural</b>: el verde y el azul, lo húmedo, la selva valdiviana. Mueve el control y el sistema migra de un polo al otro: acento, vegetación que invade los bordes y la morfología de la firma.</p>
+      <p style="margin-top:14px; font-size:15px; color:var(--muted)">Teoría de color (chroma audiovisual): todo vive en <b style="color:var(--line)">RGB</b> porque es pantalla. El verde/azul lee como natural; el gris y el espectro construido, como humano. Al pasar a impresión se remapea a CMYK.</p>
     </div>
     <div class="axisbox">
-      <div class="axislabels"><span class="l">◄ frío / generativo</span><span class="r">cálido / atmósfera ►</span></div>
-      <input type="range" id="warmth" min="0" max="100" value="22">
+      <div class="axislabels"><span class="l">◄ humano / diseñado</span><span class="r">natural / valdiviana ►</span></div>
+      <input type="range" id="warmth" min="0" max="100" value="22" aria-label="Eje: de humano/diseñado a natural">
       <div class="axisread">
         <span>posición · <b id="wval">22</b>/100</span>
-        <span>modo · <b id="wmode">frío-dominante</b></span>
-        <span>acento · <b id="wacc">#1f3df0</b></span>
+        <span>modo · <b id="wmode">humano-dominante</b></span>
+        <span>acento · <b id="wacc">#6f6f6a</b></span>
       </div>
       <div class="swatchrow" id="swatches">
-        <div style="background:var(--blue); flex:5"></div>
+        <div style="background:#6f6f6a; flex:5"></div>
         <div style="background:var(--moss); flex:1"></div>
-        <div style="background:var(--mineral); flex:1"></div>
+        <div style="background:var(--blue); flex:1"></div>
       </div>
     </div>
   </div>
@@ -331,34 +359,49 @@
 <!-- CLUSTERS -->
 <section class="wrap" id="clusters">
   <div class="tag"><span class="n">02</span> Seis clusters — la síntesis del archivo visual</div>
-  <h2 style="margin-bottom:30px">El vocabulario</h2>
+  <h2 style="margin-bottom:44px">El vocabulario</h2>
   <div class="clusters">
-    <div class="cluster"><div class="num">01</div><h3>Tipografía estructural</h3><div class="prev pv-type"></div><span class="polo cold">frío</span><p>El texto como arquitectura. Grilla visible, jerarquía explícita.</p></div>
-    <div class="cluster"><div class="num">02</div><h3>Trazo y densidad</h3><div class="prev pv-trazo"></div><span class="polo cold">frío</span><p>Línea acumulada, blueprint acotado, concept art, ASCII.</p></div>
-    <div class="cluster"><div class="num">03</div><h3>Forma generativa</h3><div class="prev"><canvas id="cl-gen"></canvas></div><span class="polo cold">núcleo</span><p>Paramétrico, p5.js, visualización de datos. El motor de la firma.</p></div>
-    <div class="cluster"><div class="num">04</div><h3>Glitch y dither</h3><div class="prev pv-glitch"></div><span class="polo cold">frío</span><p>El error y el píxel hechos visibles. Textura nacida del sistema.</p></div>
+    <div class="cluster"><div class="num">01</div><h3>Tipografía estructural</h3><div class="prev pv-type"></div><span class="polo cold">humano</span><p>El texto como arquitectura. Grilla visible, jerarquía explícita.</p></div>
+    <div class="cluster"><div class="num">02</div><h3>Trazo y densidad</h3><div class="prev pv-trazo"></div><span class="polo cold">humano</span><p>Línea acumulada, blueprint acotado, concept art, ASCII.</p></div>
+    <div class="cluster"><div class="num">03</div><h3>Forma generativa</h3><div class="prev"><canvas id="cl-gen" aria-hidden="true"></canvas></div><span class="polo cold">núcleo</span><p>Paramétrico, p5.js, visualización de datos. El motor de la firma.</p></div>
+    <div class="cluster"><div class="num">04</div><h3>Glitch y dither</h3><div class="prev pv-glitch"></div><span class="polo cold">humano</span><p>El error y el píxel hechos visibles. Textura nacida del sistema.</p></div>
     <div class="cluster"><div class="num">05</div><h3>Cartografía / dérive</h3><div class="prev pv-carto"></div><span class="polo warm">puente</span><p>Situacionismo, psicogeografía. El territorio anotado que argumenta.</p></div>
-    <div class="cluster"><div class="num">06</div><h3>Atmósfera + sobrecrecimiento</h3><div class="prev pv-atm"></div><span class="polo warm">cálido</span><p>Niebla, ambient y entornos abandonados colmados de vegetación.</p></div>
+    <div class="cluster"><div class="num">06</div><h3>Atmósfera + sobrecrecimiento</h3><div class="prev pv-atm"></div><span class="polo warm">natural</span><p>Niebla, ambient y entornos abandonados colmados de vegetación.</p></div>
   </div>
 </section>
 
 <!-- TOKENS -->
 <section class="wrap" id="tokens">
   <div class="tag"><span class="n">03</span> Tokens — base monocroma, color quirúrgico</div>
-  <h2 style="margin-bottom:30px">Paleta</h2>
+  <h2 style="margin-bottom:44px">Paleta</h2>
   <div class="tokens" id="tokGrid"></div>
-  <p class="copyhint">Base de alto contraste (negro→papel). Azul eléctrico como único acento dominante; rojo señal en uso mínimo; moss y mineral activos como modo cálido. <b>Click en cualquier ficha para copiar el hex.</b></p>
+  <p class="copyhint">Base de alto contraste (negro→papel). Azul eléctrico como acento; rojo señal en uso mínimo; verdes activos como polo natural. Capa de color de texto con contraste AA garantizado. <b>Click en cualquier ficha para copiar el hex.</b></p>
+  <div class="scales">
+    <div>
+      <div class="label-sm">Humano · diseñado <span style="color:var(--muted)">— gris · piedra · concreto</span></div>
+      <div class="ramp" role="img" aria-label="Escala humana: del negro al concreto, grises sintéticos">
+        <span style="background:#0a0a0a"></span><span style="background:#161616"></span><span style="background:#3a3a38"></span><span style="background:#6f6f6a"></span><span style="background:#b8b4ad"></span><span style="background:#e6e1d4"></span>
+      </div>
+    </div>
+    <div>
+      <div class="label-sm">Natural · selva valdiviana <span style="color:var(--muted)">— verde → húmedo → azul</span></div>
+      <div class="ramp" role="img" aria-label="Escala natural: del verde profundo al azul, pasando por lo húmedo">
+        <span style="background:#243a26"></span><span style="background:#3c5a36"></span><span style="background:#5a6b4d"></span><span style="background:#4f8a6a"></span><span style="background:#2d6f8f"></span><span style="background:#1f3df0"></span>
+      </div>
+    </div>
+  </div>
+  <p class="copyhint">Dos espectros enfrentados: lo <b>humano</b> son los grises y cromas que no aparecen en la naturaleza; lo <b>natural</b>, los verdes y azules de la selva valdiviana. Todo se define en <b>RGB</b> porque vive en pantalla; al pasar a impresión se remapea a <b>CMYK</b>.</p>
 </section>
 
 <!-- TIPOGRAFÍA -->
 <section class="wrap" id="tipo">
   <div class="tag"><span class="n">04</span> Tipografía — mono base + display modular</div>
-  <h2 style="margin-bottom:30px">Voz</h2>
+  <h2 style="margin-bottom:44px">Voz</h2>
   <div class="typegrid">
     <div class="typecell">
       <div class="label-sm">Display · modular sobre grilla <span class="pill">candidata: Syne</span></div>
       <div class="specimen">Aa<br>Gg</div>
-      <p style="font-size:12px; color:var(--muted); margin-top:18px">Construida sobre módulos, no humanista. Coherente con "el texto como arquitectura". Pendiente de confirmación: lane elegido (experimental/modular), tipo concreto a validar.</p>
+      <p style="font-size:15px; color:var(--muted); margin-top:18px">Construida sobre módulos, no humanista. Coherente con "el texto como arquitectura". Pendiente de confirmación: lane elegido (experimental/modular), tipo concreto a validar.</p>
     </div>
     <div class="typecell">
       <div class="label-sm">Mono base · IBM Plex Mono / Iosevka</div>
@@ -375,27 +418,28 @@
 
 <!-- FIRMA -->
 <section class="wrap" id="firma">
-  <div class="tag"><span class="n">05</span> Firma — espiral ascendente generativa</div>
-  <h2 style="margin-bottom:30px">El gesto propio</h2>
+  <div class="tag"><span class="n">05</span> Firma — crecimiento generativo</div>
+  <h2 style="margin-bottom:44px">El gesto que crece</h2>
   <div class="signature">
-    <canvas id="spiral"></canvas>
+    <canvas id="spiral" role="img" aria-label="Firma generativa: tallos que crecen por un campo de flujo, del trazo geométrico al orgánico, en animación continua"></canvas>
     <div class="ctrls">
-      <div class="ctrl"><label>Brazos <b id="vArms">3</b></label><input type="range" id="pArms" min="1" max="8" value="3"></div>
-      <div class="ctrl"><label>Vueltas <b id="vTurns">5</b></label><input type="range" id="pTurns" min="2" max="14" value="5"></div>
-      <div class="ctrl"><label>Ascenso <b id="vRise">60</b></label><input type="range" id="pRise" min="0" max="100" value="60"></div>
-      <div class="ctrl"><label>Densidad <b id="vDens">320</b></label><input type="range" id="pDens" min="80" max="900" value="320"></div>
-      <div class="ctrl"><label>Glitch <b id="vGlitch">18</b></label><input type="range" id="pGlitch" min="0" max="100" value="18"></div>
-      <div class="ctrl"><label>Sobrecrecimiento <b id="vOrg">25</b></label><input type="range" id="pOrg" min="0" max="100" value="25"></div>
-      <div class="ctrl"><label>Rotación · velocidad <b id="vRot">30</b></label><input type="range" id="pRot" min="0" max="100" value="30"></div>
+      <div class="ctrl"><label for="pArms">Tallos <b id="vArms">3</b></label><input type="range" id="pArms" min="1" max="8" value="3" aria-label="Número de tallos"></div>
+      <div class="ctrl"><label for="pTurns">Vueltas <b id="vTurns">5</b></label><input type="range" id="pTurns" min="2" max="14" value="5" aria-label="Vueltas"></div>
+      <div class="ctrl"><label for="pRise">Ascenso <b id="vRise">60</b></label><input type="range" id="pRise" min="0" max="100" value="60" aria-label="Ascenso"></div>
+      <div class="ctrl"><label for="pDens">Densidad <b id="vDens">320</b></label><input type="range" id="pDens" min="80" max="900" value="320" aria-label="Densidad de puntos"></div>
+      <div class="ctrl"><label for="pGlitch">Glitch <b id="vGlitch">18</b></label><input type="range" id="pGlitch" min="0" max="100" value="18" aria-label="Intensidad de glitch"></div>
+      <div class="ctrl"><label for="pOrg">Sobrecrecimiento <b id="vOrg">25</b></label><input type="range" id="pOrg" min="0" max="100" value="25" aria-label="Sobrecrecimiento orgánico"></div>
+      <div class="ctrl"><label for="pRot">Oscilación · viento <b id="vRot">30</b></label><input type="range" id="pRot" min="0" max="100" value="30" aria-label="Oscilación tipo viento"></div>
+      <div class="ctrl"><label for="pMorph">Morfología · humano→natural <b id="vMorph">40</b></label><input type="range" id="pMorph" min="0" max="100" value="40" aria-label="Morfología: de geométrico (humano) a orgánico (natural)"></div>
       <div class="btnrow">
-        <button class="btn" id="playBtn">⏸ pausa</button>
-        <button class="btn" id="reseed">↻ semilla</button>
-        <button class="btn" id="savePng">↧ png</button>
+        <button class="btn" id="playBtn" aria-pressed="true" aria-label="Pausar la animación de la espiral">⏸ pausa</button>
+        <button class="btn" id="reseed" aria-label="Generar una nueva semilla aleatoria">↻ semilla</button>
+        <button class="btn" id="savePng" aria-label="Descargar la espiral como imagen PNG">↧ png</button>
       </div>
       <div class="seedline">semilla · <b id="seedVal">—</b><br><span style="color:var(--muted)">determinista · reproducible</span></div>
     </div>
   </div>
-  <p style="margin-top:16px; font-size:12px; color:var(--muted)">Espiral fría (algoritmo) tensionada con sobrecrecimiento orgánico (puntos moss/mineral que invaden). RGB split como glitch real. Exportable como wallpaper/lockscreen del deck.</p>
+  <p style="margin-top:16px; font-size:15px; color:var(--muted)">Ya no es una espiral fija: son <b style="color:var(--line)">tallos</b> que crecen por un campo de flujo. En <b style="color:var(--line)">humano</b> el trazo es rígido y gris; al subir <b style="color:var(--line)">morfología</b> el movimiento se vuelve orgánico —el grosor afina hacia la punta, el viento lo mece y lo ramifica como organismo situado— y la selva valdiviana (verde·azul) invade los bordes. El error (glitch RGB) queda a la vista: el sistema no esconde sus reglas. Exportable como wallpaper del deck.</p>
 </section>
 
 <!-- VENTANA OS -->
@@ -403,9 +447,9 @@
   <div class="tag"><span class="n">06</span> Aplicación — el sistema instanciado en el deck</div>
   <div class="grid2">
     <div>
-      <h2>Un cyberdeck<br>con identidad.</h2>
-      <p>El sistema no es un tema descargado: son tokens que viajan de Figma a archivos de config (CSS real, dotfiles versionados en Git como source of truth). El deck sirve para todo —terminal de campo, máquina de escritura, servidor local, herramienta contemplativa— y la UI cambia de capa según el uso, manteniendo la misma identidad.</p>
-      <p style="margin-top:14px; font-size:12px; color:var(--muted)">Componente "ventana" que simula el OS — gap del sistema, ahora prototipado →</p>
+      <h2>El sistema,<br>llevado al equipo.</h2>
+      <p>El equipo no usa un tema descargado: usa los mismos tokens del sistema, llevados de Figma a sus archivos de configuración —CSS real, dotfiles versionados en Git—. Según el uso (terminal, escritura, servidor o herramienta para pensar) cambia la interfaz, pero la identidad se mantiene.</p>
+      <p style="margin-top:14px; font-size:15px; color:var(--muted)">Componente "ventana" que simula el sistema operativo, ya prototipado →</p>
     </div>
     <div class="oswin">
       <div class="osbar"><span class="dots"><i></i><i></i><i></i></span><span class="title">field-terminal — ~/deck</span></div>
@@ -423,7 +467,7 @@
 <!-- PROCESO -->
 <section class="wrap" id="proceso">
   <div class="tag"><span class="n">07</span> Proceso — el método expuesto</div>
-  <h2 style="margin-bottom:30px">Orden de trabajo</h2>
+  <h2 style="margin-bottom:44px">Orden de trabajo</h2>
   <div class="flow">
     <div class="step"><div class="s">FASE 00</div><h3>Contexto</h3><p>Netbook viejo → cyberdeck. Objetivo doble: enchilar la máquina y definir identidad propia.</p></div>
     <div class="step active"><div class="s">FASE 01</div><h3>Discovery</h3><p>Síntesis del archivo visual. Tesis, eje tonal, 6 clusters, tokens. Cerrando aquí.</p></div>
@@ -437,10 +481,10 @@
 <!-- VARIABLES -->
 <section class="wrap" id="variables">
   <div class="tag"><span class="n">08</span> Variables de entrada — el material que alimenta el sistema</div>
-  <h2 style="margin-bottom:30px">Fuentes</h2>
+  <h2 style="margin-bottom:44px">Fuentes</h2>
   <div class="vars">
-    <div class="var"><h3>Tableros Pinterest</h3><div class="src">touchdesigner · afiches · esquemas · visualización · ilustración · cartografías · paramétrico · Situacionismo</div><p>El corpus organizado que destiló los seis clusters y el eje tonal.</p></div>
-    <div class="var new"><h3>Sobrecrecimiento <span class="badge">nueva variable</span></h3><div class="src">perfil Pinterest · imágenes sueltas, fuera de tableros</div><p>Entornos abandonados colmados de vegetación. Ancla el polo cálido/orgánico: refuerza el cluster Atmósfera y promueve moss/mineral a tokens activos. Justifica una posible textura orgánica como capa del sistema.</p></div>
+    <div class="var new"><h3>Sobrecrecimiento <span class="badge">nueva variable</span></h3><div class="src">perfil Pinterest · imágenes sueltas, fuera de tableros</div><p>Entornos abandonados colmados de vegetación. Ancla el polo natural/orgánico: refuerza el cluster Atmósfera y los verdes valdivianos, y justifica la textura y el movimiento orgánico (campo de flujo, viento) como capa del sistema.</p></div>
+    <div class="var"><h3>Corpus teórico</h3><div class="src">Base de datos · 16 textos de teoría del diseño</div><p>Diseño ontológico (Willis, Agre), soberanía tecnológica (Foglia), decolonialidad (Mignolo, Escobar), futuring y justicia (Fry, Costanza-Chock) y el linaje e[ad]/Amereida. Fundamenta el eje humano↔natural y la tesis de exponer las reglas: una identidad que piensa desde el sur y desde el lugar.</p></div>
   </div>
 </section>
 
@@ -469,22 +513,32 @@
   const root=document.documentElement.style;
   const lerp=(a,b,t)=>a+(b-a)*t;
   const hex=n=>Math.max(0,Math.min(255,Math.round(n))).toString(16).padStart(2,'0');
-  // azul #1f3df0 -> mineral #b8a888 mezcla por warmth para el acento
-  const BLUE=[31,61,240], MINERAL=[184,168,136], MOSS=[90,107,77];
+  // gris humano (#6f6f6a) -> verde natural (selva) mezcla por el eje para el acento
+  const HUMANO=[111,111,106], NATURAL=[90,139,90];
+
+  // ---------- región de anuncios accesibles ----------
+  const live=msg=>{const el=$('#live'); if(el) el.textContent=msg;};
 
   // ---------- grilla ----------
-  $('#gridBtn').addEventListener('click',()=>$('#gridOv').classList.toggle('on'));
+  const gridBtn=$('#gridBtn');
+  gridBtn.addEventListener('click',()=>{
+    const on=$('#gridOv').classList.toggle('on');
+    gridBtn.setAttribute('aria-pressed', on?'true':'false');
+    live(on?'Grilla de maquetación visible':'Grilla oculta');
+  });
 
   // ---------- theme toggle (light/dark) ----------
   const themeBtn=$('#themeBtn');
   function syncThemeBtn(){
     const isLight=document.documentElement.getAttribute('data-theme')==='light';
     themeBtn.textContent=isLight?'◑ dark':'◐ light';
+    themeBtn.setAttribute('aria-label', isLight?'Cambiar a modo oscuro':'Cambiar a modo claro');
   }
   themeBtn.addEventListener('click',()=>{
     const isLight=document.documentElement.getAttribute('data-theme')==='light';
     document.documentElement.setAttribute('data-theme', isLight?'dark':'light');
     syncThemeBtn();
+    live('Modo '+(isLight?'oscuro':'claro')+' activado');
     if(typeof drawSpiral==='function') drawSpiral();
   });
   syncThemeBtn();
@@ -495,39 +549,40 @@
     const t=+w.value/100;
     $('#wval').textContent=w.value;
     // acento interpolado
-    const r=lerp(BLUE[0],MINERAL[0],t),g=lerp(BLUE[1],MINERAL[1],t),b=lerp(BLUE[2],MINERAL[2],t);
+    const r=lerp(HUMANO[0],NATURAL[0],t),g=lerp(HUMANO[1],NATURAL[1],t),b=lerp(HUMANO[2],NATURAL[2],t);
     const acc='#'+hex(r)+hex(g)+hex(b);
     root.setProperty('--accent',acc);
     root.setProperty('--warmth',w.value);
     root.setProperty('--grow',(t*0.6).toFixed(3));
     $('#wacc').textContent=acc;
-    $('#wmode').textContent = t<.33?'frío-dominante': t<.66?'tensión activa':'cálido-dominante';
-    // swatches reproporcionados
+    $('#wmode').textContent = t<.33?'humano-dominante': t<.66?'tensión activa':'natural-dominante';
+    // swatches reproporcionados: gris humano cede, verde y azul natural crecen
     const sw=$('#swatches').children;
-    sw[0].style.flex = (6-4*t).toFixed(2);   // azul cede
-    sw[1].style.flex = (1+2*t).toFixed(2);   // moss crece
-    sw[2].style.flex = (1+2.4*t).toFixed(2); // mineral crece
+    sw[0].style.flex = (6-4*t).toFixed(2);
+    sw[1].style.flex = (1+2*t).toFixed(2);
+    sw[2].style.flex = (1+2.4*t).toFixed(2);
   }
   w.addEventListener('input',applyWarmth); applyWarmth();
 
   // ---------- tokens ----------
   const TOKENS=[
     ['bg','#0a0a0a','fondo'],['surface','#161616','superficie'],['overlay','#222220','bordes'],
-    ['line','#ededed','texto'],['paper','#e6e1d4','papel cálido'],['muted','#6f6f6a','secundario'],
+    ['line','#ededed','texto'],['paper','#e6e1d4','papel cálido'],['muted','#8a857c','secundario'],
     ['blue','#1f3df0','acento primario'],['signal','#d4380d','rojo señal · mínimo'],
     ['moss','#5a6b4d','cálido activo'],['mineral','#b8a888','cálido activo']
   ];
   const tg=$('#tokGrid');
   TOKENS.forEach(([n,h,r])=>{
-    const el=document.createElement('div'); el.className='tok';
-    const light=['line','paper','mineral'].includes(n);
+    const el=document.createElement('button'); el.className='tok'; el.type='button';
+    el.setAttribute('aria-label',`Copiar token ${n}, ${h} — ${r}`);
     el.innerHTML=`<div class="chip" style="background:${h}"></div>
       <div class="meta"><span class="name">${n}</span><span class="hex">${h}</span></div>
       <div class="role">${r}</div>`;
     el.addEventListener('click',()=>{
       navigator.clipboard&&navigator.clipboard.writeText(h);
       const hx=el.querySelector('.hex'); const o=hx.textContent;
-      hx.textContent='copiado'; hx.style.color='var(--accent)';
+      hx.textContent='copiado'; hx.style.color='var(--c-blue-text)';
+      live(`Token ${n} copiado: ${h}`);
       setTimeout(()=>{hx.textContent=o; hx.style.color='';},900);
     });
     tg.appendChild(el);
@@ -541,65 +596,105 @@
   let seed=Math.floor(Math.random()*999999);
   let phase=0, playing=true, raf=null;
   const reduceMotion=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const P={arms:'pArms',turns:'pTurns',rise:'pRise',dens:'pDens',glitch:'pGlitch',org:'pOrg',rot:'pRot'};
+  const P={arms:'pArms',turns:'pTurns',rise:'pRise',dens:'pDens',glitch:'pGlitch',org:'pOrg',rot:'pRot',morph:'pMorph'};
   function val(id){return +$('#'+id).value;}
   function fit(){const r=cv.getBoundingClientRect();cv.width=r.width*devicePixelRatio;cv.height=r.height*devicePixelRatio;}
+  // campo de flujo suave y determinista: devuelve una dirección (ángulo) en (x,y,t)
+  function flow(x,y,t,sd){
+    const a=Math.sin(x*0.0042 + t + sd)
+          + Math.sin(y*0.0051 - t*0.7 + sd*1.3)*0.8
+          + Math.sin((x+y)*0.0032 + t*1.3)*0.6;
+    return a*Math.PI;
+  }
   function drawSpiral(){
     fit();
-    const W=cv.width,H=cv.height,cx=W/2,cy=H*0.6;
+    const W=cv.width,H=cv.height,cx=W/2,cy=H*0.62, dpr=devicePixelRatio;
     const light=document.documentElement.getAttribute('data-theme')==='light';
     const bgFill=light?'#e6e1d4':'#0a0a0a';
-    const lineStroke=light?'rgba(20,19,14,.92)':'rgba(237,237,237,.92)';
     ctx.clearRect(0,0,W,H); ctx.fillStyle=bgFill; ctx.fillRect(0,0,W,H);
-    const arms=val('pArms'),turns=val('pTurns'),rise=val('pRise')/100,
-          dens=val('pDens'),glitch=val('pGlitch')/100,org=val('pOrg')/100;
+    ctx.lineCap='round'; ctx.lineJoin='round';
+    const stems=val('pArms'), turns=val('pTurns'), rise=val('pRise')/100,
+          dens=val('pDens'), glitch=val('pGlitch')/100, org=val('pOrg')/100,
+          m=val('pMorph')/100;                       // 0 humano(geometría) · 1 natural(orgánico)
     const rnd=mulberry32(seed);
-    const maxR=Math.min(W,H)*0.34, totalAng=turns*Math.PI*2;
-    // brazos fríos
-    for(let a=0;a<arms;a++){
-      const off=(a/arms)*Math.PI*2;
-      ctx.beginPath();
-      for(let i=0;i<=dens;i++){
-        const tt=i/dens;
-        const ang=off+tt*totalAng+phase;
-        const r=tt*maxR;
-        let x=cx+Math.cos(ang)*r;
-        let y=cy+Math.sin(ang)*r - tt*rise*H*0.55; // ascenso
-        x+=(rnd()-.5)*glitch*26; y+=(rnd()-.5)*glitch*26;
-        i===0?ctx.moveTo(x,y):ctx.lineTo(x,y);
+    const maxR=Math.min(W,H)*0.36;
+    const human=light?[20,19,14]:[237,237,237], nature=[90,139,90], agua=[31,61,240];
+    const mix=(a,b,t)=>[lerp(a[0],b[0],t),lerp(a[1],b[1],t),lerp(a[2],b[2],t)];
+    const rgba=(c,al)=>`rgba(${c[0]|0},${c[1]|0},${c[2]|0},${al})`;
+    const steps=Math.max(36,Math.floor(dens*0.45));
+    const stepLen=maxR*1.9/steps;
+    const baseW=(2.6-m*0.7)*dpr;                     // trazo grueso en lo humano, afina hacia lo natural
+
+    // crece un tallo desde (x,y): inercia (trazo suave) + sesgo ascendente + ramificación
+    function grow(x,y,dir0,scale,depth,colT){
+      let dir=dir0, px=x, py=y; const pts=[[x,y]];
+      const n=Math.max(8,Math.floor(steps*scale));
+      for(let i=1;i<=n;i++){
+        const toC=Math.atan2(py-cy,px-cx);
+        const spiralDir=toC+Math.PI*0.5+turns*0.03;            // tangencial → geometría/espira (humano)
+        const fieldDir=flow(px,py,phase,seed%1000)+(rnd()-.5)*0.15; // orgánico (natural)
+        let d=lerp(spiralDir,fieldDir,m);
+        d=d*(1-0.4*rise)+(-Math.PI*0.5)*(0.4*rise);            // ascenso
+        dir=dir*0.74+d*0.26;                                   // inercia → trazo orgánico, sin quiebres
+        px+=Math.cos(dir)*stepLen*scale+(rnd()-.5)*glitch*20;
+        py+=Math.sin(dir)*stepLen*scale+(rnd()-.5)*glitch*20;
+        pts.push([px,py]);
       }
-      // RGB split (glitch real)
-      ctx.lineWidth=1.1*devicePixelRatio;
-      if(glitch>0){
-        ctx.save(); ctx.globalCompositeOperation='screen';
-        ctx.strokeStyle='rgba(31,61,240,.9)'; ctx.translate(glitch*5,0); ctx.stroke();
-        ctx.strokeStyle='rgba(212,56,13,.6)'; ctx.translate(-glitch*10,glitch*3); ctx.stroke();
+      for(let i=1;i<pts.length;i++){                           // trazo de grosor variable (afina a la punta)
+        const prog=i/pts.length;
+        ctx.strokeStyle=rgba(mix(mix(human,nature,colT),agua,prog*org*0.6*colT), 0.92);
+        ctx.lineWidth=Math.max(0.4*dpr, baseW*scale*(1-prog*0.85));
+        ctx.beginPath(); ctx.moveTo(pts[i-1][0],pts[i-1][1]); ctx.lineTo(pts[i][0],pts[i][1]); ctx.stroke();
+      }
+      if(glitch>0.02){                                         // glitch RGB sutil (error visible)
+        ctx.save(); ctx.globalCompositeOperation='screen'; ctx.lineWidth=1*dpr;
+        ctx.strokeStyle='rgba(31,61,240,.5)'; ctx.beginPath(); pts.forEach((p,i)=>i?ctx.lineTo(p[0]+glitch*6,p[1]):ctx.moveTo(p[0]+glitch*6,p[1])); ctx.stroke();
+        ctx.strokeStyle='rgba(212,56,13,.4)'; ctx.beginPath(); pts.forEach((p,i)=>i?ctx.lineTo(p[0]-glitch*6,p[1]+glitch*3):ctx.moveTo(p[0]-glitch*6,p[1]+glitch*3)); ctx.stroke();
         ctx.restore();
       }
-      ctx.strokeStyle=lineStroke; ctx.stroke();
+      if(depth>0 && m>0.15){                                   // ramificación: organismo que crece
+        const nb=Math.min(2,Math.floor(m*1.4+org));
+        for(let b=0;b<nb;b++){
+          const idx=Math.floor((0.45+0.45*rnd())*pts.length);
+          if(idx<2||idx>=pts.length) continue;
+          const [bx,by]=pts[idx], pdir=Math.atan2(by-pts[idx-1][1],bx-pts[idx-1][0]);
+          grow(bx,by,pdir+(rnd()-.5)*1.4,scale*0.55,depth-1,Math.min(1,colT+0.1));
+        }
+      }
     }
-    // sobrecrecimiento orgánico (puntos cálidos que invaden los bordes)
-    const blobs=Math.floor(org*220);
+
+    for(let s=0;s<stems;s++){                                  // siembra: abanico ascendente desde la base
+      const a0=(s/Math.max(1,stems-1)-0.5)*Math.PI*1.05;
+      const sx=cx+Math.cos(a0)*maxR*0.12, sy=cy+maxR*0.24;
+      grow(sx,sy,-Math.PI*0.5+a0*0.6,1,(m>0.15?2:0),m);
+    }
+
+    const blobs=Math.floor(org*240);                           // sobrecrecimiento valdiviano
     for(let i=0;i<blobs;i++){
-      const ang=rnd()*Math.PI*2+phase*0.5, rr=Math.pow(rnd(),.5)*maxR*1.15;
+      const ang=rnd()*Math.PI*2, rr=Math.pow(rnd(),.5)*maxR*1.25;
       const x=cx+Math.cos(ang)*rr, y=cy+Math.sin(ang)*rr - rnd()*rise*H*0.4;
-      const s=rnd()*3.2*devicePixelRatio+0.6;
-      ctx.fillStyle = rnd()>.5?'rgba(90,107,77,.55)':'rgba(184,168,136,.5)';
-      ctx.beginPath(); ctx.arc(x,y,s,0,7); ctx.fill();
+      const sz=rnd()*3*dpr+0.5, k=rnd();
+      ctx.fillStyle=k>.6?'rgba(90,139,90,.5)':k>.3?'rgba(45,110,95,.5)':'rgba(31,61,240,.38)';
+      ctx.beginPath(); ctx.arc(x,y,sz,0,7); ctx.fill();
     }
     $('#seedVal').textContent='#'+seed;
     const os=$('#osSeed'); if(os) os.textContent=seed;
   }
   Object.keys(P).forEach(k=>{
-    const map={arms:'vArms',turns:'vTurns',rise:'vRise',dens:'vDens',glitch:'vGlitch',org:'vOrg',rot:'vRot'};
+    const map={arms:'vArms',turns:'vTurns',rise:'vRise',dens:'vDens',glitch:'vGlitch',org:'vOrg',rot:'vRot',morph:'vMorph'};
     $('#'+P[k]).addEventListener('input',e=>{$('#'+map[k]).textContent=e.target.value; if(!playing) drawSpiral();});
   });
   $('#reseed').addEventListener('click',()=>{seed=Math.floor(Math.random()*999999); drawSpiral();});
   $('#savePng').addEventListener('click',()=>{
     const a=document.createElement('a'); a.download='espiral-'+seed+'.png'; a.href=cv.toDataURL('image/png'); a.click();
   });
-  $('#playBtn').addEventListener('click',()=>{
-    playing=!playing; $('#playBtn').textContent=playing?'⏸ pausa':'▶ play';
+  const playBtn=$('#playBtn');
+  playBtn.addEventListener('click',()=>{
+    playing=!playing;
+    playBtn.textContent=playing?'⏸ pausa':'▶ play';
+    playBtn.setAttribute('aria-pressed', playing?'true':'false');
+    playBtn.setAttribute('aria-label', playing?'Pausar la animación de la espiral':'Reanudar la animación de la espiral');
+    live(playing?'Animación reanudada':'Animación en pausa');
   });
   window.addEventListener('resize',()=>{drawSpiral();});
 
@@ -612,7 +707,7 @@
     }
     raf=requestAnimationFrame(tick);
   }
-  if(reduceMotion){ playing=false; $('#playBtn').textContent='▶ play'; }
+  if(reduceMotion){ playing=false; playBtn.textContent='▶ play'; playBtn.setAttribute('aria-pressed','false'); playBtn.setAttribute('aria-label','Reanudar la animación de la espiral'); }
 
   // mini preview cluster generativo
   const cg=$('#cl-gen'); if(cg){
