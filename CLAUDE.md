@@ -38,12 +38,16 @@ Isla `Specimen.tsx` con **R3F/three.js** (`src/components/three/`). Nube de **pa
 (`ParticleField`, `THREE.Points` + ShaderMaterial): órbita, ciclo de vida nacen→crecen→se difuminan
 (blur por-partícula en el fragment shader), ruido orgánico en **GLSL** (`glsl.ts`), densidad por
 `uActive`. Paleta de marca (azul/verde/mineral/blanco + señal). Post-proceso (`Effects.tsx`):
-**Bloom** = bioluminiscencia (slider org), **Pixelation** = glitch (slider glitch). **Lupas**
-(`Magnifiers.tsx`) reinterpretadas en 3D: paneles enmarcados con `RenderTexture` que magnifican el
-espécimen (más cuadrados = más zoom). Semilla determinista (`mulberry32`/`rng(i)` en `lib/specimen.ts`).
-Sliders tweenean uniforms con GSAP. PNG vía `gl.domElement.toDataURL` (`preserveDrawingBuffer`).
-Consola colapsable (Motion/AnimatePresence); play/seed/png siempre visibles. Respeta `prefers-reduced-motion`
-(arranca en pausa). DOF de cámara NO se usa (partículas aditivas no escriben profundidad).
+**Bloom** = bioluminiscencia (slider org), **Pixelation** = glitch (slider glitch). **Lupas**: overlay
+2D (`<canvas class="mag-overlay">` + rAF en `Specimen.tsx`) que muestrea el canvas WebGL con `drawImage`
+y dibuja recortes magnificados (más cuadrados = más zoom). El contenido se ve pixelado sólo si la escena
+está glitcheada (`imageSmoothing` atado al glitch); los marcos son trazos del overlay → siempre nítidos,
+no dependen del glitch. (No se usa `RenderTexture`: choca con el `EffectComposer` → pantalla negra.)
+Semilla determinista (`mulberry32`/`rng(i)` en `lib/specimen.ts`). Sliders tweenean uniforms con GSAP.
+PNG vía `gl.domElement.toDataURL` (`preserveDrawingBuffer`). El `<Canvas>` está **memoizado** con props =
+refs estables (no se re-renderiza desde afuera; semilla/params se leen por frame) — clave para no romper
+el EffectComposer. Consola colapsable (Motion/AnimatePresence); play/seed/png siempre visibles. Respeta
+`prefers-reduced-motion` (arranca en pausa). DOF de cámara NO se usa (partículas aditivas no escriben profundidad).
 
 ## Accesibilidad
 WCAG 2.1 AA: contraste de texto ≥4.5 (capa `--c-*-text`, sobre el modo oscuro único), foco visible
