@@ -61,6 +61,22 @@
       </div>
     </div>
   </div>
+
+  <div class="label-sm" style="margin-top:var(--sp-12)">Interacciones · estados (specs)</div>
+  <p class="copyhint" style="margin-bottom:var(--sp-7)">
+    No son tokens —Figma no importa comportamiento—; se documentan como specs. Duración y curva sí son
+    tokens (<code>--dur-*</code>, <code>--ease</code>).
+  </p>
+  <ul class="ispec">
+    <li><b>Hover</b> · borde → acento + <code>translateY(-2px)</code>, transición <code>--dur</code>/<code>--ease</code>.</li>
+    <li><b>Focus</b> · <code>outline 2px var(--c-blue-text)</code>, offset 3px (<code>:focus-visible</code>) en todo control.</li>
+    <li><b>Tap / active</b> · <code>scale .95</code> (Motion <code>whileTap</code>) en botones y fichas.</li>
+    <li><b>Copy</b> · click en ficha → clipboard + "copiado" (900ms) + anuncio <code>aria-live</code>.</li>
+    <li><b>Reveals</b> · cada sección entra con fade + <code>y:30→0</code> al 85% del viewport (ScrollTrigger, una vez).</li>
+    <li><b>Glitch</b> · pixela la escena (Pixelation 3D / bajo-muestreo 2D); los marcos de lupa no se pixelan.</li>
+    <li><b>Lupas</b> · slider Cuadrados (0–8) magnifica regiones; más cuadrados = más zoom.</li>
+    <li><b>Reduced-motion</b> · espécimen en pausa, sin scroll suave ni reveals; todo visible.</li>
+  </ul>
 </section>
 
 <style>
@@ -81,4 +97,23 @@
   .molcell .osbar {
     border: var(--bw) solid var(--overlay);
   }
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--c-blue-text);
+  }
+  ul.ispec {
+    list-style: none;
+    border-top: var(--bw) solid var(--overlay);
+  }
+  ul.ispec li {
+    border-bottom: var(--bw) solid var(--overlay);
+    padding: var(--sp-5) 0;
+    font-size: var(--fs-md);
+    color: var(--txt);
+  }
+  ul.ispec li b {
+    color: var(--line);
+  }
 </style>
+

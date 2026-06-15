@@ -34,4 +34,99 @@
       </div>
     </div>
   </div>
+
+  <div class="label-sm" style="margin-top:var(--sp-12)">Pesos · interlineado · tracking</div>
+  <div class="tgrid3">
+    <div class="typecell">
+      <div class="label-sm">Pesos · <code>--fw-*</code></div>
+      <div class="wsample mono-spec">
+        <div><span class="wn">300</span><span style="font-weight:var(--fw-light)">light · titular tenue</span></div>
+        <div><span class="wn">400</span><span style="font-weight:var(--fw-regular)">regular · cuerpo</span></div>
+        <div><span class="wn">500</span><span style="font-weight:var(--fw-medium)">medium · énfasis</span></div>
+        <div><span class="wn">600</span><span style="font-weight:var(--fw-semibold)">semibold · etiqueta</span></div>
+        <div><span class="wn">700</span><span style="font-weight:var(--fw-bold)">bold · jerarquía</span></div>
+        <div>
+          <span class="wn">800</span><span style="font-family:var(--display); font-weight:var(--fw-black); text-transform:uppercase">black · display</span>
+        </div>
+      </div>
+    </div>
+    <div class="typecell">
+      <div class="label-sm">Interlineado · <code>--lh-*</code></div>
+      <div class="lhsample">
+        <p style="line-height:var(--lh-solid)"><span class="lhn">1.0 solid</span>El texto<br />como arquitectura</p>
+        <p style="line-height:var(--lh-display)"><span class="lhn">1.18 display</span>El texto<br />como arquitectura</p>
+        <p style="line-height:var(--lh-body)"><span class="lhn">1.55 body</span>El texto que se lee, con aire suficiente para el cuerpo largo.</p>
+        <p style="line-height:var(--lh-loose)"><span class="lhn">1.7 loose</span>El texto que respira, para bloques densos o de soporte.</p>
+      </div>
+    </div>
+    <div class="typecell">
+      <div class="label-sm">Tracking · <code>--tr-*</code></div>
+      <div class="trsample">
+        <div><span class="trn">-.02 tightest</span><span style="letter-spacing:var(--tr-tightest)">SISTEMA</span></div>
+        <div><span class="trn">.01 normal</span><span style="letter-spacing:var(--tr-normal)">SISTEMA</span></div>
+        <div><span class="trn">.08 caps</span><span style="letter-spacing:var(--tr-caps)">SISTEMA</span></div>
+        <div><span class="trn">.14 caps-xl</span><span style="letter-spacing:var(--tr-caps-xl)">SISTEMA</span></div>
+        <div><span class="trn">.22 widest</span><span style="letter-spacing:var(--tr-widest)">SISTEMA</span></div>
+        <div><span class="trn">.3 mega</span><span style="letter-spacing:var(--tr-mega)">SISTEMA</span></div>
+      </div>
+    </div>
+  </div>
 </section>
+
+<style>
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--c-blue-text);
+  }
+  .tgrid3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-px);
+    background: var(--overlay);
+    border: var(--bw) solid var(--overlay);
+    margin-top: var(--sp-5);
+  }
+  .tgrid3 .typecell {
+    padding: var(--sp-9);
+  }
+  .wsample > div,
+  .trsample > div {
+    display: flex;
+    align-items: baseline;
+    gap: var(--sp-6);
+    padding: var(--sp-3) 0;
+    border-bottom: var(--bw) solid var(--overlay);
+    font-size: var(--fs-md);
+    color: var(--txt);
+  }
+  .wn,
+  .trn,
+  .lhn {
+    font-family: var(--mono);
+    font-size: var(--fs-3xs);
+    color: var(--muted);
+    flex: none;
+    width: 70px;
+  }
+  .trn {
+    width: 92px;
+  }
+  .lhsample p {
+    color: var(--txt);
+    font-size: var(--fs-sm);
+    margin-bottom: var(--sp-6);
+    max-width: none;
+  }
+  .lhn {
+    display: block;
+    margin-bottom: var(--sp-2);
+    width: auto;
+  }
+  @media (max-width: 860px) {
+    .tgrid3 {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
