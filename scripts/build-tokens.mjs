@@ -33,7 +33,7 @@ for (const [group, items] of Object.entries(tokens)) {
 blocks.push(
   '  /* runtime / alias (no exportados) */\n' +
     '  --accent:var(--blue); --warmth:0; --grow:0;\n' +
-    '  --mono:var(--font-mono); --display:var(--font-display);'
+    '  --mono:var(--font-mono); --display:var(--font-display); --sans:var(--font-sans);'
 );
 
 const css =

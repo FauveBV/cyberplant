@@ -118,6 +118,9 @@
     },
     "font-display": {
       "$value": "\"Syne\",system-ui,sans-serif"
+    },
+    "font-sans": {
+      "$value": "\"IBM Plex Sans\",system-ui,sans-serif"
     }
   },
   "fontSize": {

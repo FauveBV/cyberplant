@@ -16,7 +16,7 @@ una identidad replicable a portfolio, redes y al propio entorno. La pieza ES el 
 - CSS: `src/styles/global.css` = `@import "tailwindcss"` + **CSS legacy sin capa** (vence al preflight). Tokens `:root` = única fuente de verdad.
 - Islas React: `Specimen` (espécimen 3D), `AxisSlider`, `TokensGrid`, `ClusterPreview`, `SeedValue`. Estado compartido con **nanostores** (`$seed`).
 - Libs: **three.js + @react-three/fiber + drei + @react-three/postprocessing** (espécimen 3D), **GSAP + ScrollTrigger + Lenis** (scroll/reveals), **Motion** (microinteracciones). Sin CDN; todo por npm.
-- Fuentes (Google Fonts): mono = **IBM Plex Mono**, display = **Syne**.
+- Fuentes (Google Fonts): mono = **IBM Plex Mono**, display = **Syne**, sans/cuerpo = **IBM Plex Sans** (`--font-sans`/`--sans`, para párrafos del portafolio; conf. en sección 05).
 - `legacy/index.html` = monolito original conservado como referencia (no se deploya).
 
 ## Estructura del documento (secciones)
