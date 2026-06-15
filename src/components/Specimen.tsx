@@ -62,7 +62,7 @@ export default function Specimen({ ambient = false }: { ambient?: boolean }) {
   // magnificados. El contenido refleja el glitch (el canvas ya viene pixelado); los marcos
   // son trazos del overlay → siempre nítidos, nunca afectados por el glitch.
   useEffect(() => {
-    if (ambient || tier !== 'full') return; // sin lupas en hero ambiental; el 2D dibuja las suyas
+    if (tier !== 'full') return; // lupas-overlay solo en 3D (incl. hero ambiental); el 2D dibuja las suyas
     let raf = 0;
     const draw = () => {
       const ov = overlayRef.current;
@@ -271,6 +271,7 @@ export default function Specimen({ ambient = false }: { ambient?: boolean }) {
         {tier === 'lite' && (
           <Specimen2D paramsRef={paramsRef} playingRef={playingRef} seedRef={seedRef} canvasRef={lite2dRef} />
         )}
+        {tier === 'full' && <canvas ref={overlayRef} className="mag-overlay" aria-hidden="true" />}
       </div>
     );
   }
