@@ -1,0 +1,84 @@
+---
+---
+
+<!-- MOLECULES -->
+<section class="wrap" id="molecules">
+  <div class="tag"><span class="n">07</span> Molecules — componentes del sistema</div>
+  <h2 style="margin-bottom:var(--sp-8)">Piezas combinadas</h2>
+  <p class="copyhint" style="margin-bottom:var(--sp-10)">
+    Átomos compuestos en piezas reutilizables. Las versiones <b>vivas</b> (grilla de tokens en Color,
+    eje tonal en Fundamentos, consola del espécimen en Firma) están en sus secciones; acá el inventario
+    estático.
+  </p>
+  <div class="molgrid">
+    <div class="molcell">
+      <div class="label-sm">Botón · acción</div>
+      <button class="btn" type="button">acción</button>
+    </div>
+    <div class="molcell">
+      <div class="label-sm">Botón · barra (gridbtn)</div>
+      <button class="gridbtn" type="button">etiqueta</button>
+    </div>
+    <div class="molcell">
+      <div class="label-sm">Ficha de token</div>
+      <div class="tok" role="presentation" style="cursor:default">
+        <div class="chip" style="background:#1f3df0"></div>
+        <div class="meta"><span class="name">blue</span><span class="hex">#1f3df0</span></div>
+        <div class="role">acento primario</div>
+      </div>
+    </div>
+    <div class="molcell">
+      <div class="label-sm">Swatch row · proporción</div>
+      <div class="swatchrow">
+        <div style="background:#6f6f6a; flex:5"></div>
+        <div style="background:var(--moss); flex:1"></div>
+        <div style="background:var(--blue); flex:1"></div>
+      </div>
+    </div>
+    <div class="molcell">
+      <div class="label-sm">Etiquetas · pill / badge</div>
+      <div style="display:flex; gap:var(--sp-5); align-items:center; flex-wrap:wrap">
+        <span class="pill">candidata</span>
+        <span class="badge">nueva</span>
+      </div>
+    </div>
+    <div class="molcell">
+      <div class="label-sm">Slider · rango</div>
+      <input type="range" min="0" max="100" value="42" aria-label="Ejemplo de slider (molécula)" />
+    </div>
+    <div class="molcell">
+      <div class="label-sm">Rampa de color</div>
+      <div class="ramp" role="img" aria-label="Ejemplo de rampa">
+        <span style="background:#0a0a0a"></span><span style="background:#3a3a38"></span><span
+          style="background:#6f6f6a"></span><span style="background:#b8b4ad"></span><span
+          style="background:#e6e1d4"></span>
+      </div>
+    </div>
+    <div class="molcell">
+      <div class="label-sm">Barra de ventana (OS)</div>
+      <div class="osbar">
+        <span class="dots"><i></i><i></i><i></i></span><span class="title">field-terminal</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .molgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: var(--sp-px);
+    background: var(--overlay);
+    border: var(--bw) solid var(--overlay);
+  }
+  .molcell {
+    background: var(--bg);
+    padding: var(--sp-9);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+  .molcell .osbar {
+    border: var(--bw) solid var(--overlay);
+  }
+</style>

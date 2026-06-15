@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Proceso from '../components/sections/Proceso.astro';
+import Pendientes from '../components/sections/Pendientes.astro';
 ---
 
 <BaseLayout
@@ -21,9 +23,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
   </header>
 
+  <Proceso />
+
   <!-- FICHA DEL EQUIPO -->
   <section class="wrap" id="ficha">
-    <div class="tag"><span class="n">01</span> Ficha del equipo — el punto de partida</div>
+    <div class="tag"><span class="n">02</span> Ficha del equipo — el punto de partida</div>
     <div class="grid2">
       <div>
         <h2>El hardware<br />define el rumbo.</h2>
@@ -49,7 +53,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
   <!-- SISTEMA OPERATIVO -->
   <section class="wrap" id="os">
-    <div class="tag"><span class="n">02</span> Sistema operativo — según el equipo</div>
+    <div class="tag"><span class="n">03</span> Sistema operativo — según el equipo</div>
     <h2 style="margin-bottom:var(--sp-11)">Dos caminos</h2>
     <div class="vars">
       <div class="var">
@@ -70,14 +74,14 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </div>
     </div>
     <p class="copyhint">
-      Decisión gateada por la ficha del equipo (sección 01): se confirma <b>RAM y almacenamiento</b> antes
+      Decisión gateada por la ficha del equipo (sección 02): se confirma <b>RAM y almacenamiento</b> antes
       de elegir.
     </p>
   </section>
 
   <!-- PASOS DEL TRASPASO -->
   <section class="wrap" id="traspaso">
-    <div class="tag"><span class="n">03</span> Traspaso — el orden de las capas</div>
+    <div class="tag"><span class="n">04</span> Traspaso — el orden de las capas</div>
     <h2 style="margin-bottom:var(--sp-11)">Capas de la UI</h2>
     <div class="flow">
       <div class="step"><div class="s">CAPA 01</div><h3>WM</h3><p>Gestor de ventanas: i3 / tiling como base del escritorio.</p></div>
@@ -106,4 +110,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </li>
     </ul>
   </section>
+
+  <Pendientes />
 </BaseLayout>

@@ -19,6 +19,14 @@
   --bio-magenta:#ff3dc4; --bio-pink:#ff6fb3; --bio-yellow:#ffd23d; --bio-orange:#ff8a3d; --bio-stem:#5e9a6a;
   --accent:var(--blue); --warmth:0; --grow:0;
 
+  /* ===== COLOR SEMÁNTICO (roles → primitivos; capa aditiva, no cambia lo visual) ===== */
+  --color-bg:var(--bg); --color-surface:var(--surface); --color-border:var(--overlay);
+  --color-text-primary:var(--line); --color-text-secondary:var(--txt); --color-text-muted:var(--muted);
+  --color-accent:var(--accent); --color-accent-text:var(--c-blue-text);
+  --color-signal:var(--signal); --color-signal-text:var(--c-signal-text);
+  --color-natural:var(--moss); --color-natural-text:var(--c-moss-text);
+  --color-warm:var(--mineral); --color-warm-text:var(--c-mineral-text);
+
   /* ===================== TIPOGRAFÍA ===================== */
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
   --font-display:"Syne",system-ui,sans-serif;

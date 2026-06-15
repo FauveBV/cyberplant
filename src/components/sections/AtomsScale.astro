@@ -1,0 +1,159 @@
+---
+// escala de espacio base-4 (subconjunto representativo de --sp-*)
+const space: [string, string][] = [
+  ['--sp-2', '4px'],
+  ['--sp-4', '8px'],
+  ['--sp-5', '12px'],
+  ['--sp-6', '16px'],
+  ['--sp-7', '20px'],
+  ['--sp-8', '24px'],
+  ['--sp-9', '30px'],
+  ['--sp-10', '36px'],
+  ['--sp-11', '42px'],
+  ['--sp-12', '48px'],
+  ['--sp-14', '64px'],
+  ['--sp-16', '88px'],
+];
+const motion: [string, string][] = [
+  ['--dur-fast', '.2s'],
+  ['--dur', '.3s'],
+  ['--dur-slow', '.5s'],
+  ['--dur-slower', '.6s'],
+];
+---
+
+<!-- ATOMS · ESPACIO / LÍNEAS / MOTION -->
+<section class="wrap" id="atoms-scale">
+  <div class="tag"><span class="n">06</span> Atoms · Espacio · líneas · motion</div>
+  <h2 style="margin-bottom:var(--sp-11)">Medida y ritmo</h2>
+  <div class="scales">
+    <div>
+      <div class="label-sm">Espacio · escala base-4 (<code>--sp-*</code>)</div>
+      <div class="spacescale">
+        {
+          space.map(([t, v]) => (
+            <div class="sprow">
+              <span class="spname">{t}</span>
+              <span class="spbar" style={`width:${v}`} />
+              <span class="spval">{v}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+    <div>
+      <div class="label-sm">Líneas · bordes · radios</div>
+      <div class="linebox">borde <b>1px</b> · <code>--bw</code> sobre <code>--border</code></div>
+      <div class="radiusrow">
+        <span class="rdot"></span><span>círculo · <code>--radius-full</code> (50%)</span>
+      </div>
+      <div class="hr"></div>
+
+      <div class="label-sm" style="margin-top:var(--sp-10)">Motion · duración + ease</div>
+      <p class="motionhint">
+        Curva única <code>--ease</code> = cubic-bezier(.22,1,.36,1). Respeta <code>prefers-reduced-motion</code>.
+      </p>
+      <div class="motionscale">
+        {
+          motion.map(([t, v]) => (
+            <div class="morow">
+              <span class="spname">{t}</span>
+              <span class="track" style={`--d:var(${t})`}><i /></span>
+              <span class="spval">{v}</span>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--c-blue-text);
+  }
+  .spacescale,
+  .motionscale {
+    margin-top: var(--sp-5);
+  }
+  .sprow,
+  .morow {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-4);
+    font-size: var(--fs-xs);
+  }
+  .spname {
+    width: 78px;
+    flex: none;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+  .spbar {
+    height: 10px;
+    background: var(--c-blue-text);
+    display: block;
+    flex: none;
+  }
+  .spval {
+    color: var(--line);
+    font-family: var(--mono);
+  }
+  .linebox {
+    border: var(--bw) solid var(--border, var(--overlay));
+    padding: var(--sp-6);
+    margin-top: var(--sp-5);
+    font-size: var(--fs-sm);
+    color: var(--txt);
+  }
+  .radiusrow {
+    display: flex;
+    align-items: center;
+    gap: var(--sp-5);
+    margin-top: var(--sp-6);
+    font-size: var(--fs-sm);
+    color: var(--txt);
+  }
+  .rdot {
+    width: 22px;
+    height: 22px;
+    border-radius: var(--radius-full);
+    background: var(--c-blue-text);
+    display: block;
+    flex: none;
+  }
+  .hr {
+    height: var(--bw);
+    background: var(--overlay);
+    margin-top: var(--sp-8);
+  }
+  .motionhint {
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    margin-top: var(--sp-3);
+    max-width: none;
+  }
+  .morow .track {
+    position: relative;
+    flex: 1;
+    height: 2px;
+    background: var(--overlay);
+  }
+  .morow .track i {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    background: var(--c-blue-text);
+    animation: mo-slide var(--d) var(--ease) infinite alternate;
+  }
+  @keyframes mo-slide {
+    to {
+      left: calc(100% - 10px);
+    }
+  }
+</style>

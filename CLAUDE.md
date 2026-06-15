@@ -20,9 +20,12 @@ una identidad replicable a portfolio, redes y al propio entorno. La pieza ES el 
 - `legacy/index.html` = monolito original conservado como referencia (no se deploya).
 
 ## Estructura del documento (secciones)
-masthead (hero) · 01 Eje humano↔natural (slider interactivo) · 02 Clusters · 03 Tokens (+escalas)
-· 04 Tipografía · 05 Firma (espécimen generativo) · 06 Aplicación/ventana OS · 07 Proceso
-· 08 Variables de entrada (incl. Corpus teórico) · 09 Backlog · footer.
+El colofón (`/`) está organizado como **design system** con número + label atómico (`section.wrap`):
+masthead · **Fundamentos** (01 Eje/slider · 02 Vocabulario/clusters · 03 Fuentes/corpus+overgrowth)
+· **Atoms** (04 Color/tokens+escalas · 05 Tipografía · 06 Espacio·líneas·motion) · **Molecules**
+(07 Componentes) · **Organisms** (08 Aplicación/ventana OS · 09 Firma/espécimen) · footer.
+*(Pendiente 3c: `10 Export — tokens a Figma`.)*
+`/cyberdeck`: 01 Proceso (método) · 02 Ficha · 03 OS · 04 Traspaso · 05 Backlog del sistema.
 
 ## Sistema de tokens (design system)
 Todo vive en `:root` (**modo oscuro único**; no hay modo claro ni toggle), organizado por familias:

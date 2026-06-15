@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
 import type { WebGLRenderer } from 'three';
@@ -236,15 +236,18 @@ export default function Specimen() {
     });
   }
 
-  // auto-degradar a 2D si el FPS del 3D es bajo (solo si el tier fue automático)
-  function onLowPerf() {
+  // auto-degradar a 2D si el FPS del 3D es bajo (solo si el tier fue automático).
+  // useCallback: referencia estable → no rompe el memo de SpecimenCanvas (si no, cada
+  // re-render de Specimen —p.ej. colapsar la consola o mover un slider— re-montaría el
+  // EffectComposer y se perdería la animación).
+  const onLowPerf = useCallback(() => {
     if (manualRef.current) return;
     setTier((cur) => {
       if (cur !== 'full') return cur;
       announce('Rendimiento bajo: cambiando a modo ligero (2D)');
       return 'lite';
     });
-  }
+  }, []);
 
   return (
     <div className="stage" id="stage">
