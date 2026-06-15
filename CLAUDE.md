@@ -12,10 +12,12 @@ una identidad replicable a portfolio, redes y al propio entorno. La pieza ES el 
 - Acento de marca: azul eléctrico `#1f3df0`. Rojo señal `#d4380d` = lo sintético/humano, uso mínimo.
 
 ## Stack / cómo corre
-- **`index.html`**: un solo archivo, CSS embebido en `<style>`, JS vanilla en `<script>`. Sin build.
-- Librerías por CDN: **GSAP** (ticker + easing) y **simplex-noise 2.4.0** (ruido orgánico), con fallback.
+- **Astro 5 + React 19 (islas) + TypeScript + Tailwind v4**, en `src/`. Salida estática. `npm run dev` (localhost:4321) · `npm run build`.
+- CSS: `src/styles/global.css` = `@import "tailwindcss"` + **CSS legacy sin capa** (vence al preflight). Tokens `:root` = única fuente de verdad.
+- Islas React: `Specimen` (espécimen 3D), `AxisSlider`, `TokensGrid`, `ClusterPreview`, `SeedValue`. Estado compartido con **nanostores** (`$seed`).
+- Libs: **three.js + @react-three/fiber + drei + @react-three/postprocessing** (espécimen 3D), **GSAP + ScrollTrigger + Lenis** (scroll/reveals), **Motion** (microinteracciones). Sin CDN; todo por npm.
 - Fuentes (Google Fonts): mono = **IBM Plex Mono**, display = **Syne**.
-- Para verlo: abrir `index.html` en el navegador. No requiere servidor.
+- `legacy/index.html` = monolito original conservado como referencia (no se deploya).
 
 ## Estructura del documento (secciones)
 masthead (hero) · 01 Eje humano↔natural (slider interactivo) · 02 Clusters · 03 Tokens (+escalas)
@@ -32,12 +34,16 @@ tracking `--tr-*`, espaciado base-4 `--sp-*`, `--space-section-top/bottom`, bord
 > padding vertical de sección se setea con `section.wrap{padding-top/bottom}` para vencer a `.wrap`.
 
 ## Firma generativa (sección 05)
-Canvas `#spiral` (id histórico). Espécimen de **nube de partículas** que orbita en 3D: gránulos con
-ciclo de vida (nacen nítidos → crecen → se vuelven borrosos), paleta de marca (azul/verde/mineral/
-blanco + señal). **Glitch** = pixela toda la escena (bajo-muestreo con `drawImage` sin smoothing).
-**Cuadrados-lupa** (`anchors`) magnifican regiones (más cuadrados = más zoom). Semilla determinista
-(`mulberry32`, `rng(i)` por elemento → estable por semilla). Controles flotan en consola colapsable;
-play/seed/png viven fuera de la consola (siempre visibles). Respeta `prefers-reduced-motion`.
+Isla `Specimen.tsx` con **R3F/three.js** (`src/components/three/`). Nube de **partículas 3D en GPU**
+(`ParticleField`, `THREE.Points` + ShaderMaterial): órbita, ciclo de vida nacen→crecen→se difuminan
+(blur por-partícula en el fragment shader), ruido orgánico en **GLSL** (`glsl.ts`), densidad por
+`uActive`. Paleta de marca (azul/verde/mineral/blanco + señal). Post-proceso (`Effects.tsx`):
+**Bloom** = bioluminiscencia (slider org), **Pixelation** = glitch (slider glitch). **Lupas**
+(`Magnifiers.tsx`) reinterpretadas en 3D: paneles enmarcados con `RenderTexture` que magnifican el
+espécimen (más cuadrados = más zoom). Semilla determinista (`mulberry32`/`rng(i)` en `lib/specimen.ts`).
+Sliders tweenean uniforms con GSAP. PNG vía `gl.domElement.toDataURL` (`preserveDrawingBuffer`).
+Consola colapsable (Motion/AnimatePresence); play/seed/png siempre visibles. Respeta `prefers-reduced-motion`
+(arranca en pausa). DOF de cámara NO se usa (partículas aditivas no escriben profundidad).
 
 ## Accesibilidad
 WCAG 2.1 AA: contraste de texto ≥4.5 (capa `--c-*-text`, sobre el modo oscuro único), foco visible
@@ -45,9 +51,8 @@ WCAG 2.1 AA: contraste de texto ≥4.5 (capa `--c-*-text`, sobre el modo oscuro 
 
 ## Git / deploy
 - Repo: `https://github.com/FauveBV/cyberplant` · rama `main` (upstream configurado).
-- **GitHub Pages** publica en `https://fauvebv.github.io/cyberplant/` (rebuild ~1-2 min tras push).
-- Flujo: editar `index.html` → `git add -A && git commit -m "..."` → `git push`.
-- Nota: el `raw`/Pages tienen caché CDN (~5 min); usar recarga forzada para verificar.
+- **Vercel** publica en `https://cyberplant.vercel.app/` (autodetecta Astro; redeploy automático en cada push a `main`). GitHub Pages **apagado**.
+- Flujo: editar en `src/` → `npm run build` (verificar) → `git add -A && git commit -m "..."` → `git push`.
 
 ## Preferencias de trabajo
 - **Español neutro** en conversación y entregables.

@@ -1,4 +1,5 @@
 import { useRef, useState } from 'react';
+import { motion } from 'motion/react';
 
 // [nombre, hex, rol] — mismos tokens que el index.html monolítico
 const TOKENS: [string, string, string][] = [
@@ -36,12 +37,13 @@ export default function TokensGrid() {
       {TOKENS.map(([name, hexv, role]) => {
         const isCopied = copied === name;
         return (
-          <button
+          <motion.button
             key={name}
             className="tok"
             type="button"
             aria-label={`Copiar token ${name}, ${hexv} — ${role}`}
             onClick={() => copy(name, hexv)}
+            whileTap={{ scale: 0.97 }}
           >
             <div className="chip" style={{ background: hexv }} />
             <div className="meta">
@@ -51,7 +53,7 @@ export default function TokensGrid() {
               </span>
             </div>
             <div className="role">{role}</div>
-          </button>
+          </motion.button>
         );
       })}
     </div>

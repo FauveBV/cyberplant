@@ -47,5 +47,11 @@ const pathname = Astro.url.pathname;
         if (m) m.focus();
       });
     </script>
+    <script>
+      // scroll suave (Lenis) + reveals (GSAP ScrollTrigger), con ciclo de vida de view transitions
+      import { initMotion, destroyMotion } from '../scripts/motion.client';
+      document.addEventListener('astro:page-load', initMotion);
+      document.addEventListener('astro:before-swap', destroyMotion);
+    </script>
   </body>
 </html>
