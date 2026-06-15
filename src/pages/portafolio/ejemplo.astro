@@ -1,0 +1,239 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Vega — Portafolio (ejemplo) · Fauve Bellenger"
+  description="Caso de ejemplo ficticio para revisar la plantilla de proyecto del portafolio."
+>
+  <article>
+    <header class="wrap mast case-hero">
+      <div class="id">
+        <a href="/portafolio">← Portafolio</a> · caso de ejemplo <span class="ph">(ficticio)</span>
+      </div>
+      <h1>Vega</h1>
+      <p class="thesis">
+        Panel de monitoreo para estaciones de campo: del dato crudo a una lectura accionable.
+      </p>
+      <div class="case-meta">
+        <div><span>Rol</span><b>Product Designer · end-to-end</b></div>
+        <div><span>Año</span><b>2025</b></div>
+        <div><span>Equipo</span><b>Diseño + 2 devs</b></div>
+        <div><span>Plataforma</span><b>Web app</b></div>
+      </div>
+    </header>
+
+    <section class="wrap">
+      <figure class="ph-figure ph-cover"><span>Imagen de portada · 16:9</span></figure>
+    </section>
+
+    <section class="wrap case-body">
+      <div class="case-block">
+        <div class="tag"><span class="n">01</span> Contexto</div>
+        <p class="lead">
+          Vega es un caso ficticio para evaluar la plantilla: tipografía, ritmo, figuras y métricas.
+        </p>
+        <p>
+          Equipos en terreno recibían datos de sensores en planillas dispersas, sin una vista única que
+          permitiera decidir rápido. El encargo: una app web que ordene el flujo y haga legible el
+          estado de cada estación. <span class="ph">[reemplazar con contexto real del proyecto]</span>
+        </p>
+      </div>
+
+      <div class="case-block">
+        <div class="tag"><span class="n">02</span> Problema</div>
+        <p>
+          La información existía pero no era accionable: demasiados pasos entre el dato y la decisión, y
+          ninguna jerarquía clara de alertas. <span class="ph">[problema real + evidencia]</span>
+        </p>
+      </div>
+
+      <div class="case-block">
+        <div class="tag"><span class="n">03</span> Proceso</div>
+        <p>
+          Mapa del flujo actual, entrevistas con operadores, y prototipos de baja a alta fidelidad
+          validados en terreno. <span class="ph">[método real]</span>
+        </p>
+        <div class="ph-grid">
+          <figure class="ph-figure"><span>Research · mapa de flujo</span></figure>
+          <figure class="ph-figure"><span>Wireframes</span></figure>
+        </div>
+      </div>
+
+      <div class="case-block">
+        <div class="tag"><span class="n">04</span> Decisiones de diseño</div>
+        <p>
+          Una jerarquía de estado (normal · atención · crítico) con color semántico, densidad de datos
+          ajustable y una vista única priorizada por urgencia. <span class="ph">[decisiones clave]</span>
+        </p>
+        <figure class="ph-figure ph-wide"><span>UI final · pantalla principal</span></figure>
+      </div>
+
+      <div class="case-block">
+        <div class="tag"><span class="n">05</span> Resultado</div>
+        <p>Impacto medido tras el lanzamiento. <span class="ph">[métricas reales]</span></p>
+        <ul class="case-metrics">
+          <li><b>−38%</b><span>tiempo a la primera lectura accionable</span></li>
+          <li><b>+24%</b><span>estaciones revisadas por turno</span></li>
+          <li><b>4.6/5</b><span>satisfacción de operadores</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <nav class="wrap case-nav" aria-label="Navegación del portafolio">
+      <a href="/portafolio">← Volver al portafolio</a>
+      <span>Caso siguiente · próximamente</span>
+    </nav>
+  </article>
+</BaseLayout>
+
+<style>
+  .ph {
+    color: var(--c-signal-text);
+  }
+  .case-hero .id a {
+    color: var(--c-blue-text);
+  }
+  .case-meta {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--sp-px);
+    background: var(--overlay);
+    border: var(--bw) solid var(--overlay);
+    margin-top: var(--sp-12);
+  }
+  .case-meta > div {
+    background: var(--bg);
+    padding: var(--sp-7);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+  .case-meta span {
+    font-family: var(--mono);
+    font-size: var(--fs-3xs);
+    letter-spacing: var(--tr-caps-lg);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .case-meta b {
+    font-family: var(--font-sans);
+    font-size: var(--fs-sm);
+    color: var(--line);
+  }
+
+  /* figuras placeholder */
+  .ph-figure {
+    border: var(--bw) solid var(--overlay);
+    background:
+      repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.04) 0 10px, transparent 10px 20px),
+      var(--prev-bg);
+    aspect-ratio: 4 / 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .ph-figure span {
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--tr-caps);
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .ph-cover {
+    aspect-ratio: 16 / 9;
+    margin-top: var(--sp-9);
+  }
+  .ph-wide {
+    aspect-ratio: 16 / 9;
+    margin-top: var(--sp-7);
+  }
+  .ph-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-6);
+    margin-top: var(--sp-7);
+  }
+
+  /* cuerpo del caso en Plex Sans */
+  .case-body {
+    max-width: 760px;
+  }
+  .case-block {
+    margin-bottom: var(--sp-14);
+  }
+  .case-body p {
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    line-height: var(--lh-body);
+    color: var(--txt);
+    margin-bottom: var(--sp-6);
+    max-width: 64ch;
+  }
+  .case-body .lead {
+    font-family: var(--font-sans);
+    font-size: var(--fs-thesis);
+    line-height: var(--lh-display);
+    color: var(--line);
+    font-weight: var(--fw-medium);
+    max-width: none;
+  }
+
+  .case-metrics {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--sp-px);
+    background: var(--overlay);
+    border: var(--bw) solid var(--overlay);
+    margin-top: var(--sp-7);
+  }
+  .case-metrics li {
+    background: var(--bg);
+    padding: var(--sp-8) var(--sp-7);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-2);
+  }
+  .case-metrics b {
+    font-family: var(--display);
+    font-weight: var(--fw-bold);
+    font-size: var(--fs-h2);
+    color: var(--c-blue-text);
+    line-height: 1;
+  }
+  .case-metrics span {
+    font-family: var(--font-sans);
+    font-size: var(--fs-sm);
+    color: var(--muted);
+  }
+
+  .case-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--sp-5);
+    padding-top: var(--sp-10);
+    padding-bottom: var(--sp-16);
+    border-top: var(--bw) solid var(--overlay);
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+  }
+  .case-nav a {
+    color: var(--c-blue-text);
+  }
+  .case-nav span {
+    color: var(--muted);
+  }
+
+  @media (max-width: 720px) {
+    .case-meta {
+      grid-template-columns: 1fr 1fr;
+    }
+    .case-metrics,
+    .ph-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

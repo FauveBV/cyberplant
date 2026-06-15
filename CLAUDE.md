@@ -19,13 +19,17 @@ una identidad replicable a portfolio, redes y al propio entorno. La pieza ES el 
 - Fuentes (Google Fonts): mono = **IBM Plex Mono**, display = **Syne**, sans/cuerpo = **IBM Plex Sans** (`--font-sans`/`--sans`, para párrafos del portafolio; conf. en sección 05).
 - `legacy/index.html` = monolito original conservado como referencia (no se deploya).
 
-## Estructura del documento (secciones)
-El colofón (`/`) está organizado como **design system** con número + label atómico (`section.wrap`):
-masthead · **Fundamentos** (01 Eje/slider · 02 Vocabulario/clusters · 03 Fuentes/corpus+overgrowth)
-· **Atoms** (04 Color/tokens+escalas · 05 Tipografía · 06 Espacio·líneas·motion) · **Molecules**
-(07 Componentes) · **Organisms** (08 Aplicación/ventana OS · 09 Firma/espécimen) · **Export**
-(10 Tokens a Figma) · footer.
-`/cyberdeck`: 01 Proceso (método) · 02 Ficha · 03 OS · 04 Traspaso · 05 Backlog del sistema.
+## Arquitectura del sitio (páginas)
+- **`/`** → **landing**: el espécimen como hero ambiental (`<Specimen ambient>`, sin consola/HUD) + nombre de
+  marca + bajada + nav grande a las 4 áreas. Topbar persistente (marca→`/`, nav Sistema·Cyberdeck·Portafolio·Bio).
+- **`/sistema`** → el **colofón / design system** (número + label atómico, `section.wrap`): masthead ·
+  **Fundamentos** (01 Eje/slider · 02 Vocabulario/clusters · 03 Fuentes/corpus+overgrowth) · **Atoms**
+  (04 Color/tokens+escalas · 05 Tipografía · 06 Espacio·líneas·motion) · **Molecules** (07 Componentes + specs
+  de interacción) · **Organisms** (08 Aplicación/ventana OS · 09 Firma/espécimen) · **Export** (10 Tokens a Figma).
+- **`/cyberdeck`** → 01 Proceso · 02 Ficha · 03 OS · 04 Traspaso · 05 Backlog del sistema.
+- **`/portafolio`** → teaser "próximamente" (4 slots) + **`/portafolio/ejemplo`** = plantilla de caso (ficticia,
+  body en Plex Sans). Casos reales pendientes.
+- **`/bio`** → placeholder, body en Plex Sans (pendientes marcados en magenta señal).
 
 ## Sistema de tokens (design system)
 **Fuente única:** `src/tokens/tokens.json` (formato **W3C DTCG**). `scripts/build-tokens.mjs`

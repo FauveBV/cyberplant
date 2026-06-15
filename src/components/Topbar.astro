@@ -3,20 +3,44 @@ interface Props {
   pathname: string;
 }
 const { pathname } = Astro.props;
-const isHome = pathname === '/' || pathname === '';
-const isDeck = pathname.startsWith('/cyberdeck');
+
+// normaliza quitando barra final
+const path = pathname !== '/' ? pathname.replace(/\/$/, '') : '/';
+const nav = [
+  { href: '/sistema', label: 'sistema' },
+  { href: '/cyberdeck', label: 'cyberdeck' },
+  { href: '/portafolio', label: 'portafolio' },
+  { href: '/bio', label: 'bio' },
+];
 ---
 
 <div class="topbar">
-  <span><b>SISTEMA-IDENTIDAD</b> <span class="dot">/</span> v3 · cyberdeck</span>
-  <span>FAUVE BELLENGER <span class="dot">·</span> producto + dirección visual</span>
-  <nav aria-label="Páginas" style="display:flex; gap:var(--sp-4)">
-    <a class="gridbtn" href="/" aria-current={isHome ? 'page' : undefined}>colofón</a>
-    <a class="gridbtn" href="/cyberdeck" aria-current={isDeck ? 'page' : undefined}>cyberdeck</a>
+  <span><a class="brand" href="/"><b>SISTEMA-IDENTIDAD</b></a> <span class="dot">/</span> Fauve Bellenger</span>
+  <span>producto + dirección visual <span class="dot">·</span> CL · 2026</span>
+  <nav aria-label="Páginas" style="display:flex; gap:var(--sp-4); flex-wrap:wrap">
+    {
+      nav.map((n) => (
+        <a
+          class="gridbtn"
+          href={n.href}
+          aria-current={path === n.href || path.startsWith(n.href + '/') ? 'page' : undefined}
+        >
+          {n.label}
+        </a>
+      ))
+    }
   </nav>
 </div>
 
 <style>
+  .brand {
+    color: inherit;
+    text-decoration: none;
+  }
+  .brand:hover {
+    text-decoration: none;
+    color: var(--c-blue-text);
+  }
   /* indicador de página activa, reusando el look del estado pressed de .gridbtn */
   a.gridbtn[aria-current='page'] {
     border-color: var(--c-blue-text);

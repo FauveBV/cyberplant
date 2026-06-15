@@ -1,0 +1,81 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Bio — Fauve Bellenger" description="Quién está detrás del sistema. (Borrador)">
+  <header class="wrap mast">
+    <div class="id">CL · 2026 · bio</div>
+    <h1>Bio.</h1>
+    <p class="thesis">Quién está detrás del sistema.</p>
+  </header>
+
+  <section class="wrap" id="bio">
+    <div class="tag"><span class="n">··</span> Bio — borrador</div>
+    <div class="biobody">
+      <p class="lead">
+        Fauve Bellenger — Product Designer / full-stack senior.
+        <span class="ph">[bio en preparación]</span>
+      </p>
+      <p>
+        Diseño de producto y dirección visual situado. Trabajo el sistema como documento vivo: mostrar
+        las reglas, no esconderlas. <span class="ph">— reemplazar con tu texto parcial.</span>
+      </p>
+      <p>
+        Intereses: diseño ontológico, soberanía tecnológica, la tensión entre lo natural y lo
+        sintético, cyberdecks. <span class="ph">— completar.</span>
+      </p>
+      <ul class="biometa">
+        <li><b>Rol</b> · Product Designer / full-stack senior</li>
+        <li><b>Lugar</b> · Chile <span class="ph">[confirmar]</span></li>
+        <li><b>Contacto</b> · <span class="ph">[por completar]</span></li>
+      </ul>
+      <p class="copyhint">
+        Esta página estrena la sans de cuerpo del sistema (<b>IBM Plex Sans</b>). El texto es provisorio:
+        lo marcado en magenta queda por completar.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .biobody {
+    max-width: 64ch;
+  }
+  .biobody p {
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    line-height: var(--lh-body);
+    color: var(--txt);
+    margin-bottom: var(--sp-7);
+    max-width: none;
+  }
+  .biobody .lead {
+    font-family: var(--font-sans);
+    font-size: var(--fs-thesis);
+    line-height: var(--lh-display);
+    color: var(--line);
+    font-weight: var(--fw-medium);
+  }
+  .ph {
+    color: var(--c-signal-text);
+  }
+  .biometa {
+    list-style: none;
+    border-top: var(--bw) solid var(--overlay);
+    margin-top: var(--sp-9);
+  }
+  .biometa li {
+    border-bottom: var(--bw) solid var(--overlay);
+    padding: var(--sp-5) 0;
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    color: var(--txt);
+  }
+  .biometa li b {
+    color: var(--line);
+  }
+  .biobody .copyhint {
+    font-family: var(--mono);
+    margin-top: var(--sp-10);
+  }
+</style>

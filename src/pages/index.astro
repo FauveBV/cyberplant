@@ -1,33 +1,151 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Masthead from '../components/sections/Masthead.astro';
-import Eje from '../components/sections/Eje.astro';
-import Clusters from '../components/sections/Clusters.astro';
-import Variables from '../components/sections/Variables.astro';
-import Tokens from '../components/sections/Tokens.astro';
-import Typography from '../components/sections/Typography.astro';
-import AtomsScale from '../components/sections/AtomsScale.astro';
-import Molecules from '../components/sections/Molecules.astro';
-import Ventana from '../components/sections/Ventana.astro';
-import Signature from '../components/sections/Signature.astro';
-import Export from '../components/sections/Export.astro';
+import Specimen from '../components/Specimen.tsx';
+
+const areas = [
+  { href: '/sistema', label: 'Sistema de diseño', desc: 'el colofón: tokens · atoms · molecules · organisms' },
+  { href: '/cyberdeck', label: 'Cyberdeck', desc: 'un netbook viejo vuelto herramienta para pensar' },
+  { href: '/portafolio', label: 'Portafolio', desc: 'producto + dirección visual · próximamente' },
+  { href: '/bio', label: 'Bio', desc: 'quién está detrás del sistema' },
+];
 ---
 
-<BaseLayout title="Sistema de identidad — Fauve Bellenger">
-  <Masthead />
-  {/* Fundamentos */}
-  <Eje />
-  <Clusters />
-  <Variables />
-  {/* Atoms */}
-  <Tokens />
-  <Typography />
-  <AtomsScale />
-  {/* Molecules */}
-  <Molecules />
-  {/* Organisms */}
-  <Ventana />
-  <Signature />
-  {/* Export */}
-  <Export />
+<BaseLayout
+  title="Fauve Bellenger — Sistema de identidad"
+  description="Identidad visual propia de Fauve Bellenger: design system, cyberdeck, portafolio y bio."
+>
+  <section class="hero">
+    <div class="hero-bg"><Specimen ambient client:idle /></div>
+    <div class="hero-content wrap">
+      <h1 class="hero-name">Fauve<br />Bellenger</h1>
+      <p class="hero-thesis">
+        Product designer con interés en la creación de productos end to end, con cuidado en la
+        funcionalidad, la estética y la accesibilidad.
+      </p>
+      <nav class="hero-nav" aria-label="Áreas del sitio">
+        {
+          areas.map((a) => (
+            <a href={a.href} class="hero-link">
+              <span class="hero-link-label">{a.label}</span>
+              <span class="hero-link-desc">{a.desc}</span>
+            </a>
+          ))
+        }
+      </nav>
+      <a class="hero-firma" href="/sistema#firma">ver la firma generativa completa →</a>
+    </div>
+  </section>
 </BaseLayout>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    background: #05060a;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+  /* scrim para contraste del texto sobre la animación */
+  .hero-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      90deg,
+      rgba(5, 6, 10, 0.88) 0%,
+      rgba(5, 6, 10, 0.62) 46%,
+      rgba(5, 6, 10, 0.2) 100%
+    );
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-top: var(--sp-16);
+    padding-bottom: var(--sp-14);
+  }
+  .hero-id {
+    font-size: var(--fs-sm);
+    letter-spacing: var(--tr-mega);
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: var(--sp-8);
+  }
+  .hero-name {
+    font-family: var(--display);
+    font-weight: var(--fw-black);
+    /* acotado para no desbordar el .wrap (respeta la grilla) */
+    font-size: clamp(36px, 7vw, 92px);
+    line-height: 0.92;
+    letter-spacing: var(--tr-tightest);
+    text-transform: uppercase;
+    color: #fff;
+    overflow-wrap: break-word;
+  }
+  .hero-thesis {
+    font-family: var(--display);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-thesis);
+    color: #fff;
+    margin-top: var(--sp-7);
+    max-width: 42ch;
+    line-height: var(--lh-display);
+  }
+  .hero-nav {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--sp-12);
+    border-top: var(--bw) solid rgba(255, 255, 255, 0.18);
+    max-width: 660px;
+  }
+  .hero-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-1);
+    padding: var(--sp-6) 0;
+    border-bottom: var(--bw) solid rgba(255, 255, 255, 0.18);
+    text-decoration: none;
+    transition: padding-left var(--dur) var(--ease);
+  }
+  .hero-link:hover {
+    padding-left: var(--sp-6);
+    text-decoration: none;
+  }
+  .hero-link-label {
+    font-family: var(--display);
+    font-weight: var(--fw-bold);
+    font-size: clamp(22px, 3.4vw, 34px);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-tight);
+    color: #fff;
+    transition: color var(--dur) var(--ease);
+  }
+  .hero-link:hover .hero-link-label {
+    color: var(--c-blue-text);
+  }
+  .hero-link-desc {
+    font-size: var(--fs-sm);
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .hero-firma {
+    display: inline-block;
+    margin-top: var(--sp-10);
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--tr-caps);
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+  }
+  .hero-firma:hover {
+    color: #fff;
+    text-decoration: none;
+  }
+</style>

@@ -16,7 +16,7 @@ function announce(msg: string) {
   if (el) el.textContent = msg;
 }
 
-export default function Specimen() {
+export default function Specimen({ ambient = false }: { ambient?: boolean }) {
   const hudPixRef = useRef<HTMLDivElement>(null);
   const hudDataRef = useRef<HTMLDivElement>(null);
   const hudStatusRef = useRef<HTMLDivElement>(null);
@@ -62,7 +62,7 @@ export default function Specimen() {
   // magnificados. El contenido refleja el glitch (el canvas ya viene pixelado); los marcos
   // son trazos del overlay → siempre nítidos, nunca afectados por el glitch.
   useEffect(() => {
-    if (tier !== 'full') return; // las lupas-overlay solo en 3D; el 2D dibuja las suyas
+    if (ambient || tier !== 'full') return; // sin lupas en hero ambiental; el 2D dibuja las suyas
     let raf = 0;
     const draw = () => {
       const ov = overlayRef.current;
@@ -133,7 +133,7 @@ export default function Specimen() {
     };
     raf = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(raf);
-  }, [tier]);
+  }, [tier, ambient]);
 
   // HUD científico (matriz de datos + análisis pixelado + estado) — idéntico al 2D
   function updateHUD() {
@@ -248,6 +248,32 @@ export default function Specimen() {
       return 'lite';
     });
   }, []);
+
+  // hero ambiental: sólo el canvas como fondo, sin consola/HUD/acciones/lupas
+  if (ambient) {
+    return (
+      <div className="stage stage-ambient" aria-hidden="true">
+        {tier === 'full' && (
+          <div className="stage-canvas">
+            <Suspense fallback={null}>
+              <SpecimenCanvas
+                paramsRef={paramsRef}
+                playingRef={playingRef}
+                timeRef={timeRef}
+                glRef={glRef}
+                seedRef={seedRef}
+                onLowPerf={onLowPerf}
+                perfGuardEnabled={!manualRef.current}
+              />
+            </Suspense>
+          </div>
+        )}
+        {tier === 'lite' && (
+          <Specimen2D paramsRef={paramsRef} playingRef={playingRef} seedRef={seedRef} canvasRef={lite2dRef} />
+        )}
+      </div>
+    );
+  }
 
   return (
     <div className="stage" id="stage">

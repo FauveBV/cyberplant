@@ -1,0 +1,63 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const casos = ['Caso 01', 'Caso 02', 'Caso 03', 'Caso 04'];
+---
+
+<BaseLayout
+  title="Portafolio — Fauve Bellenger"
+  description="Casos de producto y dirección visual, documentados con el sistema. Próximamente."
+>
+  <header class="wrap mast">
+    <div class="id">CL · 2026 · producto + dirección visual</div>
+    <h1>Portafolio<br /><span class="blue">próximamente.</span></h1>
+    <p class="thesis">
+      Cuatro casos de producto y dirección visual, documentados con el mismo sistema que ves en el
+      colofón. En construcción — vuelve pronto.
+    </p>
+    <div class="metaline">
+      <span><b>Estado</b> · en construcción</span>
+      <span><b>Casos</b> · 4 en preparación</span>
+      <span><b>Sistema</b> · <a href="/sistema">ver el design system →</a></span>
+    </div>
+  </header>
+
+  <section class="wrap" id="casos">
+    <div class="tag"><span class="n">··</span> Casos — próximamente</div>
+    <h2 style="margin-bottom:var(--sp-11)">Lo que viene</h2>
+    <div class="clusters">
+      {
+        casos.map((c, i) => (
+          <div class="cluster soon">
+            <div class="num">{String(i + 1).padStart(2, '0')}</div>
+            <h3>{c}</h3>
+            <div class="prev soon-prev" />
+            <span class="polo cold">próximamente</span>
+            <p>En preparación: problema, proceso, decisiones y resultado.</p>
+          </div>
+        ))
+      }
+    </div>
+    <p class="copyhint" style="margin-top:var(--sp-9)">
+      Plantilla de caso (ejemplo ficticio, para revisar el formato):
+      <a href="/portafolio/ejemplo">ver la plantilla →</a>
+    </p>
+    <p class="copyhint">
+      Mientras tanto, recorré el <a href="/sistema">sistema de diseño</a> o el proyecto
+      <a href="/cyberdeck">cyberdeck</a>.
+    </p>
+  </section>
+</BaseLayout>
+
+<style>
+  .cluster.soon {
+    opacity: 0.72;
+  }
+  .soon-prev {
+    background: repeating-linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.05) 0 8px,
+      transparent 8px 16px
+    );
+  }
+</style>

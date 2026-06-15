@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Masthead from '../components/sections/Masthead.astro';
+import Eje from '../components/sections/Eje.astro';
+import Clusters from '../components/sections/Clusters.astro';
+import Variables from '../components/sections/Variables.astro';
+import Tokens from '../components/sections/Tokens.astro';
+import Typography from '../components/sections/Typography.astro';
+import AtomsScale from '../components/sections/AtomsScale.astro';
+import Molecules from '../components/sections/Molecules.astro';
+import Ventana from '../components/sections/Ventana.astro';
+import Signature from '../components/sections/Signature.astro';
+import Export from '../components/sections/Export.astro';
+---
+
+<BaseLayout title="Sistema de identidad — Fauve Bellenger">
+  <Masthead />
+  {/* Fundamentos */}
+  <Eje />
+  <Clusters />
+  <Variables />
+  {/* Atoms */}
+  <Tokens />
+  <Typography />
+  <AtomsScale />
+  {/* Molecules */}
+  <Molecules />
+  {/* Organisms */}
+  <Ventana />
+  <Signature />
+  {/* Export */}
+  <Export />
+</BaseLayout>
