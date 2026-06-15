@@ -1,81 +1,300 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const educacion = [
+  {
+    titulo: 'Diplomado en Diseño de Experiencia de Usuario para Productos Digitales',
+    org: 'Pontificia Universidad de Valparaíso',
+    fecha: 'mar – sep 2025',
+  },
+  {
+    titulo: 'Diseñadora de Interacción',
+    org: 'Pontificia Universidad de Valparaíso',
+    fecha: '2019 – 2024',
+  },
+];
+
+const proyectoTitulo =
+  '“Plantillas orientadas a la navegación y diferenciación de objetos semánticos en Casiopea” — sistema de plantillas y arquitectura de información para la wiki institucional de la e[ad] PUCV, combinando investigación de usuarios, diseño de componentes y documentación técnica.';
+
+const experiencia = [
+  {
+    rol: 'Diseñadora de Experiencia y Arquitectura de Información',
+    org: 'Wiki Casiopea · e[ad] PUCV',
+    fecha: 'mar 2024 – presente',
+    bullets: [
+      'Arquitectura de información y diseño de plantillas de objetos semánticos que ordenan el registro institucional de la escuela.',
+      'Implementación front-end (CSS/JS) de componentes de usabilidad: acordeones, card grids, páginas de onboarding para estudiantes y profesores.',
+      'Diseño de material de apoyo diferenciado por perfil de usuario, reduciendo barreras de entrada a la plataforma.',
+      'Generación de reportes interactivos con métricas de uso para apoyar la toma de decisiones (150 usuarios gestionados, 154 horas documentadas durante 2025).',
+    ],
+  },
+  {
+    rol: 'Diseñadora y Desarrolladora Web Freelance',
+    org: 'Independiente',
+    fecha: '2022 – presente',
+    bullets: [
+      'Diseño end-to-end de sitios web, landing pages, e-commerce y portafolios — desde el levantamiento de requerimientos hasta la interfaz final.',
+      'Dirección de arte y branding para portafolios de artistas.',
+      'Gestión directa de proyectos con clientes, adaptando soluciones a contextos y presupuestos diversos.',
+    ],
+  },
+  {
+    rol: 'Pasante · Ecosistema de Innovación y Emprendimiento',
+    org: 'PUCV',
+    fecha: 'jul – oct 2023',
+    bullets: [
+      'Investigación de usuarios y análisis de stakeholders en incubadoras de innovación universitarias.',
+      'Co-creación de la identidad visual del ecosistema y diseño de una ruta interactiva personalizada para estudiantes.',
+    ],
+  },
+];
+
+const tecnicas = [
+  'Manejo avanzado de Figma, Adobe Creative Suite y línea de comandos.',
+  'Sólidos conocimientos en principios de diseño centrado en el usuario (UCD).',
+  'User research integral y testeos de usabilidad.',
+  'Resolución de problemas y atención al detalle.',
+];
+const interpersonales = [
+  'Comunicación y escritura efectiva.',
+  'Entusiasmo y curiosidad por el aprendizaje constante.',
+  'Trabajo en equipo y cooperación multidisciplinaria.',
+];
+const intereses = [
+  'Programación asistida con IA (Claude Code).',
+  'Diseño y elaboración de circuitos sonoros, análogos y digitales.',
+  'Lectura, sobre todo novelas gráficas.',
+  'Coleccionar discos y cassettes de bandas independientes.',
+];
 ---
 
-<BaseLayout title="Bio — Fauve Bellenger" description="Quién está detrás del sistema. (Borrador)">
+<BaseLayout
+  title="Bio — Fauve Bellenger"
+  description="Diseñadora de interacción y experiencia (PUCV). Producto end-to-end: funcionalidad, estética y accesibilidad."
+>
   <header class="wrap mast">
-    <div class="id">CL · 2026 · bio</div>
+    <div class="id">CL · diseñadora de interacción y experiencia</div>
     <h1>Bio.</h1>
-    <p class="thesis">Quién está detrás del sistema.</p>
+    <p class="thesis">
+      Product designer con interés en la creación de productos end to end, con cuidado en la
+      funcionalidad, la estética y la accesibilidad.
+    </p>
   </header>
 
-  <section class="wrap" id="bio">
-    <div class="tag"><span class="n">··</span> Bio — borrador</div>
-    <div class="biobody">
-      <p class="lead">
-        Fauve Bellenger — Product Designer / full-stack senior.
-        <span class="ph">[bio en preparación]</span>
-      </p>
-      <p>
-        Diseño de producto y dirección visual situado. Trabajo el sistema como documento vivo: mostrar
-        las reglas, no esconderlas. <span class="ph">— reemplazar con tu texto parcial.</span>
-      </p>
-      <p>
-        Intereses: diseño ontológico, soberanía tecnológica, la tensión entre lo natural y lo
-        sintético, cyberdecks. <span class="ph">— completar.</span>
-      </p>
-      <ul class="biometa">
-        <li><b>Rol</b> · Product Designer / full-stack senior</li>
-        <li><b>Lugar</b> · Chile <span class="ph">[confirmar]</span></li>
-        <li><b>Contacto</b> · <span class="ph">[por completar]</span></li>
+  <section class="wrap bio">
+    <!-- EDUCACIÓN -->
+    <div class="bio-block">
+      <div class="tag">Educación</div>
+      <ul class="cv">
+        {
+          educacion.map((e) => (
+            <li class="cv-item">
+              <div class="cv-head">
+                <h3>{e.titulo}</h3>
+                <span class="cv-date">{e.fecha}</span>
+              </div>
+              <div class="cv-org">{e.org}</div>
+            </li>
+          ))
+        }
       </ul>
-      <p class="copyhint">
-        Esta página estrena la sans de cuerpo del sistema (<b>IBM Plex Sans</b>). El texto es provisorio:
-        lo marcado en magenta queda por completar.
-      </p>
+      <p class="cv-note"><b>Proyecto de título.</b> {proyectoTitulo}</p>
+    </div>
+
+    <!-- EXPERIENCIA -->
+    <div class="bio-block">
+      <div class="tag">Experiencia</div>
+      <ul class="cv">
+        {
+          experiencia.map((x) => (
+            <li class="cv-item">
+              <div class="cv-head">
+                <h3>{x.rol}</h3>
+                <span class="cv-date">{x.fecha}</span>
+              </div>
+              <div class="cv-org">{x.org}</div>
+              <ul class="cv-bullets">
+                {x.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <!-- HABILIDADES -->
+    <div class="bio-block">
+      <div class="tag">Habilidades</div>
+      <div class="skills">
+        <div>
+          <div class="label-sm">Técnicas</div>
+          <ul class="cv-bullets">{tecnicas.map((s) => <li>{s}</li>)}</ul>
+        </div>
+        <div>
+          <div class="label-sm">Interpersonales</div>
+          <ul class="cv-bullets">{interpersonales.map((s) => <li>{s}</li>)}</ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- INTERESES -->
+    <div class="bio-block">
+      <div class="tag">Intereses</div>
+      <ul class="cv-bullets cols">{intereses.map((s) => <li>{s}</li>)}</ul>
+    </div>
+
+    <!-- CONTACTO -->
+    <div class="bio-block">
+      <div class="tag">Contacto</div>
+      <ul class="contact">
+        <li><span>Ubicación</span><b>Chile</b></li>
+        <li>
+          <span>Email</span>
+          <a href="mailto:fbellengervillarroel@gmail.com">fbellengervillarroel@gmail.com</a>
+        </li>
+        <li>
+          <span>LinkedIn</span>
+          <a href="https://www.linkedin.com/in/fauvebellenger/" target="_blank" rel="noopener noreferrer"
+            >in/fauvebellenger ↗</a
+          >
+        </li>
+        <li>
+          <span>GitHub</span>
+          <a href="https://github.com/FauveBV" target="_blank" rel="noopener noreferrer">FauveBV ↗</a>
+        </li>
+      </ul>
     </div>
   </section>
 </BaseLayout>
 
 <style>
-  .biobody {
-    max-width: 64ch;
+  .bio {
+    max-width: 820px;
   }
-  .biobody p {
-    font-family: var(--font-sans);
-    font-size: var(--fs-base);
-    line-height: var(--lh-body);
-    color: var(--txt);
-    margin-bottom: var(--sp-7);
-    max-width: none;
+  .bio-block {
+    margin-bottom: var(--sp-14);
   }
-  .biobody .lead {
-    font-family: var(--font-sans);
-    font-size: var(--fs-thesis);
-    line-height: var(--lh-display);
-    color: var(--line);
-    font-weight: var(--fw-medium);
-  }
-  .ph {
-    color: var(--c-signal-text);
-  }
-  .biometa {
+  ul.cv {
     list-style: none;
-    border-top: var(--bw) solid var(--overlay);
-    margin-top: var(--sp-9);
   }
-  .biometa li {
+  .cv-item {
+    padding: var(--sp-7) 0;
     border-bottom: var(--bw) solid var(--overlay);
-    padding: var(--sp-5) 0;
+  }
+  .cv-item:first-child {
+    border-top: var(--bw) solid var(--overlay);
+  }
+  .cv-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-6);
+    flex-wrap: wrap;
+  }
+  .cv-head h3 {
+    font-family: var(--font-sans);
+    font-weight: var(--fw-semibold);
+    font-size: var(--fs-md);
+    color: var(--line);
+    margin: 0;
+  }
+  .cv-date {
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--tr-caps);
+    text-transform: uppercase;
+    color: var(--c-blue-text);
+    flex: none;
+  }
+  .cv-org {
     font-family: var(--mono);
     font-size: var(--fs-sm);
-    color: var(--txt);
+    color: var(--muted);
+    margin-top: var(--sp-2);
   }
-  .biometa li b {
+  .cv-bullets {
+    list-style: none;
+    margin-top: var(--sp-5);
+  }
+  .cv-bullets li {
+    font-family: var(--font-sans);
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--txt);
+    padding-left: var(--sp-6);
+    position: relative;
+    margin-bottom: var(--sp-4);
+    max-width: 70ch;
+  }
+  .cv-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 6px;
+    height: 1px;
+    background: var(--c-blue-text);
+  }
+  .cv-note {
+    font-family: var(--font-sans);
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--txt);
+    margin-top: var(--sp-7);
+    max-width: 72ch;
+  }
+  .cv-note b {
     color: var(--line);
   }
-  .biobody .copyhint {
+  ul.contact {
+    list-style: none;
+    border-top: var(--bw) solid var(--overlay);
+    max-width: 520px;
+  }
+  ul.contact li {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--sp-6);
+    padding: var(--sp-5) 0;
+    border-bottom: var(--bw) solid var(--overlay);
     font-family: var(--mono);
-    margin-top: var(--sp-10);
+    font-size: var(--fs-sm);
+  }
+  ul.contact span {
+    font-size: var(--fs-3xs);
+    letter-spacing: var(--tr-caps-lg);
+    text-transform: uppercase;
+    color: var(--muted);
+    flex: none;
+  }
+  ul.contact b {
+    color: var(--line);
+    font-weight: var(--fw-regular);
+  }
+  ul.contact a {
+    color: var(--c-blue-text);
+  }
+  .skills {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-10);
+  }
+  .skills .label-sm {
+    margin-bottom: var(--sp-5);
+  }
+  .cv-bullets.cols {
+    columns: 2;
+    column-gap: var(--sp-10);
+  }
+  @media (max-width: 720px) {
+    .skills,
+    .cv-bullets.cols {
+      grid-template-columns: 1fr;
+      columns: 1;
+    }
   }
 </style>
