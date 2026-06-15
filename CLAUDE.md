@@ -74,7 +74,7 @@ WCAG 2.1 AA: contraste de texto ≥4.5 (capa `--c-*-text`, sobre el modo oscuro 
 - Verificar cambios (validar JS, revisar render) antes de cerrar.
 
 ## Decisiones abiertas / backlog
-- Tipografía display: confirmar tipo definitivo del lane modular (Syne es candidata).
+- ~~Tipografía display~~: **confirmada Syne** como display del lane modular (cerrada).
 - Modelo exacto del netbook → fijar OS (antiX/MX vs Void/Arch+i3).
 - Camino del generador (lockscreen fijo vs pieza p5.js documentada).
 - Documento `FUNDAMENTACION-TEORICA.md` resume el corpus teórico (Base de datos) y su relación con el sistema.
