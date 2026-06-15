@@ -42,7 +42,7 @@ const areas = [
     position: relative;
     min-height: 100svh;
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     overflow: hidden;
     background: #05060a;
   }
@@ -68,8 +68,14 @@ const areas = [
     position: relative;
     z-index: 1;
     width: 100%;
-    padding-top: var(--sp-16);
+    /* ventana de animación fija arriba; el contenido (nombre + nav) entra abajo */
+    padding-top: 42vh;
     padding-bottom: var(--sp-14);
+  }
+  @media (max-width: 720px) {
+    .hero-content {
+      padding-top: 30vh;
+    }
   }
   .hero-id {
     font-size: var(--fs-sm);
@@ -82,7 +88,7 @@ const areas = [
     font-family: var(--display);
     font-weight: var(--fw-black);
     /* acotado para no desbordar el .wrap (respeta la grilla) */
-    font-size: clamp(36px, 7vw, 92px);
+    font-size: clamp(32px, 6vw, 76px);
     line-height: 0.92;
     letter-spacing: var(--tr-tightest);
     text-transform: uppercase;
@@ -101,7 +107,7 @@ const areas = [
   .hero-nav {
     display: flex;
     flex-direction: column;
-    margin-top: var(--sp-12);
+    margin-top: var(--sp-9);
     border-top: var(--bw) solid rgba(255, 255, 255, 0.18);
     max-width: 660px;
   }
@@ -109,7 +115,7 @@ const areas = [
     display: flex;
     flex-direction: column;
     gap: var(--sp-1);
-    padding: var(--sp-6) 0;
+    padding: var(--sp-5) 0;
     border-bottom: var(--bw) solid rgba(255, 255, 255, 0.18);
     text-decoration: none;
     transition: padding-left var(--dur) var(--ease);
@@ -121,7 +127,8 @@ const areas = [
   .hero-link-label {
     font-family: var(--display);
     font-weight: var(--fw-bold);
-    font-size: clamp(22px, 3.4vw, 34px);
+    /* más chico en desktop; el mínimo (mobile) se mantiene */
+    font-size: clamp(22px, 2.8vw, 28px);
     text-transform: uppercase;
     letter-spacing: var(--tr-tight);
     color: #fff;

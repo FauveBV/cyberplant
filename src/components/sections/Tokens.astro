@@ -45,4 +45,64 @@ import TokensGrid from '../TokensGrid.tsx';
       >RGB</b
     > porque vive en pantalla; al pasar a impresión se remapea a <b>CMYK</b>.
   </p>
+
+  <div class="label-sm" style="margin-top:var(--sp-11)">Señal · bioluminiscencia · estado</div>
+  <div class="signal-doc">
+    <div class="sd-item">
+      <span class="sd-chip" style="background:var(--signal)"></span>
+      <div>
+        <b>Rojo señal</b> · <code>--signal #d4380d</code><br />
+        Lo sintético/humano, <b>uso mínimo</b>: alerta · error · atención crítica. Relleno; RGB en
+        pantalla → CMYK al imprimir.
+      </div>
+    </div>
+    <div class="sd-item">
+      <span class="sd-chip" style="background:var(--bio-magenta)"></span>
+      <div>
+        <b>Magenta bioluminiscente</b> · <code>--bio-magenta #ff3dc4</code><br />
+        Croma sintético de la firma (RGB / pantalla). Rol semántico <code>--color-pending</code>:
+        marcador de <b>pendiente / borrador / en construcción</b> en el documento vivo. <b>No</b> es el
+        rojo señal.
+      </div>
+    </div>
+  </div>
 </section>
+
+<style>
+  .signal-doc {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-9);
+    margin-top: var(--sp-6);
+  }
+  .sd-item {
+    display: flex;
+    gap: var(--sp-5);
+    align-items: flex-start;
+  }
+  .sd-chip {
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border: var(--bw) solid var(--overlay);
+  }
+  .signal-doc > .sd-item > div {
+    font-size: var(--fs-sm);
+    line-height: var(--lh-body);
+    color: var(--txt);
+    max-width: none;
+  }
+  .signal-doc b {
+    color: var(--line);
+  }
+  .signal-doc code {
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    color: var(--c-blue-text);
+  }
+  @media (max-width: 720px) {
+    .signal-doc {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

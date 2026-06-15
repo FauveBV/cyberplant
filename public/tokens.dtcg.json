@@ -98,6 +98,10 @@
     "color-signal-text": {
       "$value": "{color.c-signal-text}"
     },
+    "color-pending": {
+      "$value": "{color.bio-magenta}",
+      "$description": "Magenta bioluminiscente (croma de la firma). Rol UI: marcador de pendiente / borrador / en construcción. Distinto del rojo señal (alerta/error)."
+    },
     "color-natural": {
       "$value": "{color.moss}"
     },

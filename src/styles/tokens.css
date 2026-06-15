@@ -3,7 +3,7 @@
   /* color */
   --bg:#0a0a0a; --surface:#161616; --overlay:#191917; --prev-bg:#0d0d0d; --line:#ededed; --paper:#e6e1d4; --muted:#8a857c; --txt:#cfcfca; --blue:#1f3df0; --signal:#d4380d; --moss:#5a6b4d; --mineral:#b8a888; --c-blue-text:#5b78ff; --c-moss-text:#7d9169; --c-mineral-text:#b8a888; --c-signal-text:#ff3dc4; --bio-magenta:#ff3dc4; --bio-pink:#ff6fb3; --bio-yellow:#ffd23d; --bio-orange:#ff8a3d; --bio-stem:#5e9a6a;
   /* color-semantic */
-  --color-bg:var(--bg); --color-surface:var(--surface); --color-border:var(--overlay); --color-text-primary:var(--line); --color-text-secondary:var(--txt); --color-text-muted:var(--muted); --color-accent:var(--blue); --color-accent-text:var(--c-blue-text); --color-signal:var(--signal); --color-signal-text:var(--c-signal-text); --color-natural:var(--moss); --color-natural-text:var(--c-moss-text); --color-warm:var(--mineral); --color-warm-text:var(--c-mineral-text);
+  --color-bg:var(--bg); --color-surface:var(--surface); --color-border:var(--overlay); --color-text-primary:var(--line); --color-text-secondary:var(--txt); --color-text-muted:var(--muted); --color-accent:var(--blue); --color-accent-text:var(--c-blue-text); --color-signal:var(--signal); --color-signal-text:var(--c-signal-text); --color-pending:var(--bio-magenta); --color-natural:var(--moss); --color-natural-text:var(--c-moss-text); --color-warm:var(--mineral); --color-warm-text:var(--c-mineral-text);
   /* font */
   --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace; --font-display:"Syne",system-ui,sans-serif; --font-sans:"IBM Plex Sans",system-ui,sans-serif;
   /* fontSize */

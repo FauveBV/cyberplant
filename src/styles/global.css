@@ -208,6 +208,17 @@ input[type=range]::-moz-range-thumb{width:16px;height:16px;background:var(--line
   font-family:var(--mono); font-size:var(--fs-xs); letter-spacing:var(--tr-caps); text-transform:uppercase;
   padding:var(--sp-4); cursor:pointer; transition:.3s var(--ease)}
 .btn:hover{border-color:var(--c-blue-text); color:var(--c-blue-text)}
+/* ===== botón: variantes y estados (documentados en Molecules 07) ===== */
+.btn--primary{background:var(--c-blue-text); border-color:var(--c-blue-text); color:var(--bg)}
+.btn--primary:hover, .btn--primary.is-hover{background:var(--blue); border-color:var(--blue); color:#fff}
+.btn.is-hover{border-color:var(--c-blue-text); color:var(--c-blue-text)}      /* hover forzado (showcase) */
+.btn.is-focus{outline:2px solid var(--c-blue-text); outline-offset:3px}       /* focus forzado (showcase) */
+.btn[disabled], .btn.is-disabled{opacity:.4; cursor:not-allowed; pointer-events:none}
+.btn.is-loading{pointer-events:none}
+.btn.is-loading::before{content:""; display:inline-block; width:.8em; height:.8em; margin-right:.5em;
+  border:2px solid currentColor; border-top-color:transparent; border-radius:var(--radius-full);
+  vertical-align:-.1em; animation:btn-spin .7s linear infinite}
+@keyframes btn-spin{to{transform:rotate(360deg)}}
 .seedline{font-size:var(--fs-xs); color:var(--muted); margin-top:var(--sp-6)}
 .seedline b{color:var(--line)}
 

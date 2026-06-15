@@ -10,11 +10,28 @@
     eje tonal en Fundamentos, consola del espécimen en Firma) están en sus secciones; acá el inventario
     estático.
   </p>
-  <div class="molgrid">
-    <div class="molcell">
-      <div class="label-sm">Botón · acción</div>
-      <button class="btn" type="button">acción</button>
+
+  <div class="label-sm" style="margin-bottom:var(--sp-6)">Botones · variantes y estados</div>
+  <div class="btnstates">
+    <div class="bs-col">
+      <div class="bs-label">Primario</div>
+      <button class="btn btn--primary" type="button">normal</button>
+      <button class="btn btn--primary is-hover" type="button">hover</button>
+      <button class="btn btn--primary is-focus" type="button">focus</button>
+      <button class="btn btn--primary" type="button" disabled>inactivo</button>
+      <button class="btn btn--primary is-loading" type="button">cargando…</button>
     </div>
+    <div class="bs-col">
+      <div class="bs-label">Secundario</div>
+      <button class="btn" type="button">normal</button>
+      <button class="btn is-hover" type="button">hover</button>
+      <button class="btn is-focus" type="button">focus</button>
+      <button class="btn" type="button" disabled>inactivo</button>
+      <button class="btn is-loading" type="button">cargando…</button>
+    </div>
+  </div>
+
+  <div class="molgrid">
     <div class="molcell">
       <div class="label-sm">Botón · barra (gridbtn)</div>
       <button class="gridbtn" type="button">etiqueta</button>
@@ -96,6 +113,35 @@
   }
   .molcell .osbar {
     border: var(--bw) solid var(--overlay);
+  }
+  .btnstates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sp-8);
+    margin-bottom: var(--sp-12);
+    max-width: 560px;
+  }
+  .bs-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-4);
+  }
+  .bs-label {
+    font-family: var(--mono);
+    font-size: var(--fs-3xs);
+    letter-spacing: var(--tr-widest);
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: var(--sp-2);
+  }
+  .btnstates .btn {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+  @media (max-width: 520px) {
+    .btnstates {
+      grid-template-columns: 1fr;
+    }
   }
   code {
     font-family: var(--mono);

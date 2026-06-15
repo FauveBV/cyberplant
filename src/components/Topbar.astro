@@ -15,9 +15,8 @@ const nav = [
 ---
 
 <div class="topbar">
-  <span><a class="brand" href="/"><b>SISTEMA-IDENTIDAD</b></a> <span class="dot">/</span> Fauve Bellenger</span>
-  <span>producto + dirección visual <span class="dot">·</span> CL · 2026</span>
   <nav aria-label="Páginas" style="display:flex; gap:var(--sp-4); flex-wrap:wrap">
+    <a class="gridbtn" href="/" aria-current={path === '/' ? 'page' : undefined}>inicio</a>
     {
       nav.map((n) => (
         <a

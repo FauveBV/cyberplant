@@ -40,6 +40,15 @@ export function initMotion() {
 
   setupReveals();
   ScrollTrigger.refresh();
+
+  // si la URL trae hash (p. ej. /sistema#firma), Lenis desplaza al elemento
+  // (Lenis toma el control del scroll, así que el salto nativo al ancla no ocurre solo)
+  if (window.location.hash) {
+    const target = document.querySelector<HTMLElement>(window.location.hash);
+    if (target) {
+      setTimeout(() => lenis && lenis.scrollTo(target, { offset: -64 }), 120);
+    }
+  }
 }
 
 export function destroyMotion() {

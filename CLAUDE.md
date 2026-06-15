@@ -9,7 +9,8 @@ una identidad replicable a portfolio, redes y al propio entorno. La pieza ES el 
 - **Tesis:** "mostrar las reglas, no esconderlas". La grilla, el error y el algoritmo son el lenguaje, no el adorno.
 - **Eje:** humano/diseñado (gris, concreto, cromas sintéticos) ↔ natural (verde y azul, húmedo, selva valdiviana).
 - **Color audiovisual:** todo se define en RGB (pantalla); al imprimir se remapea a CMYK.
-- Acento de marca: azul eléctrico `#1f3df0`. Rojo señal `#d4380d` = lo sintético/humano, uso mínimo.
+- Acento de marca: azul eléctrico `#1f3df0`. Rojo señal `#d4380d` = lo sintético/humano, uso mínimo (alerta/error).
+- Magenta `#ff3dc4` (`--bio-magenta`) = croma bioluminiscente de la firma; rol semántico **`--color-pending`** = marcador de pendiente/borrador. Distinto del rojo señal. (Doc en sección 04 Color.)
 
 ## Stack / cómo corre
 - **Astro 5 + React 19 (islas) + TypeScript + Tailwind v4**, en `src/`. Salida estática. `npm run dev` (localhost:4321) · `npm run build`.
