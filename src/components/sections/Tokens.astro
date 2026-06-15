@@ -1,0 +1,48 @@
+---
+import TokensGrid from '../TokensGrid.tsx';
+---
+
+<!-- TOKENS -->
+<section class="wrap" id="tokens">
+  <div class="tag"><span class="n">03</span> Tokens — base monocroma, color quirúrgico</div>
+  <h2 style="margin-bottom:var(--sp-11)">Paleta</h2>
+  <TokensGrid client:visible />
+  <p class="copyhint">
+    Base de alto contraste (negro→papel). Azul eléctrico como acento; rojo señal en uso mínimo;
+    verdes activos como polo natural. Capa de color de texto con contraste AA garantizado. <b
+      >Click en cualquier ficha para copiar el hex.</b
+    >
+  </p>
+  <div class="scales">
+    <div>
+      <div class="label-sm">
+        Humano · diseñado <span style="color:var(--muted)">— gris · piedra · concreto</span>
+      </div>
+      <div class="ramp" role="img" aria-label="Escala humana: del negro al concreto, grises sintéticos">
+        <span style="background:#0a0a0a"></span><span style="background:#161616"></span><span
+          style="background:#3a3a38"></span><span style="background:#6f6f6a"></span><span
+          style="background:#b8b4ad"></span><span style="background:#e6e1d4"></span>
+      </div>
+    </div>
+    <div>
+      <div class="label-sm">
+        Natural · selva valdiviana <span style="color:var(--muted)">— verde → húmedo → azul</span>
+      </div>
+      <div
+        class="ramp"
+        role="img"
+        aria-label="Escala natural: del verde profundo al azul, pasando por lo húmedo"
+      >
+        <span style="background:#243a26"></span><span style="background:#3c5a36"></span><span
+          style="background:#5a6b4d"></span><span style="background:#4f8a6a"></span><span
+          style="background:#2d6f8f"></span><span style="background:#1f3df0"></span>
+      </div>
+    </div>
+  </div>
+  <p class="copyhint">
+    Dos espectros enfrentados: lo <b>humano</b> son los grises y cromas que no aparecen en la
+    naturaleza; lo <b>natural</b>, los verdes y azules de la selva valdiviana. Todo se define en <b
+      >RGB</b
+    > porque vive en pantalla; al pasar a impresión se remapea a <b>CMYK</b>.
+  </p>
+</section>

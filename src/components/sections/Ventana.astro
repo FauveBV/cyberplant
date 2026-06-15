@@ -1,0 +1,34 @@
+---
+import SeedValue from '../SeedValue.tsx';
+---
+
+<!-- VENTANA OS -->
+<section class="wrap" id="ventana">
+  <div class="tag"><span class="n">06</span> Aplicación — el sistema instanciado en el deck</div>
+  <div class="grid2">
+    <div>
+      <h2>El sistema,<br />llevado al equipo.</h2>
+      <p>
+        El equipo no usa un tema descargado: usa los mismos tokens del sistema, llevados de Figma a
+        sus archivos de configuración —CSS real, dotfiles versionados en Git—. Según el uso
+        (terminal, escritura, servidor o herramienta para pensar) cambia la interfaz, pero la
+        identidad se mantiene.
+      </p>
+      <p style="margin-top:var(--sp-6); font-size:var(--fs-sm); color:var(--muted)">
+        Componente "ventana" que simula el sistema operativo, ya prototipado →
+      </p>
+    </div>
+    <div class="oswin">
+      <div class="osbar">
+        <span class="dots"><i></i><i></i><i></i></span><span class="title">field-terminal — ~/deck</span>
+      </div>
+      <div class="osbody mono-spec">
+        <div><span class="prompt">fauve@deck</span>:~$ ./identity --status</div>
+        <div><span class="ok">✓</span> tokens ......... v3 cargados</div>
+        <div><span class="ok">✓</span> firma .......... espiral.seed#<SeedValue client:idle /></div>
+        <div><span class="warn">!</span> display ........ por confirmar</div>
+        <div><span class="prompt">fauve@deck</span>:~$ <span class="cur"></span></div>
+      </div>
+    </div>
+  </div>
+</section>

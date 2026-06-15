@@ -1,0 +1,26 @@
+---
+interface Props {
+  pathname: string;
+}
+const { pathname } = Astro.props;
+const isHome = pathname === '/' || pathname === '';
+const isDeck = pathname.startsWith('/cyberdeck');
+---
+
+<div class="topbar">
+  <span><b>SISTEMA-IDENTIDAD</b> <span class="dot">/</span> v3 · cyberdeck</span>
+  <span>FAUVE BELLENGER <span class="dot">·</span> producto + dirección visual</span>
+  <nav aria-label="Páginas" style="display:flex; gap:var(--sp-4)">
+    <a class="gridbtn" href="/" aria-current={isHome ? 'page' : undefined}>colofón</a>
+    <a class="gridbtn" href="/cyberdeck" aria-current={isDeck ? 'page' : undefined}>cyberdeck</a>
+  </nav>
+</div>
+
+<style>
+  /* indicador de página activa, reusando el look del estado pressed de .gridbtn */
+  a.gridbtn[aria-current='page'] {
+    border-color: var(--c-blue-text);
+    color: var(--c-blue-text);
+    background: rgba(31, 61, 240, 0.12);
+  }
+</style>

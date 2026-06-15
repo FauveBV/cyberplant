@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Empezar un cyberdeck — Fauve Bellenger"
+  description="Indicaciones para convertir un netbook viejo en cyberdeck: OS, hardware y capas de UI, con los dotfiles como source of truth."
+>
+  <!-- MASTHEAD -->
+  <header class="wrap mast">
+    <div class="id">CL · 2026 · guía de traspaso</div>
+    <h1>Empezar un<br /><span class="blue">cyberdeck.</span></h1>
+    <p class="thesis">
+      Convertir un netbook viejo en una herramienta para pensar: el mismo sistema de identidad,
+      <em>instanciado</em> en la máquina. Los dotfiles, versionados en Git, son la fuente de verdad.
+    </p>
+    <div class="metaline">
+      <span><b>Objetivo</b> · máquina como prueba viva del sistema</span>
+      <span><b>Fuente de verdad</b> · dotfiles en Git</span>
+      <span><b>Estado</b> · guía en construcción</span>
+    </div>
+  </header>
+
+  <!-- FICHA DEL EQUIPO -->
+  <section class="wrap" id="ficha">
+    <div class="tag"><span class="n">01</span> Ficha del equipo — el punto de partida</div>
+    <div class="grid2">
+      <div>
+        <h2>El hardware<br />define el rumbo.</h2>
+        <p>
+          La RAM y el almacenamiento disponibles deciden el sistema operativo y el peso de la
+          interfaz. Antes de instalar nada, fijamos los datos del equipo. Ambos campos quedan por
+          completar hasta confirmar el modelo.
+        </p>
+      </div>
+      <div class="oswin">
+        <div class="osbar">
+          <span class="dots"><i></i><i></i><i></i></span><span class="title">field-terminal — ~/deck</span>
+        </div>
+        <div class="osbody mono-spec">
+          <div><span class="prompt">fauve@deck</span>:~$ ./deck --info</div>
+          <div><span class="warn">!</span> MODELO ......... por completar</div>
+          <div><span class="warn">!</span> ESTADO ......... por completar</div>
+          <div><span class="prompt">fauve@deck</span>:~$ <span class="cur"></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SISTEMA OPERATIVO -->
+  <section class="wrap" id="os">
+    <div class="tag"><span class="n">02</span> Sistema operativo — según el equipo</div>
+    <h2 style="margin-bottom:var(--sp-11)">Dos caminos</h2>
+    <div class="vars">
+      <div class="var">
+        <h3>antiX / MX <span class="badge">ligero</span></h3>
+        <div class="src">init sysv/runit · sin systemd · muy bajo consumo</div>
+        <p>
+          Para hardware modesto: arranca rápido en poca RAM, base Debian estable y herramientas listas.
+          El camino seguro si el netbook es muy limitado.
+        </p>
+      </div>
+      <div class="var new">
+        <h3>Void / Arch + i3 <span class="badge">a medida</span></h3>
+        <div class="src">rolling release · runit/systemd · WM en mosaico</div>
+        <p>
+          Para construir desde abajo: control total de cada capa y un tiling WM (i3) coherente con la
+          tesis de exponer las reglas. Pide más trabajo de configuración.
+        </p>
+      </div>
+    </div>
+    <p class="copyhint">
+      Decisión gateada por la ficha del equipo (sección 01): se confirma <b>RAM y almacenamiento</b> antes
+      de elegir.
+    </p>
+  </section>
+
+  <!-- PASOS DEL TRASPASO -->
+  <section class="wrap" id="traspaso">
+    <div class="tag"><span class="n">03</span> Traspaso — el orden de las capas</div>
+    <h2 style="margin-bottom:var(--sp-11)">Capas de la UI</h2>
+    <div class="flow">
+      <div class="step"><div class="s">CAPA 01</div><h3>WM</h3><p>Gestor de ventanas: i3 / tiling como base del escritorio.</p></div>
+      <div class="step"><div class="s">CAPA 02</div><h3>Terminal + shell</h3><p>Emulador y shell con los tokens del sistema.</p></div>
+      <div class="step"><div class="s">CAPA 03</div><h3>GTK</h3><p>Tema de aplicaciones coherente con la paleta.</p></div>
+      <div class="step"><div class="s">CAPA 04</div><h3>Compositor</h3><p>Transparencias y sombras controladas, sin adorno.</p></div>
+      <div class="step"><div class="s">CAPA 05</div><h3>Barra</h3><p>Status bar con la información mínima necesaria.</p></div>
+      <div class="step"><div class="s">CAPA 06</div><h3>Login</h3><p>Greeter y lockscreen con la firma generativa.</p></div>
+    </div>
+    <h2 style="margin:var(--sp-14) 0 var(--sp-8)">Pendientes del traspaso</h2>
+    <ul class="todo">
+      <li>
+        <span class="k">A</span><span
+          >HDD → SSD: la mejora de hardware de mayor impacto antes de instalar.</span
+        ><span class="st">hardware</span>
+      </li>
+      <li>
+        <span class="k">B</span><span
+          >Elegir OS según la ficha del equipo (antiX/MX vs. Void/Arch+i3).</span
+        ><span class="st">decisión</span>
+      </li>
+      <li>
+        <span class="k">C</span><span
+          >Dotfiles versionados en Git como source of truth: Figma → config → repo.</span
+        ><span class="st">sistema</span>
+      </li>
+    </ul>
+  </section>
+</BaseLayout>

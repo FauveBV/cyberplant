@@ -23,7 +23,7 @@ masthead (hero) · 01 Eje humano↔natural (slider interactivo) · 02 Clusters �
 · 08 Variables de entrada (incl. Corpus teórico) · 09 Backlog · footer.
 
 ## Sistema de tokens (design system)
-Todo vive en `:root` (y overrides en `:root[data-theme="light"]`), organizado por familias:
+Todo vive en `:root` (**modo oscuro único**; no hay modo claro ni toggle), organizado por familias:
 color, tipografía (familias + escala `--fs-*` + display), pesos `--fw-*`, interlineado `--lh-*`,
 tracking `--tr-*`, espaciado base-4 `--sp-*`, `--space-section-top/bottom`, bordes/radios, motion
 (`--ease`, `--dur-*`), layout (`--maxw:1180px`, `--gut`). Capa de **color de texto** AA:
@@ -40,8 +40,8 @@ blanco + señal). **Glitch** = pixela toda la escena (bajo-muestreo con `drawIma
 play/seed/png viven fuera de la consola (siempre visibles). Respeta `prefers-reduced-motion`.
 
 ## Accesibilidad
-WCAG 2.1 AA: contraste de texto ≥4.5 en ambos modos (capa `--c-*-text`), foco visible
-(`:focus-visible`), `aria-pressed` en toggles, región `aria-live`, skip link, `prefers-reduced-motion`.
+WCAG 2.1 AA: contraste de texto ≥4.5 (capa `--c-*-text`, sobre el modo oscuro único), foco visible
+(`:focus-visible`), `aria-pressed` en el play del espécimen, región `aria-live`, skip link, `prefers-reduced-motion`.
 
 ## Git / deploy
 - Repo: `https://github.com/FauveBV/cyberplant` · rama `main` (upstream configurado).
