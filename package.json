@@ -4,7 +4,10 @@
   "version": "5.0.0",
   "private": true,
   "scripts": {
+    "tokens:export": "node scripts/build-tokens.mjs",
+    "predev": "node scripts/build-tokens.mjs",
     "dev": "astro dev",
+    "prebuild": "node scripts/build-tokens.mjs",
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",

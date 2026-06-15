@@ -1,0 +1,65 @@
+---
+---
+
+<!-- EXPORT · TOKENS A FIGMA -->
+<section class="wrap" id="export">
+  <div class="tag"><span class="n">10</span> Export — tokens a Figma</div>
+  <h2 style="margin-bottom:var(--sp-8)">Del código al diseño</h2>
+  <p class="copyhint" style="margin-bottom:var(--sp-8)">
+    La <b>fuente única</b> es <code>tokens.json</code> (W3C DTCG), que genera el CSS del sitio y este
+    export. El archivo descargable está en <b>formato Tokens Studio</b> (lo que el plugin importa
+    directo); para crear Variables y estilos en Figma y seguir prototipando con el mismo sistema.
+  </p>
+  <div class="exprow">
+    <a class="btn expbtn" href="/tokens.json" download="cyberplant-tokens.json"
+      >↧ Descargar tokens (Tokens Studio)</a
+    >
+    <span class="copyhint" style="margin:0"
+      >color · semánticos · tipografía · espacio · pesos · líneas · motion</span
+    >
+  </div>
+  <ol class="expsteps">
+    <li>En Figma instalá el plugin <b>Tokens Studio for Figma</b>.</li>
+    <li>Plugin → menú <b>···</b> → <b>Import</b> → subí <code>cyberplant-tokens.json</code> (set "cyberplant").</li>
+    <li>Aplicá el set → <b>Create Variables / Styles</b> y prototipá sobre el sistema.</li>
+  </ol>
+  <p class="copyhint" style="margin-bottom:var(--sp-8)">
+    ¿Usás el modo DTCG del plugin? También está el estándar crudo en
+    <a href="/tokens.dtcg.json" download="cyberplant-tokens.dtcg.json">tokens.dtcg.json</a>.
+  </p>
+  <p class="copyhint">
+    Motion va como tokens (<code>--dur-*</code>, <code>--ease</code>); el comportamiento (hover,
+    reveals, glitch…) queda como specs en Molecules (07), porque Figma no importa interacción.
+  </p>
+</section>
+
+<style>
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--c-blue-text);
+  }
+  .exprow {
+    display: flex;
+    gap: var(--sp-8);
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: var(--sp-10);
+  }
+  .expbtn {
+    flex: 0 0 auto;
+    padding: var(--sp-5) var(--sp-8);
+    text-decoration: none;
+  }
+  .expbtn:hover {
+    text-decoration: none;
+  }
+  ol.expsteps {
+    margin: 0 0 var(--sp-8) var(--sp-9);
+    color: var(--txt);
+    font-size: var(--fs-md);
+  }
+  ol.expsteps li {
+    margin-bottom: var(--sp-4);
+  }
+</style>

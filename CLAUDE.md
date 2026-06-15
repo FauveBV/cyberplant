@@ -23,16 +23,20 @@ una identidad replicable a portfolio, redes y al propio entorno. La pieza ES el 
 El colofón (`/`) está organizado como **design system** con número + label atómico (`section.wrap`):
 masthead · **Fundamentos** (01 Eje/slider · 02 Vocabulario/clusters · 03 Fuentes/corpus+overgrowth)
 · **Atoms** (04 Color/tokens+escalas · 05 Tipografía · 06 Espacio·líneas·motion) · **Molecules**
-(07 Componentes) · **Organisms** (08 Aplicación/ventana OS · 09 Firma/espécimen) · footer.
-*(Pendiente 3c: `10 Export — tokens a Figma`.)*
+(07 Componentes) · **Organisms** (08 Aplicación/ventana OS · 09 Firma/espécimen) · **Export**
+(10 Tokens a Figma) · footer.
 `/cyberdeck`: 01 Proceso (método) · 02 Ficha · 03 OS · 04 Traspaso · 05 Backlog del sistema.
 
 ## Sistema de tokens (design system)
-Todo vive en `:root` (**modo oscuro único**; no hay modo claro ni toggle), organizado por familias:
-color, tipografía (familias + escala `--fs-*` + display), pesos `--fw-*`, interlineado `--lh-*`,
-tracking `--tr-*`, espaciado base-4 `--sp-*`, `--space-section-top/bottom`, bordes/radios, motion
-(`--ease`, `--dur-*`), layout (`--maxw:1180px`, `--gut`). Capa de **color de texto** AA:
-`--c-blue-text`, `--c-moss-text`, `--c-mineral-text`, `--c-signal-text`.
+**Fuente única:** `src/tokens/tokens.json` (formato **W3C DTCG**). `scripts/build-tokens.mjs`
+(hooks `predev`/`prebuild`, o `npm run tokens:export`) genera **`src/styles/tokens.css`** (el `:root`,
+importado por `global.css`) y **`public/tokens.json`** (export descargable para Figma / Tokens Studio,
+botón en la sección 10). **No editar `tokens.css` a mano.** Vars runtime/alias (`--accent`, `--warmth`,
+`--grow`, `--mono`, `--display`) las agrega el script (no se exportan). **Modo oscuro único.**
+Familias: color (primitivos + **semánticos** `--color-*`), tipografía (`--font-*`, escala `--fs-*`,
+pesos `--fw-*`, interlineado `--lh-*`, tracking `--tr-*`), espaciado base-4 `--sp-*`,
+`--space-section-top/bottom`, bordes/radios, motion (`--ease`, `--dur-*`), layout (`--maxw`, `--gut`).
+Capa de **color de texto** AA: `--c-blue-text`, `--c-moss-text`, `--c-mineral-text`, `--c-signal-text`.
 > Cuidado de especificidad: las secciones son `section.wrap`; `.wrap` define gutter lateral, y el
 > padding vertical de sección se setea con `section.wrap{padding-top/bottom}` para vencer a `.wrap`.
 

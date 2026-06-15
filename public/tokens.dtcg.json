@@ -1,0 +1,325 @@
+{
+  "$description": "Tokens del sistema cyberplant — formato W3C DTCG. Fuente única: genera src/styles/tokens.css (CSS del sitio) y public/tokens.json (export para Figma / Tokens Studio). No editar el CSS generado a mano.",
+  "color": {
+    "$type": "color",
+    "bg": {
+      "$value": "#0a0a0a"
+    },
+    "surface": {
+      "$value": "#161616"
+    },
+    "overlay": {
+      "$value": "#191917"
+    },
+    "prev-bg": {
+      "$value": "#0d0d0d"
+    },
+    "line": {
+      "$value": "#ededed"
+    },
+    "paper": {
+      "$value": "#e6e1d4"
+    },
+    "muted": {
+      "$value": "#8a857c"
+    },
+    "txt": {
+      "$value": "#cfcfca"
+    },
+    "blue": {
+      "$value": "#1f3df0"
+    },
+    "signal": {
+      "$value": "#d4380d"
+    },
+    "moss": {
+      "$value": "#5a6b4d"
+    },
+    "mineral": {
+      "$value": "#b8a888"
+    },
+    "c-blue-text": {
+      "$value": "#5b78ff"
+    },
+    "c-moss-text": {
+      "$value": "#7d9169"
+    },
+    "c-mineral-text": {
+      "$value": "#b8a888"
+    },
+    "c-signal-text": {
+      "$value": "#ff3dc4"
+    },
+    "bio-magenta": {
+      "$value": "#ff3dc4"
+    },
+    "bio-pink": {
+      "$value": "#ff6fb3"
+    },
+    "bio-yellow": {
+      "$value": "#ffd23d"
+    },
+    "bio-orange": {
+      "$value": "#ff8a3d"
+    },
+    "bio-stem": {
+      "$value": "#5e9a6a"
+    }
+  },
+  "color-semantic": {
+    "$type": "color",
+    "color-bg": {
+      "$value": "{color.bg}"
+    },
+    "color-surface": {
+      "$value": "{color.surface}"
+    },
+    "color-border": {
+      "$value": "{color.overlay}"
+    },
+    "color-text-primary": {
+      "$value": "{color.line}"
+    },
+    "color-text-secondary": {
+      "$value": "{color.txt}"
+    },
+    "color-text-muted": {
+      "$value": "{color.muted}"
+    },
+    "color-accent": {
+      "$value": "{color.blue}"
+    },
+    "color-accent-text": {
+      "$value": "{color.c-blue-text}"
+    },
+    "color-signal": {
+      "$value": "{color.signal}"
+    },
+    "color-signal-text": {
+      "$value": "{color.c-signal-text}"
+    },
+    "color-natural": {
+      "$value": "{color.moss}"
+    },
+    "color-natural-text": {
+      "$value": "{color.c-moss-text}"
+    },
+    "color-warm": {
+      "$value": "{color.mineral}"
+    },
+    "color-warm-text": {
+      "$value": "{color.c-mineral-text}"
+    }
+  },
+  "font": {
+    "$type": "fontFamily",
+    "font-mono": {
+      "$value": "\"IBM Plex Mono\",ui-monospace,Menlo,monospace"
+    },
+    "font-display": {
+      "$value": "\"Syne\",system-ui,sans-serif"
+    }
+  },
+  "fontSize": {
+    "$type": "dimension",
+    "fs-3xs": {
+      "$value": "10px"
+    },
+    "fs-2xs": {
+      "$value": "11px"
+    },
+    "fs-xs": {
+      "$value": "12px"
+    },
+    "fs-sm": {
+      "$value": "13px"
+    },
+    "fs-md": {
+      "$value": "14px"
+    },
+    "fs-base": {
+      "$value": "15px"
+    },
+    "fs-h1": {
+      "$value": "clamp(34px,6.2vw,82px)"
+    },
+    "fs-h2": {
+      "$value": "clamp(26px,4vw,46px)"
+    },
+    "fs-h3": {
+      "$value": "18px"
+    },
+    "fs-thesis": {
+      "$value": "clamp(20px,2.6vw,30px)"
+    },
+    "fs-specimen": {
+      "$value": "clamp(48px,9vw,120px)"
+    }
+  },
+  "fontWeight": {
+    "$type": "fontWeight",
+    "fw-light": {
+      "$value": 300
+    },
+    "fw-regular": {
+      "$value": 400
+    },
+    "fw-medium": {
+      "$value": 500
+    },
+    "fw-semibold": {
+      "$value": 600
+    },
+    "fw-bold": {
+      "$value": 700
+    },
+    "fw-black": {
+      "$value": 800
+    }
+  },
+  "lineHeight": {
+    "$type": "number",
+    "lh-specimen": {
+      "$value": ".86"
+    },
+    "lh-h1": {
+      "$value": ".92"
+    },
+    "lh-solid": {
+      "$value": "1"
+    },
+    "lh-display": {
+      "$value": "1.18"
+    },
+    "lh-body": {
+      "$value": "1.55"
+    },
+    "lh-loose": {
+      "$value": "1.7"
+    }
+  },
+  "letterSpacing": {
+    "$type": "dimension",
+    "tr-tightest": {
+      "$value": "-.02em"
+    },
+    "tr-tight": {
+      "$value": "-.01em"
+    },
+    "tr-normal": {
+      "$value": ".01em"
+    },
+    "tr-wide": {
+      "$value": ".04em"
+    },
+    "tr-wider": {
+      "$value": ".06em"
+    },
+    "tr-caps": {
+      "$value": ".08em"
+    },
+    "tr-caps-lg": {
+      "$value": ".1em"
+    },
+    "tr-caps-xl": {
+      "$value": ".14em"
+    },
+    "tr-widest": {
+      "$value": ".22em"
+    },
+    "tr-mega": {
+      "$value": ".3em"
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "sp-px": {
+      "$value": "1px"
+    },
+    "sp-1": {
+      "$value": "2px"
+    },
+    "sp-2": {
+      "$value": "4px"
+    },
+    "sp-3": {
+      "$value": "6px"
+    },
+    "sp-4": {
+      "$value": "8px"
+    },
+    "sp-5": {
+      "$value": "12px"
+    },
+    "sp-6": {
+      "$value": "16px"
+    },
+    "sp-7": {
+      "$value": "20px"
+    },
+    "sp-8": {
+      "$value": "24px"
+    },
+    "sp-9": {
+      "$value": "30px"
+    },
+    "sp-10": {
+      "$value": "36px"
+    },
+    "sp-11": {
+      "$value": "42px"
+    },
+    "sp-12": {
+      "$value": "48px"
+    },
+    "sp-14": {
+      "$value": "64px"
+    },
+    "sp-16": {
+      "$value": "88px"
+    },
+    "space-section-top": {
+      "$value": "120px"
+    },
+    "space-section-bottom": {
+      "$value": "120px"
+    }
+  },
+  "border": {
+    "$type": "dimension",
+    "bw": {
+      "$value": "1px"
+    },
+    "radius-full": {
+      "$value": "50%"
+    }
+  },
+  "motion": {
+    "$type": "duration",
+    "dur-fast": {
+      "$value": ".2s"
+    },
+    "dur": {
+      "$value": ".3s"
+    },
+    "dur-slow": {
+      "$value": ".5s"
+    },
+    "dur-slower": {
+      "$value": ".6s"
+    },
+    "ease": {
+      "$type": "cubicBezier",
+      "$value": "cubic-bezier(.22,1,.36,1)"
+    }
+  },
+  "layout": {
+    "$type": "dimension",
+    "maxw": {
+      "$value": "1180px"
+    },
+    "gut": {
+      "$value": "24px"
+    }
+  }
+}
