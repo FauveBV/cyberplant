@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import type { WebGLRenderer } from 'three';
 import { type Key, type Params, SLIDERS, DEFAULTS, mulberry32, makeRng } from '../lib/specimen';
 import { $seed } from '../stores/identity';
-import { type Tier, detectTier, saveTier } from '../lib/capability';
+import { type Tier, detectTier, saveTier, savedTier } from '../lib/capability';
 import Specimen2D from './Specimen2D';
 
 // El Canvas 3D (con three/R3F/postprocessing) vive en su propio chunk y se carga SOLO en
@@ -36,6 +36,7 @@ export default function Specimen() {
   const smoothRef = useRef(true);
   const glRef = useRef<WebGLRenderer | null>(null);
   const lite2dRef = useRef<HTMLCanvasElement | null>(null);
+  const manualRef = useRef(false); // true si el tier fue elegido a mano → no auto-degradar por FPS
 
   // init: semilla, reduced-motion, consola según viewport
   useEffect(() => {
@@ -51,6 +52,7 @@ export default function Specimen() {
     setSeed(s);
     $seed.set(s);
     setCtrlsOpen(window.matchMedia('(min-width:721px)').matches);
+    manualRef.current = savedTier() !== null; // hubo override manual guardado
     setTier(detectTier()); // 'full' (3D) o 'lite' (2D) según capacidad / override guardado
     updateHUD();
     return () => gsap.killTweensOf(paramsRef.current);
@@ -225,11 +227,22 @@ export default function Specimen() {
 
   // alterna manualmente entre 3D pleno y 2D liviano (persistido)
   function toggleTier() {
+    manualRef.current = true; // elección explícita → el guard de FPS no vuelve a degradar
     setTier((cur) => {
       const next: Tier = cur === 'full' ? 'lite' : 'full';
       saveTier(next);
       announce(next === 'full' ? 'Modo pleno (3D) activado' : 'Modo ligero (2D) activado');
       return next;
+    });
+  }
+
+  // auto-degradar a 2D si el FPS del 3D es bajo (solo si el tier fue automático)
+  function onLowPerf() {
+    if (manualRef.current) return;
+    setTier((cur) => {
+      if (cur !== 'full') return cur;
+      announce('Rendimiento bajo: cambiando a modo ligero (2D)');
+      return 'lite';
     });
   }
 
@@ -248,6 +261,8 @@ export default function Specimen() {
               timeRef={timeRef}
               glRef={glRef}
               seedRef={seedRef}
+              onLowPerf={onLowPerf}
+              perfGuardEnabled={!manualRef.current}
             />
           </Suspense>
         </div>

@@ -37,7 +37,8 @@ tracking `--tr-*`, espaciado base-4 `--sp-*`, `--space-section-top/bottom`, bord
 **Dos tiers** (`src/lib/capability.ts` → `detectTier()`): `full` = 3D (R3F) y `lite` = **motor 2D**
 (`Specimen2D.tsx`, port del `drawSpiral` original, corre en mobile/netbook). Se elige por capacidad
 (reduced-motion, sin WebGL, mobile/coarse-pointer, hardware ≤2 núcleos/mem → `lite`) con **toggle manual**
-persistido (botón `◆ pleno / ◇ ligero`). El Canvas 3D (`SpecimenCanvas.tsx`, ~245KB gzip con three) se
+persistido (botón `◆ pleno / ◇ ligero`). Además **auto-downgrade por FPS** (`PerfGuard.tsx`): si en `full`
+el FPS promedio cae <24 (tras warmup), baja a `lite` — salvo que el tier sea elección manual. El Canvas 3D (`SpecimenCanvas.tsx`, ~245KB gzip con three) se
 carga con **`lazy()` sólo en `full`** → mobile/lite nunca baja three. Ambos comparten controles/HUD y
 `paramsRef`/`seedRef`. Lo que sigue describe el tier `full`:
 

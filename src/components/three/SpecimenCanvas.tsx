@@ -4,6 +4,7 @@ import type { WebGLRenderer } from 'three';
 import { type Params } from '../../lib/specimen';
 import ParticleField from './ParticleField';
 import Effects from './Effects';
+import PerfGuard from './PerfGuard';
 
 // props estables (literales fuera del render para no reconfigurar R3F)
 const CAMERA = { position: [0, 0, 3.2] as [number, number, number], fov: 50 };
@@ -16,12 +17,22 @@ export interface SpecimenCanvasProps {
   timeRef: React.RefObject<number>;
   glRef: React.RefObject<WebGLRenderer | null>;
   seedRef: React.RefObject<number>;
+  onLowPerf: () => void; // baja a tier 'lite' si el FPS es bajo
+  perfGuardEnabled: boolean; // false si el tier fue elegido a mano
 }
 
 // Canvas 3D aislado y memoizado: TODAS sus props son refs estables → se monta una sola vez y
 // nunca se re-renderiza desde afuera (clave: el EffectComposer no tolera re-montarse).
 // Vive en su propio chunk: se importa con lazy() sólo en tier 'full' (mobile/lite no baja three).
-function SpecimenCanvas({ paramsRef, playingRef, timeRef, glRef, seedRef }: SpecimenCanvasProps) {
+function SpecimenCanvas({
+  paramsRef,
+  playingRef,
+  timeRef,
+  glRef,
+  seedRef,
+  onLowPerf,
+  perfGuardEnabled,
+}: SpecimenCanvasProps) {
   return (
     <Canvas
       dpr={DPR}
@@ -34,6 +45,7 @@ function SpecimenCanvas({ paramsRef, playingRef, timeRef, glRef, seedRef }: Spec
       <color attach="background" args={['#04050a']} />
       <ParticleField params={paramsRef.current} playingRef={playingRef} seedRef={seedRef} timeRef={timeRef} />
       <Effects params={paramsRef.current} />
+      <PerfGuard onLow={onLowPerf} enabled={perfGuardEnabled} />
     </Canvas>
   );
 }
