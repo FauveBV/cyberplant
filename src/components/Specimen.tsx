@@ -29,7 +29,8 @@ export default function Specimen({ ambient = false }: { ambient?: boolean }) {
   const [tier, setTier] = useState<Tier | null>(null); // null hasta detectar en cliente
 
   // estado del motor (sin re-render)
-  const paramsRef = useRef<Params>({ ...DEFAULTS });
+  // en el hero ambiental: glitch en 0 (sin pixelado)
+  const paramsRef = useRef<Params>(ambient ? { ...DEFAULTS, glitch: 0 } : { ...DEFAULTS });
   const playingRef = useRef(true);
   const timeRef = useRef(0);
   const seedRef = useRef(0);
@@ -62,7 +63,7 @@ export default function Specimen({ ambient = false }: { ambient?: boolean }) {
   // magnificados. El contenido refleja el glitch (el canvas ya viene pixelado); los marcos
   // son trazos del overlay → siempre nítidos, nunca afectados por el glitch.
   useEffect(() => {
-    if (tier !== 'full') return; // lupas-overlay solo en 3D (incl. hero ambiental); el 2D dibuja las suyas
+    if (ambient || tier !== 'full') return; // el hero usa el 2D (lupas propias); overlay solo en 3D de /sistema
     let raf = 0;
     const draw = () => {
       const ov = overlayRef.current;
@@ -249,29 +250,11 @@ export default function Specimen({ ambient = false }: { ambient?: boolean }) {
     });
   }, []);
 
-  // hero ambiental: sólo el canvas como fondo, sin consola/HUD/acciones/lupas
+  // hero ambiental: SIEMPRE el motor 2D liviano (con glitch 0), sin consola/HUD; no carga three
   if (ambient) {
     return (
       <div className="stage stage-ambient" aria-hidden="true">
-        {tier === 'full' && (
-          <div className="stage-canvas">
-            <Suspense fallback={null}>
-              <SpecimenCanvas
-                paramsRef={paramsRef}
-                playingRef={playingRef}
-                timeRef={timeRef}
-                glRef={glRef}
-                seedRef={seedRef}
-                onLowPerf={onLowPerf}
-                perfGuardEnabled={!manualRef.current}
-              />
-            </Suspense>
-          </div>
-        )}
-        {tier === 'lite' && (
-          <Specimen2D paramsRef={paramsRef} playingRef={playingRef} seedRef={seedRef} canvasRef={lite2dRef} />
-        )}
-        {tier === 'full' && <canvas ref={overlayRef} className="mag-overlay" aria-hidden="true" />}
+        <Specimen2D paramsRef={paramsRef} playingRef={playingRef} seedRef={seedRef} canvasRef={lite2dRef} />
       </div>
     );
   }
