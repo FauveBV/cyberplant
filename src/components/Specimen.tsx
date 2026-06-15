@@ -1,57 +1,20 @@
-import { memo, useEffect, useRef, useState } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import gsap from 'gsap';
-import * as THREE from 'three';
+import type { WebGLRenderer } from 'three';
 import { type Key, type Params, SLIDERS, DEFAULTS, mulberry32, makeRng } from '../lib/specimen';
 import { $seed } from '../stores/identity';
-import ParticleField from './three/ParticleField';
-import Effects from './three/Effects';
+import { type Tier, detectTier, saveTier } from '../lib/capability';
+import Specimen2D from './Specimen2D';
+
+// El Canvas 3D (con three/R3F/postprocessing) vive en su propio chunk y se carga SOLO en
+// tier 'full' → mobile y equipos de bajos recursos (tier 'lite') nunca descargan three.
+const SpecimenCanvas = lazy(() => import('./three/SpecimenCanvas'));
 
 function announce(msg: string) {
   const el = document.getElementById('live');
   if (el) el.textContent = msg;
 }
-
-// props estables de la escena 3D (literales fuera del render para no reconfigurar R3F)
-const CAMERA = { position: [0, 0, 3.2] as [number, number, number], fov: 50 };
-const GL = { preserveDrawingBuffer: true, antialias: true };
-const DPR: [number, number] = [1, 2];
-
-interface CanvasProps {
-  paramsRef: React.RefObject<Params>;
-  playingRef: React.RefObject<boolean>;
-  timeRef: React.RefObject<number>;
-  glRef: React.RefObject<THREE.WebGLRenderer | null>;
-  seedRef: React.RefObject<number>;
-}
-
-// Canvas aislado y memoizado: TODAS sus props son refs estables → se monta una sola vez y
-// nunca se re-renderiza desde afuera (clave: el EffectComposer no tolera re-montarse).
-// Semilla, parámetros y nº de lupas se leen por frame vía refs; los cambios provocan
-// re-renders LOCALES dentro de ParticleField/Magnifiers, no del Canvas.
-const SpecimenCanvas = memo(function SpecimenCanvas({
-  paramsRef,
-  playingRef,
-  timeRef,
-  glRef,
-  seedRef,
-}: CanvasProps) {
-  return (
-    <Canvas
-      dpr={DPR}
-      camera={CAMERA}
-      gl={GL}
-      onCreated={(state) => {
-        glRef.current = state.gl;
-      }}
-    >
-      <color attach="background" args={['#04050a']} />
-      <ParticleField params={paramsRef.current} playingRef={playingRef} seedRef={seedRef} timeRef={timeRef} />
-      <Effects params={paramsRef.current} />
-    </Canvas>
-  );
-});
 
 export default function Specimen() {
   const hudPixRef = useRef<HTMLDivElement>(null);
@@ -63,6 +26,7 @@ export default function Specimen() {
   const [playing, setPlaying] = useState(true);
   const [ctrlsOpen, setCtrlsOpen] = useState(true);
   const [seed, setSeed] = useState<number | null>(null);
+  const [tier, setTier] = useState<Tier | null>(null); // null hasta detectar en cliente
 
   // estado del motor (sin re-render)
   const paramsRef = useRef<Params>({ ...DEFAULTS });
@@ -70,7 +34,8 @@ export default function Specimen() {
   const timeRef = useRef(0);
   const seedRef = useRef(0);
   const smoothRef = useRef(true);
-  const glRef = useRef<THREE.WebGLRenderer | null>(null);
+  const glRef = useRef<WebGLRenderer | null>(null);
+  const lite2dRef = useRef<HTMLCanvasElement | null>(null);
 
   // init: semilla, reduced-motion, consola según viewport
   useEffect(() => {
@@ -86,6 +51,7 @@ export default function Specimen() {
     setSeed(s);
     $seed.set(s);
     setCtrlsOpen(window.matchMedia('(min-width:721px)').matches);
+    setTier(detectTier()); // 'full' (3D) o 'lite' (2D) según capacidad / override guardado
     updateHUD();
     return () => gsap.killTweensOf(paramsRef.current);
   }, []);
@@ -94,12 +60,14 @@ export default function Specimen() {
   // magnificados. El contenido refleja el glitch (el canvas ya viene pixelado); los marcos
   // son trazos del overlay → siempre nítidos, nunca afectados por el glitch.
   useEffect(() => {
+    if (tier !== 'full') return; // las lupas-overlay solo en 3D; el 2D dibuja las suyas
     let raf = 0;
     const draw = () => {
-      const gl = glRef.current;
       const ov = overlayRef.current;
-      if (gl && ov) {
-        const src = gl.domElement;
+      const src =
+        glRef.current?.domElement ??
+        (document.querySelector('#stage .stage-canvas canvas') as HTMLCanvasElement | null);
+      if (src && ov) {
         const W = src.width,
           H = src.height;
         if (W && H) {
@@ -163,7 +131,7 @@ export default function Specimen() {
     };
     raf = requestAnimationFrame(draw);
     return () => cancelAnimationFrame(raf);
-  }, []);
+  }, [tier]);
 
   // HUD científico (matriz de datos + análisis pixelado + estado) — idéntico al 2D
   function updateHUD() {
@@ -239,11 +207,11 @@ export default function Specimen() {
   }
 
   function savePng() {
-    const gl = glRef.current;
-    if (!gl) return;
+    const canvas = tier === 'lite' ? lite2dRef.current : (glRef.current?.domElement ?? null);
+    if (!canvas) return;
     const a = document.createElement('a');
     a.download = 'espiral-' + seedRef.current + '.png';
-    a.href = gl.domElement.toDataURL('image/png');
+    a.href = canvas.toDataURL('image/png');
     a.click();
   }
 
@@ -255,22 +223,44 @@ export default function Specimen() {
     });
   }
 
+  // alterna manualmente entre 3D pleno y 2D liviano (persistido)
+  function toggleTier() {
+    setTier((cur) => {
+      const next: Tier = cur === 'full' ? 'lite' : 'full';
+      saveTier(next);
+      announce(next === 'full' ? 'Modo pleno (3D) activado' : 'Modo ligero (2D) activado');
+      return next;
+    });
+  }
+
   return (
     <div className="stage" id="stage">
-      <div
-        className="stage-canvas"
-        role="img"
-        aria-label="Espécimen generativo: nube de partículas bioluminiscentes en 3D que orbita y cambia con el tiempo, con paneles lupa y glitch, en animación continua"
-      >
-        <SpecimenCanvas
+      {tier === 'full' && (
+        <div
+          className="stage-canvas"
+          role="img"
+          aria-label="Espécimen generativo: nube de partículas bioluminiscentes en 3D que orbita y cambia con el tiempo, con paneles lupa y glitch, en animación continua"
+        >
+          <Suspense fallback={null}>
+            <SpecimenCanvas
+              paramsRef={paramsRef}
+              playingRef={playingRef}
+              timeRef={timeRef}
+              glRef={glRef}
+              seedRef={seedRef}
+            />
+          </Suspense>
+        </div>
+      )}
+      {tier === 'lite' && (
+        <Specimen2D
           paramsRef={paramsRef}
           playingRef={playingRef}
-          timeRef={timeRef}
-          glRef={glRef}
           seedRef={seedRef}
+          canvasRef={lite2dRef}
         />
-      </div>
-      <canvas ref={overlayRef} className="mag-overlay" aria-hidden="true" />
+      )}
+      {tier === 'full' && <canvas ref={overlayRef} className="mag-overlay" aria-hidden="true" />}
 
       <motion.button
         className="ctrls-toggle"
@@ -320,6 +310,24 @@ export default function Specimen() {
         >
           ↧ png
         </motion.button>
+        {tier && (
+          <motion.button
+            className="btn"
+            id="tierBtn"
+            type="button"
+            aria-pressed={tier === 'lite'}
+            aria-label={
+              tier === 'full'
+                ? 'Cambiar a modo ligero 2D, para equipos de bajos recursos'
+                : 'Cambiar a modo pleno 3D'
+            }
+            onClick={toggleTier}
+            whileHover={{ y: -1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            {tier === 'full' ? '◆ pleno' : '◇ ligero'}
+          </motion.button>
+        )}
       </div>
 
       <div className="hud" aria-hidden="true">

@@ -34,6 +34,13 @@ tracking `--tr-*`, espaciado base-4 `--sp-*`, `--space-section-top/bottom`, bord
 > padding vertical de sección se setea con `section.wrap{padding-top/bottom}` para vencer a `.wrap`.
 
 ## Firma generativa (sección 05)
+**Dos tiers** (`src/lib/capability.ts` → `detectTier()`): `full` = 3D (R3F) y `lite` = **motor 2D**
+(`Specimen2D.tsx`, port del `drawSpiral` original, corre en mobile/netbook). Se elige por capacidad
+(reduced-motion, sin WebGL, mobile/coarse-pointer, hardware ≤2 núcleos/mem → `lite`) con **toggle manual**
+persistido (botón `◆ pleno / ◇ ligero`). El Canvas 3D (`SpecimenCanvas.tsx`, ~245KB gzip con three) se
+carga con **`lazy()` sólo en `full`** → mobile/lite nunca baja three. Ambos comparten controles/HUD y
+`paramsRef`/`seedRef`. Lo que sigue describe el tier `full`:
+
 Isla `Specimen.tsx` con **R3F/three.js** (`src/components/three/`). Nube de **partículas 3D en GPU**
 (`ParticleField`, `THREE.Points` + ShaderMaterial): órbita, ciclo de vida nacen→crecen→se difuminan
 (blur por-partícula en el fragment shader), ruido orgánico en **GLSL** (`glsl.ts`), densidad por

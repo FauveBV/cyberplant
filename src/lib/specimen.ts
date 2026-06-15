@@ -11,7 +11,7 @@ export const SLIDERS: {
   def: number;
   aria: string;
 }[] = [
-  { key: 'arms', id: 'pArms', label: 'Cuadrados · zoom', min: 1, max: 8, def: 4, aria: 'Cuadrados-lupa: cantidad y nivel de zoom' },
+  { key: 'arms', id: 'pArms', label: 'Cuadrados · zoom', min: 0, max: 8, def: 4, aria: 'Cuadrados-lupa: cantidad y nivel de zoom (0 = sin cuadrados)' },
   { key: 'turns', id: 'pTurns', label: 'Ondulación · turbulencia', min: 2, max: 14, def: 5, aria: 'Ondulación / turbulencia de la superficie' },
   { key: 'rise', id: 'pRise', label: 'Altura', min: 0, max: 100, def: 60, aria: 'Altura de los tallos' },
   { key: 'dens', id: 'pDens', label: 'Densidad', min: 80, max: 900, def: 560, aria: 'Densidad del campo' },
