@@ -1,0 +1,152 @@
+---
+// Documenta en /sistema los patrones propios de /portafolio y /portafolio/ejemplo.
+// El CSS de estos componentes vive en global.css (fuente única).
+---
+
+<section class="wrap" id="patrones-portafolio">
+  <div class="tag"><span class="n">11</span> Patrones de portafolio — plantilla de caso</div>
+  <h2 style="margin-bottom:var(--sp-8)">Caso y casos</h2>
+  <p class="copyhint" style="margin-bottom:var(--sp-10)">
+    Componentes específicos del <b>portafolio</b> y de la <b>plantilla de caso</b>
+    (<code>/portafolio</code>, <code>/portafolio/ejemplo</code>). El cuerpo del caso va en Plex Sans.
+  </p>
+
+  <!-- ATOMS -->
+  <div class="pgroup">
+    <div class="label-sm">Atoms</div>
+    <div class="patgrid">
+      <div class="patcell">
+        <div class="pcap">Marcador pendiente · <code>.ph</code> (<code>--color-pending</code>)</div>
+        <p style="font-family:var(--font-sans)">Texto de caso <span class="ph">[reemplazar con dato real]</span></p>
+      </div>
+      <div class="patcell">
+        <div class="pcap">Preview "próximamente" · <code>.soon-prev</code></div>
+        <div class="soon-prev demo-prev"></div>
+      </div>
+      <div class="patcell">
+        <div class="pcap">Cluster atenuado · <code>.cluster.soon</code></div>
+        <div class="pnote">opacity .72 — caso en preparación</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOLECULES -->
+  <div class="pgroup">
+    <div class="label-sm">Molecules</div>
+
+    <div class="demo">
+      <div class="pcap">Ficha del caso · <code>.case-meta</code></div>
+      <div class="case-meta" style="margin-top:var(--sp-5)">
+        <div><span>Rol</span><b>Product Designer · end-to-end</b></div>
+        <div><span>Año</span><b>2025</b></div>
+        <div><span>Equipo</span><b>Diseño + 2 devs</b></div>
+        <div><span>Plataforma</span><b>Web app</b></div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="pcap">Figura placeholder · <code>.ph-figure</code> (cover 16:9 · grid)</div>
+      <figure class="ph-figure ph-cover"><span>Imagen de portada · 16:9</span></figure>
+      <div class="ph-grid">
+        <figure class="ph-figure"><span>Research · mapa de flujo</span></figure>
+        <figure class="ph-figure"><span>Wireframes</span></figure>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="pcap">Bloque de caso · <code>.case-block</code> + <code>.lead</code></div>
+      <div class="case-body" style="max-width:none">
+        <div class="case-block" style="margin-bottom:0">
+          <div class="tag"><span class="n">01</span> Contexto</div>
+          <p class="lead">Una bajada en Plex Sans, con el peso medio, abre cada bloque del caso.</p>
+          <p style="margin-bottom:0">
+            Párrafo de cuerpo en Plex Sans: problema, proceso y decisiones, legible y con medida acotada.
+            <span class="ph">[texto real del proyecto]</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORGANISMS -->
+  <div class="pgroup">
+    <div class="label-sm">Organisms</div>
+
+    <div class="demo">
+      <div class="pcap">Métricas de resultado · <code>.case-metrics</code></div>
+      <ul class="case-metrics">
+        <li><b>−38%</b><span>tiempo a la primera lectura accionable</span></li>
+        <li><b>+24%</b><span>estaciones revisadas por turno</span></li>
+        <li><b>4.6/5</b><span>satisfacción de operadores</span></li>
+      </ul>
+    </div>
+
+    <div class="demo">
+      <div class="pcap">Casos "próximamente" · <code>.clusters</code> + <code>.cluster.soon</code></div>
+      <div class="clusters">
+        {
+          [1, 2, 3].map((i) => (
+            <div class="cluster soon">
+              <div class="num">{String(i).padStart(2, '0')}</div>
+              <h3>Caso {String(i).padStart(2, '0')}</h3>
+              <div class="prev soon-prev" />
+              <span class="polo cold">próximamente</span>
+              <p>En preparación: problema, proceso, decisiones y resultado.</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="pcap">Navegación de caso · <code>.case-nav</code></div>
+      <nav class="case-nav" style="padding-bottom:var(--sp-6)" aria-label="Ejemplo de navegación de caso">
+        <a href="#patrones-portafolio">← Volver al portafolio</a>
+        <span>Caso siguiente · próximamente</span>
+      </nav>
+    </div>
+  </div>
+</section>
+
+<style>
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--c-blue-text);
+  }
+  .pgroup {
+    margin-bottom: var(--sp-12);
+  }
+  .pgroup > .label-sm {
+    margin-bottom: var(--sp-6);
+  }
+  .demo {
+    margin-bottom: var(--sp-9);
+  }
+  .pcap {
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    margin-bottom: var(--sp-4);
+  }
+  .patgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--sp-px);
+    background: var(--overlay);
+    border: var(--bw) solid var(--overlay);
+  }
+  .patcell {
+    background: var(--bg);
+    padding: var(--sp-8);
+  }
+  .demo-prev {
+    height: 64px;
+    border: var(--bw) solid var(--overlay);
+  }
+  .pnote {
+    font-family: var(--mono);
+    font-size: var(--fs-sm);
+    color: var(--txt);
+  }
+</style>

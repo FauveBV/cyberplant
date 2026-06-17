@@ -1,0 +1,143 @@
+---
+// Documenta en /sistema los patrones propios de /bio (currículum + contacto).
+// El CSS de estos componentes vive en global.css (fuente única).
+---
+
+<section class="wrap" id="patrones-bio">
+  <div class="tag"><span class="n">12</span> Patrones de bio — currículum</div>
+  <h2 style="margin-bottom:var(--sp-8)">Currículum y contacto</h2>
+  <p class="copyhint" style="margin-bottom:var(--sp-10)">
+    Componentes específicos de <b>bio</b> (<code>/bio</code>): listas de CV, habilidades, intereses y
+    contacto. El cuerpo va en Plex Sans; fechas y etiquetas en mono.
+  </p>
+
+  <!-- ATOMS -->
+  <div class="pgroup">
+    <div class="label-sm">Atoms</div>
+    <div class="patgrid">
+      <div class="patcell">
+        <div class="pcap">Fecha · <code>.cv-date</code> (mono, azul, caps)</div>
+        <span class="cv-date">mar 2024 – presente</span>
+      </div>
+      <div class="patcell">
+        <div class="pcap">Viñeta · <code>.cv-bullets li::before</code></div>
+        <ul class="cv-bullets" style="margin-top:0">
+          <li>Ítem con guion azul como marcador.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- MOLECULES -->
+  <div class="pgroup">
+    <div class="label-sm">Molecules</div>
+
+    <div class="demo">
+      <div class="pcap">Entrada de CV · <code>.cv-item</code></div>
+      <ul class="cv">
+        <li class="cv-item">
+          <div class="cv-head">
+            <h3>Diseñadora de Experiencia y Arquitectura de Información</h3>
+            <span class="cv-date">mar 2024 – presente</span>
+          </div>
+          <div class="cv-org">Wiki Casiopea · e[ad] PUCV</div>
+          <ul class="cv-bullets">
+            <li>Arquitectura de información y plantillas de objetos semánticos.</li>
+            <li>Implementación front-end de componentes de usabilidad.</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="demo">
+      <div class="pcap">Nota destacada · <code>.cv-note</code></div>
+      <p class="cv-note"><b>Proyecto de título.</b> Sistema de plantillas y arquitectura de información para la wiki institucional de la e[ad] PUCV.</p>
+    </div>
+
+    <div class="demo">
+      <div class="pcap">Fila de contacto · <code>ul.contact li</code></div>
+      <ul class="contact">
+        <li><span>Email</span><a href="mailto:fbellengervillarroel@gmail.com">fbellengervillarroel@gmail.com</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ORGANISMS -->
+  <div class="pgroup">
+    <div class="label-sm">Organisms</div>
+
+    <div class="demo">
+      <div class="pcap">Bloque de habilidades · <code>.skills</code></div>
+      <div class="skills">
+        <div>
+          <div class="label-sm">Técnicas</div>
+          <ul class="cv-bullets">
+            <li>Manejo avanzado de Figma, Adobe Creative Suite y línea de comandos.</li>
+            <li>User research integral y testeos de usabilidad.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="label-sm">Interpersonales</div>
+          <ul class="cv-bullets">
+            <li>Comunicación y escritura efectiva.</li>
+            <li>Trabajo en equipo y cooperación multidisciplinaria.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="demo">
+      <div class="pcap">Intereses en columnas · <code>.cv-bullets.cols</code></div>
+      <ul class="cv-bullets cols">
+        <li>Programación asistida con IA (Claude Code).</li>
+        <li>Circuitos sonoros, análogos y digitales.</li>
+        <li>Lectura, sobre todo novelas gráficas.</li>
+        <li>Coleccionar discos y cassettes de bandas independientes.</li>
+      </ul>
+    </div>
+
+    <div class="demo">
+      <div class="pcap">Lista de contacto completa · <code>ul.contact</code></div>
+      <ul class="contact">
+        <li><span>Ubicación</span><b>Chile</b></li>
+        <li><span>Email</span><a href="mailto:fbellengervillarroel@gmail.com">fbellengervillarroel@gmail.com</a></li>
+        <li><span>LinkedIn</span><a href="https://www.linkedin.com/in/fauvebellenger/" target="_blank" rel="noopener noreferrer">in/fauvebellenger ↗</a></li>
+        <li><span>GitHub</span><a href="https://github.com/FauveBV" target="_blank" rel="noopener noreferrer">FauveBV ↗</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  code {
+    font-family: var(--mono);
+    font-size: 0.9em;
+    color: var(--c-blue-text);
+  }
+  .pgroup {
+    margin-bottom: var(--sp-12);
+  }
+  .pgroup > .label-sm {
+    margin-bottom: var(--sp-6);
+  }
+  .demo {
+    margin-bottom: var(--sp-9);
+  }
+  .pcap {
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    margin-bottom: var(--sp-4);
+  }
+  .patgrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--sp-px);
+    background: var(--overlay);
+    border: var(--bw) solid var(--overlay);
+  }
+  .patcell {
+    background: var(--bg);
+    padding: var(--sp-8);
+  }
+</style>
