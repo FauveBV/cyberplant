@@ -1,0 +1,69 @@
+---
+/**
+ * Alert / Callout — feedback inline. Variantes info/success/warning/error.
+ * Token-only · role semántico (status vs alert) · icono por variante.
+ */
+interface Props {
+  variant?: 'info' | 'success' | 'warning' | 'error';
+  title?: string;
+  class?: string;
+}
+const { variant = 'info', title, class: extra } = Astro.props;
+const ICON: Record<string, string> = { info: 'i', success: '✓', warning: '!', error: '×' };
+const role = variant === 'error' || variant === 'warning' ? 'alert' : 'status';
+---
+
+<div class:list={['alert', `alert--${variant}`, extra]} role={role}>
+  <span class="ic" aria-hidden="true">{ICON[variant]}</span>
+  <span class="msg">
+    {title && <b class="title">{title}</b>}
+    <slot />
+  </span>
+</div>
+
+<style>
+  .alert {
+    border: var(--bw) solid var(--color-border);
+    border-left-width: 3px;
+    padding: var(--sp-5) var(--sp-6);
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+    display: flex;
+    gap: var(--sp-5);
+    align-items: flex-start;
+    line-height: var(--lh-body);
+  }
+  .ic {
+    font-weight: var(--fw-bold);
+    flex: none;
+  }
+  .title {
+    color: var(--color-text-primary);
+    display: block;
+    margin-bottom: var(--sp-2);
+  }
+  .alert--info {
+    border-left-color: var(--color-info);
+  }
+  .alert--info .ic {
+    color: var(--color-info);
+  }
+  .alert--success {
+    border-left-color: var(--color-success);
+  }
+  .alert--success .ic {
+    color: var(--color-success);
+  }
+  .alert--warning {
+    border-left-color: var(--color-warning);
+  }
+  .alert--warning .ic {
+    color: var(--color-warning);
+  }
+  .alert--error {
+    border-left-color: var(--color-error);
+  }
+  .alert--error .ic {
+    color: var(--color-error);
+  }
+</style>

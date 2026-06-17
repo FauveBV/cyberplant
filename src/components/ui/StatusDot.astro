@@ -1,0 +1,37 @@
+---
+/**
+ * StatusDot — indicador de estado puntual (online/proceso/error…).
+ */
+interface Props {
+  tone?: 'success' | 'warning' | 'error' | 'info' | 'muted';
+  class?: string;
+}
+const { tone = 'muted', class: extra } = Astro.props;
+const VAR: Record<string, string> = {
+  success: 'var(--color-success)',
+  warning: 'var(--color-warning)',
+  error: 'var(--color-error)',
+  info: 'var(--color-info)',
+  muted: 'var(--color-text-muted)',
+};
+---
+
+<span class:list={['sdot', extra]}>
+  <i style={`background:${VAR[tone]}`} aria-hidden="true"></i><slot />
+</span>
+
+<style>
+  .sdot {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-3);
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+  }
+  .sdot i {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    flex: none;
+  }
+</style>

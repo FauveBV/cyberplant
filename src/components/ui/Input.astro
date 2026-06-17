@@ -1,0 +1,90 @@
+---
+/**
+ * Input — campo de texto con label, ayuda y estados (focus/error/disabled).
+ * Token-only · a11y: label asociado, aria-invalid, aria-describedby.
+ */
+interface Props {
+  label?: string;
+  name?: string;
+  id?: string;
+  type?: string;
+  value?: string;
+  placeholder?: string;
+  help?: string;
+  error?: string | boolean;
+  disabled?: boolean;
+  required?: boolean;
+  class?: string;
+}
+const { label, name, id = name, type = 'text', value, placeholder, help, error, disabled, required, class: extra } = Astro.props;
+const hasError = !!error;
+const errMsg = typeof error === 'string' ? error : null;
+const descId = id ? `${id}-help` : undefined;
+const showDesc = errMsg || help;
+---
+
+<div class:list={['field', extra]}>
+  {label && <label for={id}>{label}{required && <span class="req" aria-hidden="true"> *</span>}</label>}
+  <input
+    class:list={['input', hasError && 'err']}
+    type={type}
+    id={id}
+    name={name}
+    value={value}
+    placeholder={placeholder}
+    disabled={disabled}
+    required={required}
+    aria-invalid={hasError ? 'true' : undefined}
+    aria-describedby={showDesc && descId ? descId : undefined}
+  />
+  {showDesc && <span id={descId} class:list={['help', hasError && 'err']}>{errMsg || help}</span>}
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+  label {
+    font-size: var(--fs-2xs);
+    letter-spacing: var(--tr-wider);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+  .req {
+    color: var(--color-error);
+  }
+  .input {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--line);
+    background: var(--bg);
+    border: var(--bw) solid var(--color-border);
+    padding: var(--sp-4) var(--sp-5);
+    outline: none;
+    width: 100%;
+    transition:
+      border-color var(--dur-fast) var(--ease),
+      box-shadow var(--dur-fast) var(--ease);
+  }
+  .input:focus {
+    border-color: var(--color-accent-text);
+    box-shadow: var(--focus-ring);
+  }
+  .input.err {
+    border-color: var(--color-error);
+  }
+  .input:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    border-style: dashed;
+  }
+  .help {
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+  }
+  .help.err {
+    color: var(--color-error);
+  }
+</style>

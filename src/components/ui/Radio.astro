@@ -1,0 +1,61 @@
+---
+/**
+ * Radio — opción única dentro de un grupo (mismo name).
+ */
+interface Props {
+  label?: string;
+  name: string;
+  id?: string;
+  value?: string;
+  checked?: boolean;
+  disabled?: boolean;
+  class?: string;
+}
+const { label, name, id, value, checked, disabled, class: extra } = Astro.props;
+---
+
+<label class:list={['check', extra]}>
+  <input type="radio" name={name} id={id} value={value} checked={checked} disabled={disabled} />
+  <span><slot>{label}</slot></span>
+</label>
+
+<style>
+  .check {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-4);
+    font-size: var(--fs-sm);
+    color: var(--line);
+    cursor: pointer;
+  }
+  .check input {
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    border: var(--bw) solid var(--color-text-muted);
+    background: var(--bg);
+    border-radius: var(--radius-full);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    flex: none;
+  }
+  .check input:checked {
+    border-color: var(--color-accent-text);
+  }
+  .check input:checked::after {
+    content: '';
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-accent-text);
+  }
+  .check input:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+  }
+  .check input:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+  }
+</style>

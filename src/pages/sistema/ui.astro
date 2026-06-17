@@ -1,0 +1,143 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Button from '../../components/ui/Button.astro';
+import Alert from '../../components/ui/Alert.astro';
+import Badge from '../../components/ui/Badge.astro';
+import StatusDot from '../../components/ui/StatusDot.astro';
+import Input from '../../components/ui/Input.astro';
+import Textarea from '../../components/ui/Textarea.astro';
+import Select from '../../components/ui/Select.astro';
+import Checkbox from '../../components/ui/Checkbox.astro';
+import Radio from '../../components/ui/Radio.astro';
+import Switch from '../../components/ui/Switch.tsx';
+import Nav from '../../components/ui/Nav.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import Table from '../../components/ui/Table.astro';
+import SpecSheet from '../../components/ui/SpecSheet.astro';
+import EmptyState from '../../components/ui/EmptyState.astro';
+---
+
+<BaseLayout title="UI · componentes P0 — cyberplant" description="Componentes P0 del sistema, en vivo, construidos con tokens.">
+  <section class="wrap ui-doc">
+    <div class="tag"><span class="n">P0</span> Componentes — en vivo</div>
+    <h2 style="margin-bottom:var(--sp-9)">Lo que falta, ya construido</h2>
+
+    <h3>Botones</h3>
+    <div class="row">
+      <Button variant="primary">primario</Button>
+      <Button>secundario</Button>
+      <Button variant="ghost">ghost</Button>
+      <Button variant="danger">peligro</Button>
+    </div>
+    <div class="row">
+      <Button size="sm">sm</Button>
+      <Button>md</Button>
+      <Button size="icon" aria-label="recargar">↻</Button>
+      <Button disabled>disabled</Button>
+      <Button loading>cargando</Button>
+    </div>
+
+    <h3>Formularios</h3>
+    <div class="cols">
+      <Input label="Modelo" name="modelo" placeholder="Acer Aspire One…" />
+      <Input label="Error" name="err" value="valor inválido" error="revisá este campo" />
+      <Input label="Disabled" name="dis" value="bloqueado" disabled />
+      <Select label="OS" name="os" options={['antiX', 'MX Linux', 'Debian 13']} />
+      <Textarea label="Notas" name="notas" placeholder="estado del hardware…" />
+      <div class="field-group">
+        <Checkbox label="SSD instalado" checked />
+        <Checkbox label="WiFi con firmware" />
+        <div class="row">
+          <Radio name="arch" label="64-bit" checked />
+          <Radio name="arch" label="32-bit" />
+        </div>
+        <Switch client:visible label="modo oscuro" checked={true} />
+      </div>
+    </div>
+
+    <h3>Navegación</h3>
+    <Nav
+      ariaLabel="Áreas"
+      items={[
+        { href: '#', label: 'colofón', active: true },
+        { href: '#', label: 'cyberdeck' },
+        { href: '#', label: 'sistema' },
+      ]}
+    />
+    <Breadcrumb items={[{ href: '#', label: 'inicio' }, { href: '#', label: 'cyberdeck' }, { label: 'instalación' }]} />
+
+    <h3>Feedback</h3>
+    <div class="stack">
+      <Alert variant="info">Pieza estática, sin build.</Alert>
+      <Alert variant="success">Dotfiles versionados.</Alert>
+      <Alert variant="warning">CPU de 32-bit: usá Debian 12 o antiX.</Alert>
+      <Alert variant="error">No se pudo leer el disco.</Alert>
+    </div>
+    <div class="row">
+      <Badge>neutro</Badge>
+      <Badge tone="accent">acento</Badge>
+      <Badge tone="accent" solid>nueva</Badge>
+      <Badge tone="success">hecho</Badge>
+      <Badge tone="warning">pendiente</Badge>
+      <Badge tone="pending">borrador</Badge>
+    </div>
+    <div class="row">
+      <StatusDot tone="success">online</StatusDot>
+      <StatusDot tone="warning">en proceso</StatusDot>
+      <StatusDot tone="error">error</StatusDot>
+    </div>
+
+    <h3>Datos</h3>
+    <div class="cols">
+      <Table
+        caption="Comparativa de OS"
+        columns={['OS', 'Peso', '32-bit']}
+        rows={[
+          ['antiX', 'muy bajo', 'sí'],
+          ['MX', 'bajo', 'sí'],
+          ['Debian 13', 'medio', 'no'],
+        ]}
+      />
+      <SpecSheet
+        items={[
+          { key: 'Modelo', empty: true },
+          { key: 'Estado', empty: true },
+          { key: 'RAM', value: '—', empty: true },
+          { key: 'OS', value: 'Debian 13' },
+        ]}
+      />
+    </div>
+    <EmptyState>Sin casos todavía — por completar.</EmptyState>
+  </section>
+</BaseLayout>
+
+<style>
+  .ui-doc h3 {
+    margin: var(--sp-12) 0 var(--sp-6);
+  }
+  .row {
+    display: flex;
+    gap: var(--sp-5);
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: var(--sp-5);
+  }
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+    margin-bottom: var(--sp-6);
+    max-width: 560px;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: var(--sp-7);
+    align-items: start;
+  }
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+  }
+</style>

@@ -113,6 +113,22 @@
     },
     "color-warm-text": {
       "$value": "{color.c-mineral-text}"
+    },
+    "color-success": {
+      "$value": "{color.c-moss-text}",
+      "$description": "Estado: éxito. Derivado del verde AA."
+    },
+    "color-warning": {
+      "$value": "{color.bio-yellow}",
+      "$description": "Estado: advertencia. Derivado del amarillo bio."
+    },
+    "color-info": {
+      "$value": "{color.c-blue-text}",
+      "$description": "Estado: información. Derivado del azul AA."
+    },
+    "color-error": {
+      "$value": "{color.signal}",
+      "$description": "Estado: error. Derivado del rojo señal (#d4380d). Separado de pending. Uso gráfico (borde/icono ≥3:1); para texto de error usar peso/realce, no cuerpo."
     }
   },
   "font": {
@@ -125,6 +141,10 @@
     },
     "font-sans": {
       "$value": "\"IBM Plex Sans\",system-ui,sans-serif"
+    },
+    "font-icon": {
+      "$value": "\"Lilex\",\"IBM Plex Mono\",ui-monospace,monospace",
+      "$description": "Iconografía vía glifos/ligaduras (Lilex). Activar font-feature-settings 'liga','calt'."
     }
   },
   "fontSize": {
@@ -297,8 +317,82 @@
     "bw": {
       "$value": "1px"
     },
+    "radius-0": {
+      "$value": "0"
+    },
+    "radius-sm": {
+      "$value": "2px"
+    },
     "radius-full": {
-      "$value": "50%"
+      "$value": "50%",
+      "$description": "Círculo (dots, avatares)."
+    },
+    "radius-pill": {
+      "$value": "9999px",
+      "$description": "Cápsula (botones/chips redondeados)."
+    }
+  },
+  "shadow": {
+    "$type": "shadow",
+    "shadow-1": {
+      "$value": "0 1px 2px rgba(0,0,0,.5)"
+    },
+    "shadow-2": {
+      "$value": "0 6px 24px rgba(0,0,0,.55)"
+    },
+    "shadow-glow": {
+      "$value": "0 0 24px rgba(31,61,240,.35)",
+      "$description": "Glow del acento (azul de marca)."
+    }
+  },
+  "focus": {
+    "$type": "shadow",
+    "focus-ring": {
+      "$value": "0 0 0 2px var(--bg), 0 0 0 4px var(--c-blue-text)",
+      "$description": "Anillo de foco doble (fondo + acento), reutilizable en todo interactivo."
+    }
+  },
+  "zindex": {
+    "$type": "number",
+    "z-base": {
+      "$value": "0"
+    },
+    "z-raised": {
+      "$value": "10"
+    },
+    "z-sticky": {
+      "$value": "50"
+    },
+    "z-overlay": {
+      "$value": "100"
+    },
+    "z-modal": {
+      "$value": "1000"
+    },
+    "z-toast": {
+      "$value": "1100"
+    },
+    "z-max": {
+      "$value": "9999"
+    }
+  },
+  "breakpoint": {
+    "$type": "dimension",
+    "bp-sm": {
+      "$value": "520px"
+    },
+    "bp-md": {
+      "$value": "720px"
+    },
+    "bp-lg": {
+      "$value": "860px"
+    }
+  },
+  "opacity": {
+    "$type": "number",
+    "opacity-disabled": {
+      "$value": ".45",
+      "$description": "Estado disabled: opacidad + borde dashed sobre --overlay (no hay color disabled propio; deriva de la paleta)."
     }
   },
   "motion": {

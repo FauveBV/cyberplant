@@ -1,0 +1,57 @@
+---
+/**
+ * SpecSheet — ficha clave/valor (key-value). Soporta estado "vacío"
+ * (por completar) marcado con --color-pending.
+ */
+interface Item {
+  key: string;
+  value?: string;
+  empty?: boolean;
+}
+interface Props {
+  items: Item[];
+  class?: string;
+}
+const { items, class: extra } = Astro.props;
+---
+
+<dl class:list={['kv', extra]}>
+  {
+    items.map((it) => {
+      const isEmpty = it.empty || !it.value;
+      return (
+        <Fragment>
+          <dt>{it.key}</dt>
+          <dd class:list={[isEmpty && 'empty']}>{isEmpty ? it.value || 'por completar' : it.value}</dd>
+        </Fragment>
+      );
+    })
+  }
+</dl>
+
+<style>
+  .kv {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 var(--sp-7);
+  }
+  .kv dt {
+    color: var(--color-text-muted);
+    font-size: var(--fs-2xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-wider);
+    padding: var(--sp-4) 0;
+    border-bottom: var(--bw) solid var(--color-border);
+  }
+  .kv dd {
+    color: var(--color-text-primary);
+    font-size: var(--fs-sm);
+    padding: var(--sp-4) 0;
+    border-bottom: var(--bw) solid var(--color-border);
+    text-align: right;
+  }
+  .kv dd.empty {
+    color: var(--color-pending);
+    font-style: italic;
+  }
+</style>

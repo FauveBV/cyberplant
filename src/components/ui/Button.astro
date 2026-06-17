@@ -1,0 +1,129 @@
+---
+/**
+ * Button — acción del sistema. Variantes, tamaños y estados.
+ * Token-only · accesible (focus-visible con --focus-ring, aria-busy/disabled).
+ * Render <a> si recibe href, si no <button>.
+ */
+interface Props {
+  variant?: 'primary' | 'secondary' | 'ghost' | 'danger';
+  size?: 'sm' | 'md' | 'icon';
+  loading?: boolean;
+  disabled?: boolean;
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+}
+const {
+  variant = 'secondary',
+  size = 'md',
+  loading = false,
+  disabled = false,
+  href,
+  type = 'button',
+  class: extra,
+} = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag
+  class:list={['btn', `btn--${variant}`, size !== 'md' && `btn--${size}`, loading && 'is-loading', extra]}
+  href={href}
+  type={href ? undefined : type}
+  aria-busy={loading ? 'true' : undefined}
+  disabled={!href && (disabled || loading) ? true : undefined}
+  aria-disabled={href && disabled ? 'true' : undefined}
+>
+  {loading && <span class="spin" aria-hidden="true"></span>}
+  <slot />
+</Tag>
+
+<style>
+  .btn {
+    font-family: var(--font-mono);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--tr-wider);
+    text-transform: uppercase;
+    padding: var(--sp-4) var(--sp-6);
+    border: var(--bw) solid var(--color-border);
+    background: transparent;
+    color: var(--color-text-primary);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-4);
+    text-decoration: none;
+  }
+  .btn:hover {
+    border-color: var(--color-accent-text);
+    color: var(--color-accent-text);
+  }
+  .btn:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+  }
+  .btn--primary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--line);
+  }
+  .btn--primary:hover {
+    background: color-mix(in srgb, var(--color-accent) 82%, var(--line));
+    border-color: color-mix(in srgb, var(--color-accent) 82%, var(--line));
+    color: var(--line);
+  }
+  .btn--ghost {
+    border-color: transparent;
+    color: var(--color-text-muted);
+  }
+  .btn--ghost:hover {
+    color: var(--color-text-primary);
+    border-color: var(--color-border);
+  }
+  .btn--danger {
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
+  .btn--danger:hover {
+    background: var(--color-error);
+    color: var(--bg);
+  }
+  .btn--sm {
+    padding: var(--sp-3) var(--sp-5);
+    font-size: var(--fs-3xs);
+  }
+  .btn--icon {
+    padding: var(--sp-4);
+    width: 34px;
+    height: 34px;
+  }
+  .btn:disabled,
+  .btn[aria-disabled='true'] {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    border-style: dashed;
+    pointer-events: none;
+  }
+  .btn.is-loading {
+    pointer-events: none;
+  }
+  .spin {
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--color-text-muted);
+    border-top-color: var(--color-accent-text);
+    border-radius: var(--radius-full);
+    animation: btn-spin 0.7s linear infinite;
+  }
+  @keyframes btn-spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .spin {
+      animation: none;
+    }
+  }
+</style>

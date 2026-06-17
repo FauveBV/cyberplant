@@ -1,0 +1,23 @@
+---
+/**
+ * EmptyState — vacío / sin datos. Mensaje por slot.
+ */
+interface Props {
+  class?: string;
+}
+const { class: extra } = Astro.props;
+---
+
+<div class:list={['empty', extra]} role="status">
+  <slot>Sin datos todavía — por completar.</slot>
+</div>
+
+<style>
+  .empty {
+    border: var(--bw) dashed var(--color-border);
+    padding: var(--sp-9);
+    text-align: center;
+    color: var(--color-text-muted);
+    font-size: var(--fs-xs);
+  }
+</style>

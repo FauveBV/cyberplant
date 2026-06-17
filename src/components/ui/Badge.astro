@@ -1,0 +1,74 @@
+---
+/**
+ * Badge / Chip — etiqueta de estado o categoría.
+ * tone = color semántico · solid = relleno (texto sobre fondo).
+ */
+interface Props {
+  tone?: 'neutral' | 'accent' | 'success' | 'warning' | 'error' | 'pending';
+  solid?: boolean;
+  class?: string;
+}
+const { tone = 'neutral', solid = false, class: extra } = Astro.props;
+---
+
+<span class:list={['badge', `t-${tone}`, solid && 'is-solid', extra]}>
+  <slot />
+</span>
+
+<style>
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-3);
+    font-size: var(--fs-3xs);
+    letter-spacing: var(--tr-caps);
+    text-transform: uppercase;
+    padding: var(--sp-2) var(--sp-5);
+    border: var(--bw) solid var(--color-border);
+    color: var(--color-text-muted);
+  }
+  /* outline tones */
+  .t-accent {
+    border-color: var(--color-accent-text);
+    color: var(--color-accent-text);
+  }
+  .t-success {
+    border-color: var(--color-success);
+    color: var(--color-success);
+  }
+  .t-warning {
+    border-color: var(--color-warning);
+    color: var(--color-warning);
+  }
+  .t-error {
+    border-color: var(--color-error);
+    color: var(--color-error);
+  }
+  .t-pending {
+    border-color: var(--color-pending);
+    color: var(--color-pending);
+  }
+  /* solid: relleno con el tono, texto sobre el fondo base */
+  .is-solid {
+    color: var(--bg);
+    border-color: transparent;
+  }
+  .is-solid.t-neutral {
+    background: var(--color-text-muted);
+  }
+  .is-solid.t-accent {
+    background: var(--color-accent-text);
+  }
+  .is-solid.t-success {
+    background: var(--color-success);
+  }
+  .is-solid.t-warning {
+    background: var(--color-warning);
+  }
+  .is-solid.t-error {
+    background: var(--color-error);
+  }
+  .is-solid.t-pending {
+    background: var(--color-pending);
+  }
+</style>

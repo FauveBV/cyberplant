@@ -1,0 +1,56 @@
+---
+/**
+ * Nav — navegación principal con item activo (aria-current).
+ */
+interface Item {
+  href: string;
+  label: string;
+  active?: boolean;
+}
+interface Props {
+  items: Item[];
+  ariaLabel?: string;
+  class?: string;
+}
+const { items, ariaLabel = 'Navegación', class: extra } = Astro.props;
+---
+
+<nav class:list={['nav', extra]} aria-label={ariaLabel}>
+  {
+    items.map((i) => (
+      <a href={i.href} class:list={[i.active && 'active']} aria-current={i.active ? 'page' : undefined}>
+        {i.label}
+      </a>
+    ))
+  }
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    gap: var(--sp-8);
+    border-bottom: var(--bw) solid var(--color-border);
+    font-size: var(--fs-xs);
+    letter-spacing: var(--tr-wider);
+    text-transform: uppercase;
+  }
+  .nav a {
+    padding: 0 0 var(--sp-5);
+    color: var(--color-text-muted);
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    text-decoration: none;
+    transition: color var(--dur-fast) var(--ease);
+  }
+  .nav a:hover {
+    color: var(--color-text-secondary);
+  }
+  .nav a.active {
+    color: var(--color-text-primary);
+    border-color: var(--color-accent-text);
+  }
+  .nav a:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+  }
+</style>

@@ -3,9 +3,9 @@
   /* color */
   --bg:#0a0a0a; --surface:#161616; --overlay:#191917; --prev-bg:#0d0d0d; --line:#ededed; --paper:#e6e1d4; --muted:#8a857c; --txt:#cfcfca; --blue:#1f3df0; --signal:#d4380d; --moss:#5a6b4d; --mineral:#b8a888; --c-blue-text:#5b78ff; --c-moss-text:#7d9169; --c-mineral-text:#b8a888; --c-signal-text:#ff3dc4; --bio-magenta:#ff3dc4; --bio-pink:#ff6fb3; --bio-yellow:#ffd23d; --bio-orange:#ff8a3d; --bio-stem:#5e9a6a;
   /* color-semantic */
-  --color-bg:var(--bg); --color-surface:var(--surface); --color-border:var(--overlay); --color-text-primary:var(--line); --color-text-secondary:var(--txt); --color-text-muted:var(--muted); --color-accent:var(--blue); --color-accent-text:var(--c-blue-text); --color-signal:var(--signal); --color-signal-text:var(--c-signal-text); --color-pending:var(--bio-magenta); --color-natural:var(--moss); --color-natural-text:var(--c-moss-text); --color-warm:var(--mineral); --color-warm-text:var(--c-mineral-text);
+  --color-bg:var(--bg); --color-surface:var(--surface); --color-border:var(--overlay); --color-text-primary:var(--line); --color-text-secondary:var(--txt); --color-text-muted:var(--muted); --color-accent:var(--blue); --color-accent-text:var(--c-blue-text); --color-signal:var(--signal); --color-signal-text:var(--c-signal-text); --color-pending:var(--bio-magenta); --color-natural:var(--moss); --color-natural-text:var(--c-moss-text); --color-warm:var(--mineral); --color-warm-text:var(--c-mineral-text); --color-success:var(--c-moss-text); --color-warning:var(--bio-yellow); --color-info:var(--c-blue-text); --color-error:var(--signal);
   /* font */
-  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace; --font-display:"Syne",system-ui,sans-serif; --font-sans:"IBM Plex Sans",system-ui,sans-serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,Menlo,monospace; --font-display:"Syne",system-ui,sans-serif; --font-sans:"IBM Plex Sans",system-ui,sans-serif; --font-icon:"Lilex","IBM Plex Mono",ui-monospace,monospace;
   /* fontSize */
   --fs-3xs:10px; --fs-2xs:11px; --fs-xs:12px; --fs-sm:13px; --fs-md:14px; --fs-base:15px; --fs-h1:clamp(34px,6.2vw,82px); --fs-h2:clamp(26px,4vw,46px); --fs-h3:18px; --fs-thesis:clamp(20px,2.6vw,30px); --fs-specimen:clamp(48px,9vw,120px);
   /* fontWeight */
@@ -17,7 +17,17 @@
   /* space */
   --sp-px:1px; --sp-1:2px; --sp-2:4px; --sp-3:6px; --sp-4:8px; --sp-5:12px; --sp-6:16px; --sp-7:20px; --sp-8:24px; --sp-9:30px; --sp-10:36px; --sp-11:42px; --sp-12:48px; --sp-14:64px; --sp-16:88px; --space-section-top:120px; --space-section-bottom:120px;
   /* border */
-  --bw:1px; --radius-full:50%;
+  --bw:1px; --radius-0:0; --radius-sm:2px; --radius-full:50%; --radius-pill:9999px;
+  /* shadow */
+  --shadow-1:0 1px 2px rgba(0,0,0,.5); --shadow-2:0 6px 24px rgba(0,0,0,.55); --shadow-glow:0 0 24px rgba(31,61,240,.35);
+  /* focus */
+  --focus-ring:0 0 0 2px var(--bg), 0 0 0 4px var(--c-blue-text);
+  /* zindex */
+  --z-base:0; --z-raised:10; --z-sticky:50; --z-overlay:100; --z-modal:1000; --z-toast:1100; --z-max:9999;
+  /* breakpoint */
+  --bp-sm:520px; --bp-md:720px; --bp-lg:860px;
+  /* opacity */
+  --opacity-disabled:.45;
   /* motion */
   --dur-fast:.2s; --dur:.3s; --dur-slow:.5s; --dur-slower:.6s; --ease:cubic-bezier(.22,1,.36,1);
   /* layout */

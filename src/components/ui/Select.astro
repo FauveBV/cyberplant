@@ -1,0 +1,86 @@
+---
+/**
+ * Select — desplegable nativo con label, estados y caret token.
+ */
+type Opt = string | { value: string; label: string };
+interface Props {
+  label?: string;
+  name?: string;
+  id?: string;
+  options: Opt[];
+  value?: string;
+  help?: string;
+  disabled?: boolean;
+  required?: boolean;
+  class?: string;
+}
+const { label, name, id = name, options, value, help, disabled, required, class: extra } = Astro.props;
+const descId = id ? `${id}-help` : undefined;
+const norm = options.map((o) => (typeof o === 'string' ? { value: o, label: o } : o));
+---
+
+<div class:list={['field', extra]}>
+  {label && <label for={id}>{label}{required && <span class="req" aria-hidden="true"> *</span>}</label>}
+  <select
+    class="select"
+    id={id}
+    name={name}
+    disabled={disabled}
+    required={required}
+    aria-describedby={help && descId ? descId : undefined}>
+    {norm.map((o) => <option value={o.value} selected={value === o.value}>{o.label}</option>)}
+  </select>
+  {help && <span id={descId} class="help">{help}</span>}
+</div>
+
+<style>
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+  }
+  label {
+    font-size: var(--fs-2xs);
+    letter-spacing: var(--tr-wider);
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+  }
+  .req {
+    color: var(--color-error);
+  }
+  .select {
+    font-family: var(--font-mono);
+    font-size: var(--fs-sm);
+    color: var(--line);
+    background: var(--bg);
+    border: var(--bw) solid var(--color-border);
+    padding: var(--sp-4) var(--sp-5);
+    outline: none;
+    width: 100%;
+    appearance: none;
+    transition:
+      border-color var(--dur-fast) var(--ease),
+      box-shadow var(--dur-fast) var(--ease);
+    background-image:
+      linear-gradient(45deg, transparent 50%, var(--color-text-muted) 50%),
+      linear-gradient(135deg, var(--color-text-muted) 50%, transparent 50%);
+    background-position:
+      calc(100% - 16px) 17px,
+      calc(100% - 11px) 17px;
+    background-size: 5px 5px;
+    background-repeat: no-repeat;
+  }
+  .select:focus {
+    border-color: var(--color-accent-text);
+    box-shadow: var(--focus-ring);
+  }
+  .select:disabled {
+    opacity: var(--opacity-disabled);
+    cursor: not-allowed;
+    border-style: dashed;
+  }
+  .help {
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+  }
+</style>

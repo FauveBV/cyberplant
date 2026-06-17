@@ -1,0 +1,66 @@
+---
+/**
+ * Breadcrumb — ruta jerárquica. El último ítem es la página actual.
+ */
+interface Crumb {
+  href?: string;
+  label: string;
+}
+interface Props {
+  items: Crumb[];
+  class?: string;
+}
+const { items, class: extra } = Astro.props;
+---
+
+<nav class:list={['crumb', extra]} aria-label="Ruta">
+  {
+    items.map((c, i) => (
+      <span class="seg">
+        {i > 0 && <span class="sep" aria-hidden="true">/</span>}
+        {i === items.length - 1 ? (
+          <b aria-current="page">{c.label}</b>
+        ) : c.href ? (
+          <a href={c.href}>{c.label}</a>
+        ) : (
+          <span>{c.label}</span>
+        )}
+      </span>
+    ))
+  }
+</nav>
+
+<style>
+  .crumb {
+    font-size: var(--fs-2xs);
+    color: var(--color-text-muted);
+    letter-spacing: var(--tr-wide);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+  .seg {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--sp-3);
+  }
+  .sep {
+    color: var(--color-border);
+  }
+  .crumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+  }
+  .crumb a:hover {
+    color: var(--color-accent-text);
+  }
+  .crumb a:focus-visible {
+    box-shadow: var(--focus-ring);
+    outline: none;
+  }
+  .crumb b {
+    color: var(--color-text-primary);
+    font-weight: var(--fw-medium);
+  }
+</style>

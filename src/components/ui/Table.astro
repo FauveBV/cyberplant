@@ -1,0 +1,55 @@
+---
+/**
+ * Table — tabla comparativa/de datos. Columnas + filas (strings).
+ */
+interface Props {
+  columns: string[];
+  rows: string[][];
+  caption?: string;
+  class?: string;
+}
+const { columns, rows, caption, class: extra } = Astro.props;
+---
+
+<table class:list={['t', extra]}>
+  {caption && <caption>{caption}</caption>}
+  <thead>
+    <tr>{columns.map((c) => <th scope="col">{c}</th>)}</tr>
+  </thead>
+  <tbody>
+    {rows.map((r) => <tr>{r.map((cell) => <td>{cell}</td>)}</tr>)}
+  </tbody>
+</table>
+
+<style>
+  .t {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--fs-xs);
+  }
+  .t caption {
+    text-align: left;
+    color: var(--color-text-muted);
+    font-size: var(--fs-2xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tr-caps);
+    padding-bottom: var(--sp-4);
+  }
+  .t th,
+  .t td {
+    border: var(--bw) solid var(--color-border);
+    padding: var(--sp-4) var(--sp-5);
+    text-align: left;
+  }
+  .t th {
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    font-size: var(--fs-3xs);
+    letter-spacing: var(--tr-caps);
+    font-weight: var(--fw-medium);
+    background: var(--bg);
+  }
+  .t td {
+    color: var(--color-text-secondary);
+  }
+</style>
