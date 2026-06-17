@@ -159,6 +159,25 @@ Figma no admite curvas/duraciones ni `clamp()` como variable. Fuente de verdad:
 - **Motion:** `--dur-fast` .2s · `--dur` .3s · `--dur-slow` .5s · `--dur-slower` .6s · `--ease` `cubic-bezier(.22, 1, .36, 1)`.
 - **Fluidos:** `--fs-h1/h2/thesis/specimen` usan `clamp()` (los min/max sí existen como `fontSize/*-min` · `*-max`).
 
+### 2.7 Estados, elevación y utilidades (gaps formalizados)
+
+Derivados de la paleta (única fuente); en CSS y en variables Figma.
+
+| Token CSS | Valor / origen | Uso |
+|---|---|---|
+| `--color-success` | ← `c-moss-text` | estado: éxito |
+| `--color-warning` | ← `bio-yellow` | estado: advertencia |
+| `--color-info` | ← `c-blue-text` | estado: información |
+| `--color-error` | ← `signal` (#d4380d) | error — **separado de pending** (uso gráfico ≥3:1) |
+| `--color-pending` | ← `bio-magenta` (#ff3dc4) | pendiente / borrador |
+| `--shadow-1` / `-2` / `-glow` | suave / elevada / glow azul | elevación |
+| `--radius-0` / `-sm` / `-pill` | 0 / 2px / 9999px | radios (`--radius-full` 50% = círculo) |
+| `--focus-ring` | doble anillo (`--bg` + `--c-blue-text`) | foco visible reutilizable |
+| `--z-base…max` | 0 · 10 · 50 · 100 · 1000 · 1100 · 9999 | raised/sticky/overlay/modal/toast/max |
+| `--bp-sm/md/lg` | 520 / 720 / 860 px | breakpoints |
+| `--opacity-disabled` | .45 | disabled = opacidad + dashed sobre `--overlay` (no se inventa color) |
+| `--font-icon` | `Lilex`, mono | iconografía por glifos/ligaduras |
+
 ---
 
 ## 3. Inventario de componentes
@@ -192,7 +211,7 @@ Bio Block · Backlog · **Signature Stage** (HUD + consola flotante + acciones).
 BaseLayout · Editorial · Case study · Landing · Section (esqueletos de layout).
 
 ### Pages (maquetas hi-fi)
-`/` Landing · `/sistema` · `/cyberdeck` · `/portafolio` · `/portafolio/ejemplo` · `/bio`.
+`/` Landing · `/sistema` (+ `/sistema/ui` showcase de componentes) · `/cyberdeck` · `/musicplant` · `/portafolio` · `/portafolio/ejemplo` · `/bio` · `/wallpaper` (deck, fullscreen).
 **Dos vistas** en Figma: `Pages · desktop` (1440) y `Pages · mobile` (390), cada una con panel de especificaciones.
 
 ### Patrones de página (documentados en `/sistema`)
@@ -204,6 +223,15 @@ BaseLayout · Editorial · Case study · Landing · Section (esqueletos de layou
 - **Focus:** `outline 2px var(--c-blue-text)`, offset 3px (`:focus-visible`) en todo control.
 - **Pressed/Active:** `aria-pressed="true"` → borde + texto `c-blue-text` + fondo azul 12%.
 - **Loading:** spinner; **Disabled:** `opacity .4`.
+
+### Biblioteca de componentes UI (`src/components/ui/`)
+
+Componentes de código: **`.astro` estáticos** (cero JS) + **islas React** (CSS module) para lo interactivo. Token-only, accesibles, portables. Showcase en vivo: **`/sistema/ui`**.
+
+- **P0** — Button · Input · Textarea · Select · Checkbox · Radio · **Switch** (React) · Nav · Breadcrumb · Alert · Badge · StatusDot · Table · SpecSheet · EmptyState.
+- **P1/P2** — **Tabs · Accordion · Modal (`<dialog>`) · Toast** (React) · Tooltip · Code · Metric · Skeleton · Progress.
+
+> Consumidos por `/cyberdeck` (form, spec-sheet, table, alerts, badges, breadcrumb).
 
 ---
 
@@ -251,7 +279,20 @@ BaseLayout · Editorial · Case study · Landing · Section (esqueletos de layou
 
 ---
 
-## 6. Stack
+## 6. Firma generativa — módulo (`src/lib/signature`)
+
+El espécimen audio-reactivo como **módulo TS reutilizable** (canvas 2D, sin libs). Paleta derivada de tokens; audio opcional. Estética portada 1:1 del original.
+
+- `engine.ts` — render + mapeo audio→visual (graves → eyección · agudos → glitch · voz → halo · ambient → ondas) + pixelación/feedback.
+- `audio.ts` — fuente mic/sistema + análisis por banda Hz con auto-normalización.
+- `palette.ts` — paleta desde CSS vars (`--blue`, `--bio-magenta`, …); **sin hex de marca** (los fallbacks solo espejan el token).
+- `index.ts` — API: `createSignature(canvas) → { start, stop, setAudioSource('mic'|'system'|null), exportPNG, onMeter }`.
+
+**Consumidores:** `/musicplant` (página web, con topbar/footer) y `/wallpaper` (deck, fullscreen — **M** micrófono · **G** sistema · **S** PNG). La firma de la home (`Specimen2D` / R3F) queda **intacta**.
+
+---
+
+## 7. Stack
 
 Astro 5 + React 19 (islas) + TypeScript + Tailwind v4 · salida estática · deploy en **Vercel**
 (`cyberplant.vercel.app`, redeploy en cada push a `main`). Fuentes por Google Fonts (sin CDN propio).
