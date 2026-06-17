@@ -2,6 +2,15 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Proceso from '../components/sections/Proceso.astro';
 import Pendientes from '../components/sections/Pendientes.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import Input from '../components/ui/Input.astro';
+import Select from '../components/ui/Select.astro';
+import Textarea from '../components/ui/Textarea.astro';
+import Button from '../components/ui/Button.astro';
+import SpecSheet from '../components/ui/SpecSheet.astro';
+import Alert from '../components/ui/Alert.astro';
+import Table from '../components/ui/Table.astro';
+import Badge from '../components/ui/Badge.astro';
 ---
 
 <BaseLayout
@@ -22,6 +31,10 @@ import Pendientes from '../components/sections/Pendientes.astro';
       <span><b>Estado</b> · guía en construcción</span>
     </div>
   </header>
+
+  <div class="wrap" style="padding-top:var(--sp-8)">
+    <Breadcrumb items={[{ href: '/', label: 'inicio' }, { label: 'cyberdeck' }]} />
+  </div>
 
   <Proceso />
 
@@ -49,6 +62,33 @@ import Pendientes from '../components/sections/Pendientes.astro';
         </div>
       </div>
     </div>
+
+    <!-- ficha editable (componentes del sistema) -->
+    <div class="grid2 ficha-form">
+      <div class="deck-form" role="group" aria-label="Ficha del equipo">
+        <div class="label-sm">Completá los datos de tu equipo</div>
+        <Input label="Modelo" name="modelo" placeholder="Acer Aspire One D255…" />
+        <Select
+          label="Sistema operativo"
+          name="os"
+          options={['por definir', 'antiX', 'MX Linux', 'Debian 13', 'Void / Arch + i3']}
+        />
+        <Textarea label="Estado / notas" name="estado" placeholder="RAM, almacenamiento, batería, WiFi…" />
+        <div><Button type="button">guardar ficha</Button></div>
+      </div>
+      <div>
+        <div class="label-sm">Resumen</div>
+        <SpecSheet
+          items={[
+            { key: 'Modelo', empty: true },
+            { key: 'Estado', empty: true },
+            { key: 'RAM', value: '—', empty: true },
+            { key: 'OS', empty: true },
+          ]}
+        />
+        <Alert variant="info" class="mt">Campos por completar hasta confirmar el modelo y el estado del equipo.</Alert>
+      </div>
+    </div>
   </section>
 
   <!-- SISTEMA OPERATIVO -->
@@ -57,7 +97,7 @@ import Pendientes from '../components/sections/Pendientes.astro';
     <h2 style="margin-bottom:var(--sp-11)">Dos caminos</h2>
     <div class="vars">
       <div class="var">
-        <h3>antiX / MX <span class="badge">ligero</span></h3>
+        <h3>antiX / MX <Badge tone="accent" solid>ligero</Badge></h3>
         <div class="src">init sysv/runit · sin systemd · muy bajo consumo</div>
         <p>
           Para hardware modesto: arranca rápido en poca RAM, base Debian estable y herramientas listas.
@@ -65,7 +105,7 @@ import Pendientes from '../components/sections/Pendientes.astro';
         </p>
       </div>
       <div class="var new">
-        <h3>Void / Arch + i3 <span class="badge">a medida</span></h3>
+        <h3>Void / Arch + i3 <Badge tone="accent" solid>a medida</Badge></h3>
         <div class="src">rolling release · runit/systemd · WM en mosaico</div>
         <p>
           Para construir desde abajo: control total de cada capa y un tiling WM (i3) coherente con la
@@ -73,10 +113,23 @@ import Pendientes from '../components/sections/Pendientes.astro';
         </p>
       </div>
     </div>
-    <p class="copyhint">
-      Decisión gateada por la ficha del equipo (sección 02): se confirma <b>RAM y almacenamiento</b> antes
-      de elegir.
-    </p>
+
+    <Table
+      caption="Comparativa rápida"
+      class="mt"
+      columns={['OS', 'Peso', '32-bit', 'init']}
+      rows={[
+        ['antiX', 'muy bajo', 'sí', 'sysv/runit'],
+        ['MX Linux', 'bajo', 'sí', 'sysv'],
+        ['Debian 13', 'medio', 'no', 'systemd'],
+        ['Void / Arch + i3', 'a medida', 'según', 'runit/systemd'],
+      ]}
+    />
+
+    <Alert variant="warning" class="mt">CPU de 32-bit: usá Debian 12 o antiX (Debian 13 dejó de soportar i386).</Alert>
+    <Alert variant="info" class="mt">
+      Decisión gateada por la ficha del equipo (sección 02): se confirma <b>RAM y almacenamiento</b> antes de elegir.
+    </Alert>
   </section>
 
   <!-- PASOS DEL TRASPASO -->
@@ -94,22 +147,39 @@ import Pendientes from '../components/sections/Pendientes.astro';
     <h2 style="margin:var(--sp-14) 0 var(--sp-8)">Pendientes del traspaso</h2>
     <ul class="todo">
       <li>
-        <span class="k">A</span><span
-          >HDD → SSD: la mejora de hardware de mayor impacto antes de instalar.</span
-        ><span class="st">hardware</span>
+        <span class="k">A</span><span>HDD → SSD: la mejora de hardware de mayor impacto antes de instalar.</span>
+        <Badge class="push" tone="neutral">hardware</Badge>
       </li>
       <li>
-        <span class="k">B</span><span
-          >Elegir OS según la ficha del equipo (antiX/MX vs. Void/Arch+i3).</span
-        ><span class="st">decisión</span>
+        <span class="k">B</span><span>Elegir OS según la ficha del equipo (antiX/MX vs. Void/Arch+i3).</span>
+        <Badge class="push" tone="accent">decisión</Badge>
       </li>
       <li>
-        <span class="k">C</span><span
-          >Dotfiles versionados en Git como source of truth: Figma → config → repo.</span
-        ><span class="st">sistema</span>
+        <span class="k">C</span><span>Dotfiles versionados en Git como source of truth: Figma → config → repo.</span>
+        <Badge class="push" tone="pending">sistema</Badge>
       </li>
     </ul>
   </section>
 
   <Pendientes />
 </BaseLayout>
+
+<style>
+  .ficha-form {
+    margin-top: var(--sp-12);
+    align-items: start;
+  }
+  .deck-form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-6);
+  }
+  .mt {
+    margin-top: var(--sp-6);
+  }
+  /* empuja el badge de estado al extremo del item (reemplaza el viejo .st) */
+  ul.todo li :global(.push) {
+    margin-left: auto;
+    flex: none;
+  }
+</style>
