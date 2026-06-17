@@ -1,0 +1,36 @@
+---
+/**
+ * Progress — barra de progreso accesible (role=progressbar).
+ */
+interface Props {
+  value: number;
+  max?: number;
+  label?: string;
+  class?: string;
+}
+const { value, max = 100, label, class: extra } = Astro.props;
+const pct = Math.max(0, Math.min(100, Math.round((value / max) * 100)));
+---
+
+<div
+  class:list={['prog', extra]}
+  role="progressbar"
+  aria-valuenow={value}
+  aria-valuemin={0}
+  aria-valuemax={max}
+  aria-label={label}>
+  <i style={`width:${pct}%`}></i>
+</div>
+
+<style>
+  .prog {
+    height: 6px;
+    background: var(--bg);
+    border: var(--bw) solid var(--color-border);
+  }
+  .prog i {
+    display: block;
+    height: 100%;
+    background: var(--color-accent-text);
+  }
+</style>

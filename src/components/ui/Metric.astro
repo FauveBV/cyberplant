@@ -1,0 +1,43 @@
+---
+/**
+ * Metric — dato grande (display) + etiqueta.
+ */
+interface Props {
+  value: string;
+  unit?: string;
+  label: string;
+  class?: string;
+}
+const { value, unit, label, class: extra } = Astro.props;
+---
+
+<div class:list={['metric', extra]}>
+  <div class="v">{value}{unit && <span class="u">{unit}</span>}</div>
+  <div class="k">{label}</div>
+</div>
+
+<style>
+  .metric {
+    border: var(--bw) solid var(--color-border);
+    padding: var(--sp-6);
+  }
+  .v {
+    font-family: var(--font-display);
+    font-weight: var(--fw-black);
+    font-size: var(--fs-h2);
+    color: var(--color-text-primary);
+    line-height: 1;
+  }
+  .u {
+    font-size: var(--fs-md);
+    color: var(--color-text-muted);
+    margin-left: var(--sp-1);
+  }
+  .k {
+    font-size: var(--fs-3xs);
+    letter-spacing: var(--tr-caps-lg);
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-top: var(--sp-3);
+  }
+</style>

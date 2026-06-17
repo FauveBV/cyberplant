@@ -15,6 +15,15 @@ import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import Table from '../../components/ui/Table.astro';
 import SpecSheet from '../../components/ui/SpecSheet.astro';
 import EmptyState from '../../components/ui/EmptyState.astro';
+import Tabs from '../../components/ui/Tabs.tsx';
+import Accordion from '../../components/ui/Accordion.tsx';
+import Modal from '../../components/ui/Modal.tsx';
+import Toast from '../../components/ui/Toast.tsx';
+import Tooltip from '../../components/ui/Tooltip.astro';
+import Code from '../../components/ui/Code.astro';
+import Metric from '../../components/ui/Metric.astro';
+import Skeleton from '../../components/ui/Skeleton.astro';
+import Progress from '../../components/ui/Progress.astro';
 ---
 
 <BaseLayout title="UI · componentes P0 — cyberplant" description="Componentes P0 del sistema, en vivo, construidos con tokens.">
@@ -108,6 +117,59 @@ import EmptyState from '../../components/ui/EmptyState.astro';
       />
     </div>
     <EmptyState>Sin casos todavía — por completar.</EmptyState>
+
+    <h3>Interacción</h3>
+    <div class="cols">
+      <div>
+        <div class="label-sm">Tabs</div>
+        <Tabs
+          client:visible
+          tabs={[
+            { label: 'tokens', content: 'Variables base del sistema.' },
+            { label: 'componentes', content: 'Inventario de componentes.' },
+          ]}
+        />
+      </div>
+      <div>
+        <div class="label-sm">Acordeón</div>
+        <Accordion
+          client:visible
+          items={[
+            { title: 'Capas de la UI', content: 'WM, terminal, GTK, compositor, barra…' },
+            { title: 'Apps propias', content: 'Tauri, WebKit, kiosco, TUI.' },
+          ]}
+        />
+      </div>
+      <div>
+        <div class="label-sm">Modal · Toast · Tooltip</div>
+        <div class="row">
+          <Modal client:visible triggerLabel="abrir modal" title="Confirmar" body="¿Sobrescribir los dotfiles del deck?" />
+          <Toast client:visible />
+        </div>
+        <p style="font-size:var(--fs-xs);color:var(--color-text-muted);margin-top:var(--sp-4)">
+          Pasa por <Tooltip tip="source of truth">dotfiles</Tooltip> ← tooltip al foco/hover.
+        </p>
+      </div>
+    </div>
+
+    <h3>Datos · carga</h3>
+    <div class="cols">
+      <div>
+        <div class="label-sm">Code</div>
+        <Code><span class="c">$</span> git push <span class="g">origin main</span>
+<span class="c">$</span> ./build.sh</Code>
+      </div>
+      <Metric value="120" unit="px" label="padding de sección" />
+      <div>
+        <div class="label-sm">Skeleton</div>
+        <div style="display:flex;flex-direction:column;gap:var(--sp-3)">
+          <Skeleton width="80%" />
+          <Skeleton width="55%" />
+        </div>
+        <div class="label-sm" style="margin-top:var(--sp-6)">Progress</div>
+        <Progress value={62} label="progreso de ejemplo" />
+      </div>
+    </div>
   </section>
 </BaseLayout>
 
