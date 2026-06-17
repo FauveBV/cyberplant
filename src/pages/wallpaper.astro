@@ -1,0 +1,139 @@
+---
+/**
+ * /wallpaper — espécimen audio-reactivo a pantalla completa.
+ * Entrada del deck (live en navegador; PNG para feh; grabable para xwinwrap).
+ * Standalone: sin topbar/footer. Consume el módulo src/lib/signature.
+ */
+import '../styles/tokens.css';
+---
+
+<!doctype html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>cyberplant · wallpaper (espécimen · audio-reactivo)</title>
+  </head>
+  <body>
+    <canvas id="wall"></canvas>
+    <div id="hud">│ RGB en pantalla → CMYK al imprimir</div>
+    <div id="hint">
+      cyberplant · espécimen — <b>M</b> micrófono · <b>G</b> audio del sistema · <b>S</b> exporta PNG
+    </div>
+    <div id="meter"></div>
+
+    <script>
+      import { createSignature } from '../lib/signature';
+
+      const cv = document.getElementById('wall') as HTMLCanvasElement;
+      const hint = document.getElementById('hint')!;
+      const meter = document.getElementById('meter')!;
+      const sig = createSignature(cv);
+      sig.start();
+
+      const bar = (v: number) => {
+        const k = Math.max(0, Math.min(6, Math.round(v * 6)));
+        return '█'.repeat(k) + '·'.repeat(6 - k);
+      };
+      sig.onMeter((m) => {
+        if (!sig.audioOn) return;
+        meter.style.display = 'block';
+        meter.textContent = `kick ${bar(m.kick)}  voz ${bar(m.voice)}  syn ${bar(m.synth)}  hat ${bar(m.snare)}`;
+      });
+
+      const setHint = (r: { ok: boolean; label: string }) => {
+        hint.innerHTML = r.ok
+          ? `<span class="on">●</span> ${r.label} · kick·snare·voz·synth · <b>S</b> PNG`
+          : `${r.label} · <b>M</b> micrófono · <b>G</b> sistema`;
+      };
+      addEventListener('keydown', async (e) => {
+        const k = e.key.toLowerCase();
+        if (k === 'm') setHint(await sig.setAudioSource('mic'));
+        if (k === 'g') setHint(await sig.setAudioSource('system'));
+        if (k === 's') sig.exportPNG();
+      });
+      addEventListener('click', async () => {
+        if (!sig.audioOn) setHint(await sig.setAudioSource('mic'));
+      });
+
+      // idle: oculta el hint tras inactividad
+      let it: number;
+      const idle = () => {
+        clearTimeout(it);
+        document.body.classList.remove('idle');
+        it = window.setTimeout(() => document.body.classList.add('idle'), 3500);
+      };
+      addEventListener('mousemove', idle);
+      idle();
+    </script>
+
+    <style is:global>
+      html,
+      body {
+        margin: 0;
+        height: 100%;
+        background: var(--bg);
+        overflow: hidden;
+      }
+      #wall {
+        display: block;
+        position: fixed;
+        inset: 0;
+        width: 100vw;
+        height: 100vh;
+      }
+      #hud {
+        position: fixed;
+        top: 14px;
+        left: 50%;
+        transform: translateX(-50%);
+        font: var(--fs-xs) / 1.4 var(--font-mono);
+        color: var(--muted);
+        letter-spacing: var(--tr-caps-lg);
+        opacity: 0.75;
+        pointer-events: none;
+        z-index: var(--z-raised);
+        white-space: nowrap;
+      }
+      #hint {
+        position: fixed;
+        left: 12px;
+        bottom: 10px;
+        font: var(--fs-2xs) / 1.4 var(--font-mono);
+        color: var(--muted);
+        letter-spacing: var(--tr-caps);
+        opacity: 0.8;
+        transition: opacity var(--dur-slower);
+        pointer-events: none;
+        z-index: var(--z-raised);
+      }
+      #hint b {
+        color: var(--line);
+      }
+      #hint .on {
+        color: var(--bio-magenta);
+      }
+      #meter {
+        display: none;
+        position: fixed;
+        right: 12px;
+        bottom: 10px;
+        font: var(--fs-2xs) / 1.4 var(--font-mono);
+        color: var(--muted);
+        letter-spacing: var(--tr-wide);
+        opacity: 0.85;
+        pointer-events: none;
+        z-index: var(--z-raised);
+        white-space: pre;
+      }
+      body.idle #hint {
+        opacity: 0;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #hint {
+          display: none;
+        }
+      }
+    </style>
+  </body>
+</html>
