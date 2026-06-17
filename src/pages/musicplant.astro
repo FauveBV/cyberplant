@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Button from '../components/ui/Button.astro';
+---
+
+<BaseLayout
+  title="musicplant — espécimen audio-reactivo · Fauve Bellenger"
+  description="La firma generativa de cyberplant, viva y reactiva al sonido. El mismo motor del wallpaper del cyberdeck, dentro de la web."
+>
+  <section class="wrap mp">
+    <div class="tag"><span class="n">♪</span> Espécimen · audio-reactivo</div>
+    <h1>music<span class="blue">plant.</span></h1>
+    <p class="thesis">
+      La firma generativa de cyberplant, viva y reactiva al sonido. Es el mismo espécimen que aparece
+      como wallpaper del cyberdeck, ahora como pieza dentro de la web.
+    </p>
+
+    <div class="mp-stage" id="mp-stage">
+      <canvas id="wall"></canvas>
+      <div id="mp-meter" class="mp-meter" aria-hidden="true"></div>
+    </div>
+
+    <div class="mp-controls" role="group" aria-label="Fuente de audio del espécimen">
+      <Button id="mp-mic" variant="secondary">♪ micrófono</Button>
+      <Button id="mp-sys" variant="secondary">♪ audio del sistema</Button>
+      <Button id="mp-png" variant="ghost">↧ exportar PNG</Button>
+    </div>
+    <p id="mp-hint" class="mp-hint">
+      Activa una fuente de audio: <b>micrófono</b> (ambiental) o <b>audio del sistema</b> (compartir
+      pestaña con sonido). En silencio, el espécimen respira en calma.
+    </p>
+
+    <div class="metaline">
+      <span><b>Motor</b> · canvas 2D, sin librerías</span>
+      <span><b>Paleta</b> · derivada de los tokens</span>
+      <span><b>Mapeo</b> · graves → eyección · agudos → glitch · voz → halo</span>
+      <span><b>Accesibilidad</b> · respeta prefers-reduced-motion</span>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { createSignature } from '../lib/signature';
+
+  const cv = document.getElementById('wall') as HTMLCanvasElement | null;
+  if (cv) {
+    const hint = document.getElementById('mp-hint')!;
+    const meter = document.getElementById('mp-meter')!;
+    const sig = createSignature(cv);
+    sig.start();
+
+    const bar = (v: number) => {
+      const k = Math.max(0, Math.min(6, Math.round(v * 6)));
+      return '█'.repeat(k) + '·'.repeat(6 - k);
+    };
+    sig.onMeter((m) => {
+      if (!sig.audioOn) return;
+      meter.style.display = 'block';
+      meter.textContent = `kick ${bar(m.kick)}  voz ${bar(m.voice)}  syn ${bar(m.synth)}  hat ${bar(m.snare)}`;
+    });
+
+    const setHint = (r: { ok: boolean; label: string }) => {
+      hint.innerHTML = r.ok
+        ? `<span class="mp-on">●</span> ${r.label} · reaccionando a kick · snare · voz · synth`
+        : `${r.label}. Prueba con <b>micrófono</b> o <b>audio del sistema</b>.`;
+    };
+    document.getElementById('mp-mic')?.addEventListener('click', async () => setHint(await sig.setAudioSource('mic')));
+    document.getElementById('mp-sys')?.addEventListener('click', async () => setHint(await sig.setAudioSource('system')));
+    document.getElementById('mp-png')?.addEventListener('click', () => sig.exportPNG('musicplant.png'));
+  }
+</script>
+
+<style>
+  .mp h1 {
+    margin-top: var(--sp-6);
+  }
+  .mp-stage {
+    position: relative;
+    margin-top: var(--sp-10);
+    border: var(--bw) solid var(--overlay);
+    background: #05060a;
+    height: clamp(420px, 64vh, 640px);
+    overflow: hidden;
+  }
+  #wall {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .mp-meter {
+    position: absolute;
+    right: var(--sp-5);
+    bottom: var(--sp-5);
+    display: none;
+    font-family: var(--mono);
+    font-size: var(--fs-2xs);
+    letter-spacing: var(--tr-wide);
+    color: rgba(255, 255, 255, 0.7);
+    white-space: pre;
+    pointer-events: none;
+  }
+  .mp-controls {
+    display: flex;
+    gap: var(--sp-4);
+    flex-wrap: wrap;
+    margin-top: var(--sp-6);
+  }
+  .mp-hint {
+    margin-top: var(--sp-5);
+    font-family: var(--mono);
+    font-size: var(--fs-xs);
+    color: var(--muted);
+    max-width: 70ch;
+  }
+  .mp-hint b {
+    color: var(--line);
+  }
+  .mp-on {
+    color: var(--bio-magenta);
+  }
+</style>

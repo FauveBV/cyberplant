@@ -12,7 +12,7 @@ y coincide 1:1 con `src/tokens/tokens.json` (`:root` del sitio) y con el archivo
 ## 1. Principios y tesis
 
 - **Tesis:** *mostrar las reglas, no esconderlas.* La grilla, el error y el algoritmo son el lenguaje, no el adorno.
-- **Eje:** humano/diseñado (gris, concreto, cromas sintéticos) ↔ natural (verde y azul, húmedo, selva valdiviana).
+- **Eje:** humano/diseñado (gris, concreto, cromas sintéticos) ↔ natural (verde y azul, húmedo, orgánico/vegetal).
 - **Color audiovisual:** todo se define en **RGB** (pantalla); al imprimir se remapea a CMYK.
 - **Acento de marca:** azul eléctrico `#1f3df0`. **Rojo señal** `#d4380d` = lo sintético/humano, uso mínimo (alerta/error).
 - **Magenta** `#ff3dc4` (`--bio-magenta`) = croma bioluminiscente de la firma; rol semántico **`--color-pending`** (pendiente/borrador). Distinto del rojo señal.

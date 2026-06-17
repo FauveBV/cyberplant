@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-// eje humano↔natural: gris humano (#6f6f6a) → verde natural (selva) mezclado por el eje.
+// eje humano↔natural: gris humano (#6f6f6a) → verde natural (vegetal) mezclado por el eje.
 const HUMANO = [111, 111, 106];
 const NATURAL = [90, 139, 90];
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
@@ -33,7 +33,7 @@ export default function AxisSlider() {
     <div className="axisbox">
       <div className="axislabels">
         <span className="l">◄ humano / diseñado</span>
-        <span className="r">natural / valdiviana ►</span>
+        <span className="r">natural / orgánico ►</span>
       </div>
       <input
         type="range"

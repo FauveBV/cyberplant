@@ -11,6 +11,7 @@ interface Props {
   disabled?: boolean;
   href?: string;
   type?: 'button' | 'submit' | 'reset';
+  id?: string;
   class?: string;
 }
 const {
@@ -20,6 +21,7 @@ const {
   disabled = false,
   href,
   type = 'button',
+  id,
   class: extra,
 } = Astro.props;
 const Tag = href ? 'a' : 'button';
@@ -27,6 +29,7 @@ const Tag = href ? 'a' : 'button';
 
 <Tag
   class:list={['btn', `btn--${variant}`, size !== 'md' && `btn--${size}`, loading && 'is-loading', extra]}
+  id={id}
   href={href}
   type={href ? undefined : type}
   aria-busy={loading ? 'true' : undefined}

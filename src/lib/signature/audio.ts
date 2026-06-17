@@ -45,7 +45,7 @@ export class SignatureAudio {
       const s = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
       if (!s.getAudioTracks().length) {
         s.getTracks().forEach((t) => t.stop());
-        return { ok: false, label: 'sin pista de audio — marcá «compartir audio»' };
+        return { ok: false, label: 'sin pista de audio — marca «compartir audio»' };
       }
       s.getVideoTracks().forEach((t) => t.stop()); // no necesitamos el video
       this.start(s, 'audio del sistema');
