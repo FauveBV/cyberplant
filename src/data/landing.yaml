@@ -1,0 +1,20 @@
+nombre: |-
+  Fauve
+  Bellenger
+bajada: >-
+  Product designer con interés en la creación de productos end to end, con cuidado
+  en la funcionalidad, la estética y la accesibilidad.
+firmaLink: "ver la firma generativa completa →"
+areas:
+  - label: Sistema de diseño
+    desc: "el colofón: tokens · atoms · molecules · organisms"
+    href: /sistema
+  - label: Cyberdeck
+    desc: un netbook viejo vuelto herramienta para pensar
+    href: /cyberdeck
+  - label: Portafolio
+    desc: producto + dirección visual · próximamente
+    href: /portafolio
+  - label: Bio
+    desc: quién está detrás del sistema
+    href: /bio

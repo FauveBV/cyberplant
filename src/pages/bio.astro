@@ -1,72 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
 
-const educacion = [
-  {
-    titulo: 'Diplomado en Diseño de Experiencia de Usuario para Productos Digitales',
-    org: 'Pontificia Universidad de Valparaíso',
-    fecha: 'mar – sep 2025',
-  },
-  {
-    titulo: 'Diseñadora de Interacción',
-    org: 'Pontificia Universidad de Valparaíso',
-    fecha: '2019 – 2024',
-  },
-];
-
-const proyectoTitulo =
-  '“Plantillas orientadas a la navegación y diferenciación de objetos semánticos en Casiopea” — sistema de plantillas y arquitectura de información para la wiki institucional de la e[ad] PUCV, combinando investigación de usuarios, diseño de componentes y documentación técnica.';
-
-const experiencia = [
-  {
-    rol: 'Diseñadora de Experiencia y Arquitectura de Información',
-    org: 'Wiki Casiopea · e[ad] PUCV',
-    fecha: 'mar 2024 – presente',
-    bullets: [
-      'Arquitectura de información y diseño de plantillas de objetos semánticos que ordenan el registro institucional de la escuela.',
-      'Implementación front-end (CSS/JS) de componentes de usabilidad: acordeones, card grids, páginas de onboarding para estudiantes y profesores.',
-      'Diseño de material de apoyo diferenciado por perfil de usuario, reduciendo barreras de entrada a la plataforma.',
-      'Generación de reportes interactivos con métricas de uso para apoyar la toma de decisiones (150 usuarios gestionados, 154 horas documentadas durante 2025).',
-    ],
-  },
-  {
-    rol: 'Diseñadora y Desarrolladora Web Freelance',
-    org: 'Independiente',
-    fecha: '2022 – presente',
-    bullets: [
-      'Diseño end-to-end de sitios web, landing pages, e-commerce y portafolios — desde el levantamiento de requerimientos hasta la interfaz final.',
-      'Dirección de arte y branding para portafolios de artistas.',
-      'Gestión directa de proyectos con clientes, adaptando soluciones a contextos y presupuestos diversos.',
-    ],
-  },
-  {
-    rol: 'Pasante · Ecosistema de Innovación y Emprendimiento',
-    org: 'PUCV',
-    fecha: 'jul – oct 2023',
-    bullets: [
-      'Investigación de usuarios y análisis de stakeholders en incubadoras de innovación universitarias.',
-      'Co-creación de la identidad visual del ecosistema y diseño de una ruta interactiva personalizada para estudiantes.',
-    ],
-  },
-];
-
-const tecnicas = [
-  'Manejo avanzado de Figma, Adobe Creative Suite y línea de comandos.',
-  'Sólidos conocimientos en principios de diseño centrado en el usuario (UCD).',
-  'User research integral y testeos de usabilidad.',
-  'Resolución de problemas y atención al detalle.',
-];
-const interpersonales = [
-  'Comunicación y escritura efectiva.',
-  'Entusiasmo y curiosidad por el aprendizaje constante.',
-  'Trabajo en equipo y cooperación multidisciplinaria.',
-];
-const intereses = [
-  'Programación asistida con IA (Claude Code).',
-  'Diseño y elaboración de circuitos sonoros, análogos y digitales.',
-  'Lectura, sobre todo novelas gráficas.',
-  'Coleccionar discos y cassettes de bandas independientes.',
-];
+const reader = createReader(process.cwd(), keystaticConfig);
+const bio = await reader.singletons.bio.read();
+if (!bio) throw new Error('Falta el contenido de bio (src/data/bio.yaml).');
 ---
 
 <BaseLayout
@@ -74,12 +13,9 @@ const intereses = [
   description="Diseñadora de interacción y experiencia (PUCV). Producto end-to-end: funcionalidad, estética y accesibilidad."
 >
   <header class="wrap mast">
-    <div class="id">CL · diseñadora de interacción y experiencia</div>
-    <h1>Bio.</h1>
-    <p class="thesis">
-      Product designer con interés en la creación de productos end to end, con cuidado en la
-      funcionalidad, la estética y la accesibilidad.
-    </p>
+    <div class="id">{bio.id}</div>
+    <h1>{bio.titulo}</h1>
+    <p class="thesis">{bio.thesis}</p>
   </header>
 
   <section class="wrap bio">
@@ -88,7 +24,7 @@ const intereses = [
       <div class="tag">Educación</div>
       <ul class="cv">
         {
-          educacion.map((e) => (
+          bio.educacion.map((e) => (
             <li class="cv-item">
               <div class="cv-head">
                 <h3>{e.titulo}</h3>
@@ -99,7 +35,7 @@ const intereses = [
           ))
         }
       </ul>
-      <p class="cv-note"><b>Proyecto de título.</b> {proyectoTitulo}</p>
+      <p class="cv-note"><b>Proyecto de título.</b> {bio.proyectoTitulo}</p>
     </div>
 
     <!-- EXPERIENCIA -->
@@ -107,7 +43,7 @@ const intereses = [
       <div class="tag">Experiencia</div>
       <ul class="cv">
         {
-          experiencia.map((x) => (
+          bio.experiencia.map((x) => (
             <li class="cv-item">
               <div class="cv-head">
                 <h3>{x.rol}</h3>
@@ -131,11 +67,11 @@ const intereses = [
       <div class="skills">
         <div>
           <div class="label-sm">Técnicas</div>
-          <ul class="cv-bullets">{tecnicas.map((s) => <li>{s}</li>)}</ul>
+          <ul class="cv-bullets">{bio.tecnicas.map((s) => <li>{s}</li>)}</ul>
         </div>
         <div>
           <div class="label-sm">Interpersonales</div>
-          <ul class="cv-bullets">{interpersonales.map((s) => <li>{s}</li>)}</ul>
+          <ul class="cv-bullets">{bio.interpersonales.map((s) => <li>{s}</li>)}</ul>
         </div>
       </div>
     </div>
@@ -143,28 +79,30 @@ const intereses = [
     <!-- INTERESES -->
     <div class="bio-block">
       <div class="tag">Intereses</div>
-      <ul class="cv-bullets cols">{intereses.map((s) => <li>{s}</li>)}</ul>
+      <ul class="cv-bullets cols">{bio.intereses.map((s) => <li>{s}</li>)}</ul>
     </div>
 
     <!-- CONTACTO -->
     <div class="bio-block">
       <div class="tag">Contacto</div>
       <ul class="contact">
-        <li><span>Ubicación</span><b>Chile</b></li>
-        <li>
-          <span>Email</span>
-          <a href="mailto:fbellengervillarroel@gmail.com">fbellengervillarroel@gmail.com</a>
-        </li>
-        <li>
-          <span>LinkedIn</span>
-          <a href="https://www.linkedin.com/in/fauvebellenger/" target="_blank" rel="noopener noreferrer"
-            >in/fauvebellenger ↗</a
-          >
-        </li>
-        <li>
-          <span>GitHub</span>
-          <a href="https://github.com/FauveBV" target="_blank" rel="noopener noreferrer">FauveBV ↗</a>
-        </li>
+        {
+          bio.contacto.map((c) => (
+            <li>
+              <span>{c.label}</span>
+              {c.href ? (
+                <a
+                  href={c.href}
+                  {...(c.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  {c.valor}
+                </a>
+              ) : (
+                <b>{c.valor}</b>
+              )}
+            </li>
+          ))
+        }
       </ul>
     </div>
   </section>

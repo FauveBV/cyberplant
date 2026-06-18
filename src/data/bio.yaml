@@ -1,0 +1,66 @@
+id: CL · diseñadora de interacción y experiencia
+titulo: Bio.
+thesis: >-
+  Product designer con interés en la creación de productos end to end, con cuidado
+  en la funcionalidad, la estética y la accesibilidad.
+educacion:
+  - titulo: Diplomado en Diseño de Experiencia de Usuario para Productos Digitales
+    org: Pontificia Universidad de Valparaíso
+    fecha: mar – sep 2025
+  - titulo: Diseñadora de Interacción
+    org: Pontificia Universidad de Valparaíso
+    fecha: 2019 – 2024
+proyectoTitulo: >-
+  “Plantillas orientadas a la navegación y diferenciación de objetos semánticos en
+  Casiopea” — sistema de plantillas y arquitectura de información para la wiki
+  institucional de la e[ad] PUCV, combinando investigación de usuarios, diseño de
+  componentes y documentación técnica.
+experiencia:
+  - rol: Diseñadora de Experiencia y Arquitectura de Información
+    org: Wiki Casiopea · e[ad] PUCV
+    fecha: mar 2024 – presente
+    bullets:
+      - Arquitectura de información y diseño de plantillas de objetos semánticos que ordenan el registro institucional de la escuela.
+      - "Implementación front-end (CSS/JS) de componentes de usabilidad: acordeones, card grids, páginas de onboarding para estudiantes y profesores."
+      - Diseño de material de apoyo diferenciado por perfil de usuario, reduciendo barreras de entrada a la plataforma.
+      - Generación de reportes interactivos con métricas de uso para apoyar la toma de decisiones (150 usuarios gestionados, 154 horas documentadas durante 2025).
+  - rol: Diseñadora y Desarrolladora Web Freelance
+    org: Independiente
+    fecha: 2022 – presente
+    bullets:
+      - Diseño end-to-end de sitios web, landing pages, e-commerce y portafolios — desde el levantamiento de requerimientos hasta la interfaz final.
+      - Dirección de arte y branding para portafolios de artistas.
+      - Gestión directa de proyectos con clientes, adaptando soluciones a contextos y presupuestos diversos.
+  - rol: Pasante · Ecosistema de Innovación y Emprendimiento
+    org: PUCV
+    fecha: jul – oct 2023
+    bullets:
+      - Investigación de usuarios y análisis de stakeholders en incubadoras de innovación universitarias.
+      - Co-creación de la identidad visual del ecosistema y diseño de una ruta interactiva personalizada para estudiantes.
+tecnicas:
+  - Manejo avanzado de Figma, Adobe Creative Suite y línea de comandos.
+  - Sólidos conocimientos en principios de diseño centrado en el usuario (UCD).
+  - User research integral y testeos de usabilidad.
+  - Resolución de problemas y atención al detalle.
+interpersonales:
+  - Comunicación y escritura efectiva.
+  - Entusiasmo y curiosidad por el aprendizaje constante.
+  - Trabajo en equipo y cooperación multidisciplinaria.
+intereses:
+  - Programación asistida con IA (Claude Code).
+  - Diseño y elaboración de circuitos sonoros, análogos y digitales.
+  - Lectura, sobre todo novelas gráficas.
+  - Coleccionar discos y cassettes de bandas independientes.
+contacto:
+  - label: Ubicación
+    valor: Chile
+    href: ""
+  - label: Email
+    valor: fbellengervillarroel@gmail.com
+    href: mailto:fbellengervillarroel@gmail.com
+  - label: LinkedIn
+    valor: "in/fauvebellenger ↗"
+    href: https://www.linkedin.com/in/fauvebellenger/
+  - label: GitHub
+    valor: "FauveBV ↗"
+    href: https://github.com/FauveBV

@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Specimen from '../components/Specimen.tsx';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
 
-const areas = [
-  { href: '/sistema', label: 'Sistema de diseño', desc: 'el colofón: tokens · atoms · molecules · organisms' },
-  { href: '/cyberdeck', label: 'Cyberdeck', desc: 'un netbook viejo vuelto herramienta para pensar' },
-  { href: '/portafolio', label: 'Portafolio', desc: 'producto + dirección visual · próximamente' },
-  { href: '/bio', label: 'Bio', desc: 'quién está detrás del sistema' },
-];
+const reader = createReader(process.cwd(), keystaticConfig);
+const landing = await reader.singletons.landing.read();
+if (!landing) throw new Error('Falta el contenido de landing (src/data/landing.yaml).');
+const areas = landing.areas;
 ---
 
 <BaseLayout
@@ -17,11 +17,10 @@ const areas = [
   <section class="hero">
     <div class="hero-bg"><Specimen ambient client:idle /></div>
     <div class="hero-content wrap">
-      <h1 class="hero-name">Fauve<br />Bellenger</h1>
-      <p class="hero-thesis">
-        Product designer con interés en la creación de productos end to end, con cuidado en la
-        funcionalidad, la estética y la accesibilidad.
-      </p>
+      <h1 class="hero-name">
+        {landing.nombre.split('\n').map((l, i) => (i > 0 ? <Fragment><br />{l}</Fragment> : l))}
+      </h1>
+      <p class="hero-thesis">{landing.bajada}</p>
       <nav class="hero-nav" aria-label="Áreas del sitio">
         {
           areas.map((a) => (
@@ -32,7 +31,7 @@ const areas = [
           ))
         }
       </nav>
-      <a class="hero-firma" href="/sistema#firma">ver la firma generativa completa →</a>
+      <a class="hero-firma" href="/sistema#firma">{landing.firmaLink}</a>
     </div>
   </section>
 </BaseLayout>
