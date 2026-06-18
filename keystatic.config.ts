@@ -7,7 +7,9 @@ const textList = (label: string, itemLabel = 'Ítem') =>
   fields.array(fields.text({ label: itemLabel }), { label, itemLabel: (p) => p.value || '—' });
 
 export default config({
-  storage: isProd ? { kind: 'github', repo: 'FauveBV/cyberplant' } : { kind: 'local' },
+  // dev: edición local sin login · producción: Keystatic Cloud (login + commit al repo)
+  storage: isProd ? { kind: 'cloud' } : { kind: 'local' },
+  cloud: { project: 'fauve/cyberplant' },
   ui: {
     brand: { name: 'cyberplant' },
     navigation: {
