@@ -1,13 +1,11 @@
-nombre: |-
-  Fauve
-  Bellenger
+nombre: Cyberplant
 bajada: >-
-  Product designer con interés en la creación de productos end to end, con cuidado
-  en la funcionalidad, la estética y la accesibilidad.
-firmaLink: "ver la firma generativa completa →"
+  Sistema gráfico y generativo para la creación de entornos
+  personales-digitales.
+firmaLink: ver la firma generativa completa →
 areas:
   - label: Sistema de diseño
-    desc: "el colofón: tokens · atoms · molecules · organisms"
+    desc: 'el colofón: tokens · atoms · molecules · organisms'
     href: /sistema
   - label: Cyberdeck
     desc: un netbook viejo vuelto herramienta para pensar
