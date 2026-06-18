@@ -1,16 +1,17 @@
-id: CL · 2026 · proyecto personal / pieza de portfolio
+id: CL · 2026 · design system
 titulo: Mostrar las reglas, no
 acento: esconderlas.
 thesis: >-
-  Identidad visual propia y situada, documentada como design system: la grilla, el
-  error y el algoritmo se ven —su textura y su movimiento— y construyen el lenguaje,
-  en vez de decorarlo. Este documento expone sus átomos, moléculas y organismos.
+  Identidad visual propia y situada, documentada como design system: la grilla,
+  el error y el algoritmo se ven —su textura y su movimiento— y construyen el
+  lenguaje, en vez de decorarlo. Este documento expone sus átomos, moléculas y
+  organismos.
 metaline:
   - k: Tesis
     v: sistema sobre ornamento
   - k: Eje
     v: humano/diseñado ↔ natural/orgánico
   - k: Acento
-    v: azul eléctrico #1f3df0
+    v: azul eléctrico
   - k: Sistema
     v: atoms · molecules · organisms
