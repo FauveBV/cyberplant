@@ -4,12 +4,15 @@ bajada: >-
   personales-digitales.
 firmaLink: ver la firma generativa completa →
 areas:
-  - label: Sistema de diseño
-    desc: 'el colofón: tokens · atoms · molecules · organisms'
-    href: /sistema
+  - label: Musicplant
+    desc: La firma generativa de cyberplant ahora es viva y reactiva al sonido.
+    href: https://cyberplant.vercel.app/musicplant
   - label: Cyberdeck
     desc: un netbook viejo vuelto herramienta para pensar
     href: /cyberdeck
+  - label: Sistema de diseño
+    desc: 'el colofón: tokens · atoms · molecules · organisms'
+    href: /sistema
   - label: Portafolio
     desc: producto + dirección visual · próximamente
     href: /portafolio
