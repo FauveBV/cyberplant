@@ -20,7 +20,7 @@ Google Fonts (IBM Plex Mono · Syne · IBM Plex Sans · Lilex para iconografía)
 ```bash
 npm install
 npm run dev       # localhost:4321
-npm run build     # salida estática en dist/ (corre tokens:export antes)
+npm run build     # build para Vercel (híbrido) · corre tokens:export antes
 npm run tokens:export   # regenera tokens.css + exports desde tokens.json
 ```
 
@@ -35,7 +35,9 @@ src/
   components/sections/      Secciones del colofón (/sistema)
   components/three/         Espécimen 3D (R3F) · Specimen2D.tsx (tier liviano)
   lib/signature/           Firma generativa audio-reactiva (módulo reutilizable)
-  pages/                   /, /sistema (+/ui), /cyberdeck, /musicplant, /portafolio, /bio, /wallpaper
+  data/                    Contenido editable (YAML) que consume el CMS
+  pages/                   /, /sistema (+/ui), /cyberdeck, /musicplant, /portafolio, /bio, /wallpaper, /keystatic
+keystatic.config.ts        Esquema del CMS (Keystatic) · en la raíz
 ```
 
 ## Páginas
@@ -49,6 +51,36 @@ src/
 | `/musicplant` | La firma generativa, reactiva al sonido, como pieza web |
 | `/wallpaper` | El espécimen a pantalla completa (wallpaper del deck) |
 | `/portafolio` · `/portafolio/ejemplo` · `/bio` | Casos y bio |
+| `/keystatic` | Panel del CMS (editar contenido) |
+
+## Gestión de contenidos (CMS)
+
+El sitio tiene un CMS propio con **[Keystatic](https://keystatic.com)** (git-based): un panel
+en **`/keystatic`** que edita **archivos de contenido del repo** (no una base externa).
+Editar contenido **no toca plantillas ni componentes** — el contenido vive separado en
+`src/data/*.yaml` y las páginas lo leen vía `@keystatic/core/reader`.
+
+**Dónde editar:**
+- **En vivo:** `cyberplant.vercel.app/keystatic` → login con GitHub (Keystatic Cloud,
+  proyecto `fauve/cyberplant`). Al guardar, commitea al repo y Vercel redeploya.
+- **Local:** `npm run dev` → `localhost:4321/keystatic` (sin login; guarda en los archivos).
+
+**Qué es editable** (singletons en `keystatic.config.ts` → `src/data/`):
+
+| Panel | Archivo | Contenido |
+|---|---|---|
+| Landing | `landing.yaml` | nombre, bajada, áreas, link de firma |
+| Sistema · cabecera | `sistema.yaml` | título, acento, bajada, metaline |
+| Bio | `bio.yaml` | educación, experiencia, habilidades, intereses, contacto |
+| Cyberdeck | `cyberdeck.yaml` | cabecera, ficha, opciones de OS, tabla, pasos, backlog |
+| Portafolio | `portafolio.yaml` | cabecera + casos |
+| Caso de ejemplo | `caso-ejemplo.yaml` | título, bajada, ficha, bloques, métricas |
+
+**Infra:** el adapter `@astrojs/vercel` hace el deploy **híbrido** — las páginas públicas se
+prerenderizan (estáticas) y solo `/keystatic` y `/api/keystatic` corren on-demand.
+
+> Para agregar un campo editable: definilo en `keystatic.config.ts` y leelo en la página
+> con el reader. Lo que NO es "contenido" (componentes, firma, formularios) queda en plantilla.
 
 ## Sistema de diseño
 

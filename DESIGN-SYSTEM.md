@@ -294,6 +294,34 @@ El espécimen audio-reactivo como **módulo TS reutilizable** (canvas 2D, sin li
 
 ## 7. Stack
 
-Astro 5 + React 19 (islas) + TypeScript + Tailwind v4 · salida estática · deploy en **Vercel**
-(`cyberplant.vercel.app`, redeploy en cada push a `main`). Fuentes por Google Fonts (sin CDN propio).
+Astro 5 + React 19 (islas) + TypeScript + Tailwind v4 · **deploy híbrido** en **Vercel**
+(`@astrojs/vercel`: páginas prerenderizadas + rutas server para el CMS; redeploy en cada push a `main`).
+CMS: **Keystatic** (git-based). Fuentes por Google Fonts (sin CDN propio).
 Animación: three.js / R3F (espécimen 3D) · motor 2D para mobile/netbook · GSAP + ScrollTrigger + Lenis · Motion.
+
+---
+
+## 8. Contenido editable (CMS)
+
+CMS propio con **Keystatic** (git-based): panel en **`/keystatic`** que edita **archivos del repo**
+(`src/data/*.yaml`), no una base externa. Las páginas leen ese contenido vía
+`@keystatic/core/reader` → **editar contenido no toca plantillas ni componentes**.
+
+- **Config:** `keystatic.config.ts` (raíz). Storage: `local` en dev (sin login) · **Keystatic Cloud**
+  (`fauve/cyberplant`) en producción (login con GitHub → commit al repo → redeploy).
+- **Singletons → archivo:**
+
+| Panel | `src/data/` | Contenido |
+|---|---|---|
+| Landing | `landing.yaml` | nombre, bajada, áreas, link de firma |
+| Sistema · cabecera | `sistema.yaml` | título, acento, bajada, metaline |
+| Bio | `bio.yaml` | educación, experiencia, habilidades, intereses, contacto |
+| Cyberdeck | `cyberdeck.yaml` | cabecera, ficha, opciones de OS, tabla, pasos, backlog |
+| Portafolio | `portafolio.yaml` | cabecera + casos |
+| Caso de ejemplo | `caso-ejemplo.yaml` | título, bajada, ficha, bloques, métricas |
+
+- **Convención:** singleton data-only → archivo `{path}.yaml` (no carpeta). El contenido va en
+  `src/data/` (no en `src/content/`, reservado por Astro).
+- **Qué NO es contenido** (queda en plantilla/código): componentes del sistema, firma generativa,
+  formulario y terminal de la ficha, alertas guía.
+- **Agregar un campo editable:** definilo en `keystatic.config.ts` y leelo en la página con el reader.
