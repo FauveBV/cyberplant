@@ -9,8 +9,8 @@ areas:
     href: /cyberdeck
   - label: Musicplant
     desc: La firma generativa de cyberplant ahora es viva y reactiva al sonido.
-    href: https://cyberplant.vercel.app/musicplant
-  - label: Sistema de diseño
+    href: /musicplant
+  - label: Sistema
     desc: 'el colofón: tokens · atoms · molecules · organisms'
     href: /sistema
   - label: Portafolio
