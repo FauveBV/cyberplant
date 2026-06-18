@@ -11,6 +11,16 @@ import SpecSheet from '../components/ui/SpecSheet.astro';
 import Alert from '../components/ui/Alert.astro';
 import Table from '../components/ui/Table.astro';
 import Badge from '../components/ui/Badge.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const c = await reader.singletons.cyberdeck.read();
+if (!c) throw new Error('Falta el contenido de cyberdeck (src/data/cyberdeck.yaml).');
+
+const tablaRows = c.tabla.map((r) => [r.os, r.peso, r.bits, r.init]);
+const toneFor = (estado: string) =>
+  estado === 'decisión' ? 'accent' : estado === 'sistema' ? 'pending' : 'neutral';
 ---
 
 <BaseLayout
@@ -19,16 +29,11 @@ import Badge from '../components/ui/Badge.astro';
 >
   <!-- MASTHEAD -->
   <header class="wrap mast">
-    <div class="id">CL · 2026 · guía de traspaso</div>
-    <h1>Empezar un<br /><span class="blue">cyberdeck.</span></h1>
-    <p class="thesis">
-      Convertir un netbook viejo en una herramienta para pensar: el mismo sistema de identidad,
-      <em>instanciado</em> en la máquina. Los dotfiles, versionados en Git, son la fuente de verdad.
-    </p>
+    <div class="id">{c.id}</div>
+    <h1>{c.titulo}<br /><span class="blue">{c.acento}</span></h1>
+    <p class="thesis">{c.thesis}</p>
     <div class="metaline">
-      <span><b>Objetivo</b> · máquina como prueba viva del sistema</span>
-      <span><b>Fuente de verdad</b> · dotfiles en Git</span>
-      <span><b>Estado</b> · guía en construcción</span>
+      {c.metaline.map((x) => <span><b>{x.k}</b> · {x.v}</span>)}
     </div>
   </header>
 
@@ -43,12 +48,8 @@ import Badge from '../components/ui/Badge.astro';
     <div class="tag"><span class="n">02</span> Ficha del equipo — el punto de partida</div>
     <div class="grid2">
       <div>
-        <h2>El hardware<br />define el rumbo.</h2>
-        <p>
-          La RAM y el almacenamiento disponibles deciden el sistema operativo y el peso de la
-          interfaz. Antes de instalar nada, fijamos los datos del equipo. Ambos campos quedan por
-          completar hasta confirmar el modelo.
-        </p>
+        <h2>{c.fichaTitulo}</h2>
+        <p>{c.fichaTexto}</p>
       </div>
       <div class="oswin">
         <div class="osbar">
@@ -63,7 +64,6 @@ import Badge from '../components/ui/Badge.astro';
       </div>
     </div>
 
-    <!-- ficha editable (componentes del sistema) -->
     <div class="grid2 ficha-form">
       <div class="deck-form" role="group" aria-label="Ficha del equipo">
         <div class="label-sm">Completa los datos de tu equipo</div>
@@ -94,37 +94,20 @@ import Badge from '../components/ui/Badge.astro';
   <!-- SISTEMA OPERATIVO -->
   <section class="wrap" id="os">
     <div class="tag"><span class="n">03</span> Sistema operativo — según el equipo</div>
-    <h2 style="margin-bottom:var(--sp-11)">Dos caminos</h2>
+    <h2 style="margin-bottom:var(--sp-11)">{c.osTitulo}</h2>
     <div class="vars">
-      <div class="var">
-        <h3>antiX / MX <Badge tone="accent" solid>ligero</Badge></h3>
-        <div class="src">init sysv/runit · sin systemd · muy bajo consumo</div>
-        <p>
-          Para hardware modesto: arranca rápido en poca RAM, base Debian estable y herramientas listas.
-          El camino seguro si el netbook es muy limitado.
-        </p>
-      </div>
-      <div class="var new">
-        <h3>Void / Arch + i3 <Badge tone="accent" solid>a medida</Badge></h3>
-        <div class="src">rolling release · runit/systemd · WM en mosaico</div>
-        <p>
-          Para construir desde abajo: control total de cada capa y un tiling WM (i3) coherente con la
-          tesis de exponer las reglas. Pide más trabajo de configuración.
-        </p>
-      </div>
+      {
+        c.osOpciones.map((o, i) => (
+          <div class:list={['var', i === 1 && 'new']}>
+            <h3>{o.nombre} <Badge tone="accent" solid>{o.badge}</Badge></h3>
+            <div class="src">{o.src}</div>
+            <p>{o.texto}</p>
+          </div>
+        ))
+      }
     </div>
 
-    <Table
-      caption="Comparativa rápida"
-      class="mt"
-      columns={['OS', 'Peso', '32-bit', 'init']}
-      rows={[
-        ['antiX', 'muy bajo', 'sí', 'sysv/runit'],
-        ['MX Linux', 'bajo', 'sí', 'sysv'],
-        ['Debian 13', 'medio', 'no', 'systemd'],
-        ['Void / Arch + i3', 'a medida', 'según', 'runit/systemd'],
-      ]}
-    />
+    <Table caption="Comparativa rápida" class="mt" columns={['OS', 'Peso', '32-bit', 'init']} rows={tablaRows} />
 
     <Alert variant="warning" class="mt">CPU de 32-bit: usa Debian 12 o antiX (Debian 13 dejó de soportar i386).</Alert>
     <Alert variant="info" class="mt">
@@ -135,29 +118,24 @@ import Badge from '../components/ui/Badge.astro';
   <!-- PASOS DEL TRASPASO -->
   <section class="wrap" id="traspaso">
     <div class="tag"><span class="n">04</span> Traspaso — el orden de las capas</div>
-    <h2 style="margin-bottom:var(--sp-11)">Capas de la UI</h2>
+    <h2 style="margin-bottom:var(--sp-11)">{c.traspasoTitulo}</h2>
     <div class="flow">
-      <div class="step"><div class="s">CAPA 01</div><h3>WM</h3><p>Gestor de ventanas: i3 / tiling como base del escritorio.</p></div>
-      <div class="step"><div class="s">CAPA 02</div><h3>Terminal + shell</h3><p>Emulador y shell con los tokens del sistema.</p></div>
-      <div class="step"><div class="s">CAPA 03</div><h3>GTK</h3><p>Tema de aplicaciones coherente con la paleta.</p></div>
-      <div class="step"><div class="s">CAPA 04</div><h3>Compositor</h3><p>Transparencias y sombras controladas, sin adorno.</p></div>
-      <div class="step"><div class="s">CAPA 05</div><h3>Barra</h3><p>Status bar con la información mínima necesaria.</p></div>
-      <div class="step"><div class="s">CAPA 06</div><h3>Login</h3><p>Greeter y lockscreen con la firma generativa.</p></div>
+      {
+        c.pasos.map((s) => (
+          <div class="step"><div class="s">{s.capa}</div><h3>{s.titulo}</h3><p>{s.texto}</p></div>
+        ))
+      }
     </div>
-    <h2 style="margin:var(--sp-14) 0 var(--sp-8)">Pendientes del traspaso</h2>
+    <h2 style="margin:var(--sp-14) 0 var(--sp-8)">{c.backlogTitulo}</h2>
     <ul class="todo">
-      <li>
-        <span class="k">A</span><span>HDD → SSD: la mejora de hardware de mayor impacto antes de instalar.</span>
-        <Badge class="push" tone="neutral">hardware</Badge>
-      </li>
-      <li>
-        <span class="k">B</span><span>Elegir OS según la ficha del equipo (antiX/MX vs. Void/Arch+i3).</span>
-        <Badge class="push" tone="accent">decisión</Badge>
-      </li>
-      <li>
-        <span class="k">C</span><span>Dotfiles versionados en Git como source of truth: Figma → config → repo.</span>
-        <Badge class="push" tone="pending">sistema</Badge>
-      </li>
+      {
+        c.backlog.map((it) => (
+          <li>
+            <span class="k">{it.k}</span><span>{it.texto}</span>
+            <Badge class="push" tone={toneFor(it.estado)}>{it.estado}</Badge>
+          </li>
+        ))
+      }
     </ul>
   </section>
 
@@ -177,7 +155,6 @@ import Badge from '../components/ui/Badge.astro';
   .mt {
     margin-top: var(--sp-6);
   }
-  /* empuja el badge de estado al extremo del item (reemplaza el viejo .st) */
   ul.todo li :global(.push) {
     margin-left: auto;
     flex: none;

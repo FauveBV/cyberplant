@@ -1,19 +1,18 @@
 ---
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const m = await reader.singletons.sistema.read();
+if (!m) throw new Error('Falta el contenido de sistema (src/data/sistema.yaml).');
 ---
 
 <!-- MASTHEAD -->
 <header class="wrap mast">
-  <div class="id">CL · 2026 · proyecto personal / pieza de portfolio</div>
-  <h1>Mostrar las<br />reglas, no<br /><span class="blue">esconderlas.</span></h1>
-  <p class="thesis">
-    Identidad visual propia y situada, documentada como <em>design system</em>: la grilla, el error y
-    el algoritmo se <em>ven</em> —su textura y su movimiento— y construyen el lenguaje, en vez de
-    decorarlo. Este documento expone sus átomos, moléculas y organismos.
-  </p>
+  <div class="id">{m.id}</div>
+  <h1>{m.titulo} <span class="blue">{m.acento}</span></h1>
+  <p class="thesis">{m.thesis}</p>
   <div class="metaline">
-    <span><b>Tesis</b> · sistema sobre ornamento</span>
-    <span><b>Eje</b> · humano/diseñado ↔ natural/orgánico</span>
-    <span><b>Acento</b> · azul eléctrico #1f3df0</span>
-    <span><b>Sistema</b> · atoms · molecules · organisms</span>
+    {m.metaline.map((x) => <span><b>{x.k}</b> · {x.v}</span>)}
   </div>
 </header>

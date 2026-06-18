@@ -1,0 +1,63 @@
+id: CL · 2026 · guía de traspaso
+titulo: Empezar un
+acento: cyberdeck.
+thesis: >-
+  Convertir un netbook viejo en una herramienta para pensar: el mismo sistema de
+  identidad, instanciado en la máquina. Los dotfiles, versionados en Git, son la
+  fuente de verdad.
+metaline:
+  - k: Objetivo
+    v: máquina como prueba viva del sistema
+  - k: Fuente de verdad
+    v: dotfiles en Git
+  - k: Estado
+    v: guía en construcción
+fichaTitulo: El hardware define el rumbo.
+fichaTexto: >-
+  La RAM y el almacenamiento disponibles deciden el sistema operativo y el peso de la
+  interfaz. Antes de instalar nada, fijamos los datos del equipo. Ambos campos quedan
+  por completar hasta confirmar el modelo.
+osTitulo: Dos caminos
+osOpciones:
+  - nombre: antiX / MX
+    badge: ligero
+    src: init sysv/runit · sin systemd · muy bajo consumo
+    texto: >-
+      Para hardware modesto: arranca rápido en poca RAM, base Debian estable y
+      herramientas listas. El camino seguro si el netbook es muy limitado.
+  - nombre: Void / Arch + i3
+    badge: a medida
+    src: rolling release · runit/systemd · WM en mosaico
+    texto: >-
+      Para construir desde abajo: control total de cada capa y un tiling WM (i3)
+      coherente con la tesis de exponer las reglas. Pide más trabajo de configuración.
+tabla:
+  - { os: antiX, peso: muy bajo, bits: sí, init: sysv/runit }
+  - { os: MX Linux, peso: bajo, bits: sí, init: sysv }
+  - { os: Debian 13, peso: medio, bits: "no", init: systemd }
+  - { os: Void / Arch + i3, peso: a medida, bits: según, init: runit/systemd }
+traspasoTitulo: Capas de la UI
+pasos:
+  - capa: CAPA 01
+    titulo: WM
+    texto: "Gestor de ventanas: i3 / tiling como base del escritorio."
+  - capa: CAPA 02
+    titulo: Terminal + shell
+    texto: "Emulador y shell con los tokens del sistema."
+  - capa: CAPA 03
+    titulo: GTK
+    texto: "Tema de aplicaciones coherente con la paleta."
+  - capa: CAPA 04
+    titulo: Compositor
+    texto: "Transparencias y sombras controladas, sin adorno."
+  - capa: CAPA 05
+    titulo: Barra
+    texto: "Status bar con la información mínima necesaria."
+  - capa: CAPA 06
+    titulo: Login
+    texto: "Greeter y lockscreen con la firma generativa."
+backlogTitulo: Pendientes del traspaso
+backlog:
+  - { k: A, texto: "HDD → SSD: la mejora de hardware de mayor impacto antes de instalar.", estado: hardware }
+  - { k: B, texto: "Elegir OS según la ficha del equipo (antiX/MX vs. Void/Arch+i3).", estado: decisión }
+  - { k: C, texto: "Dotfiles versionados en Git como source of truth: Figma → config → repo.", estado: sistema }

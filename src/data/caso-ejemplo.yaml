@@ -1,0 +1,37 @@
+titulo: Vega
+bajada: >-
+  Panel de monitoreo para estaciones de campo: del dato crudo a una lectura accionable.
+meta:
+  - { label: Rol, valor: Product Designer · end-to-end }
+  - { label: Año, valor: "2025" }
+  - { label: Equipo, valor: Diseño + 2 devs }
+  - { label: Plataforma, valor: Web app }
+bloques:
+  - num: "01"
+    titulo: Contexto
+    texto: >-
+      Equipos en terreno recibían datos de sensores en planillas dispersas, sin una
+      vista única que permitiera decidir rápido. El encargo: una app web que ordene el
+      flujo y haga legible el estado de cada estación.
+  - num: "02"
+    titulo: Problema
+    texto: >-
+      La información existía pero no era accionable: demasiados pasos entre el dato y la
+      decisión, y ninguna jerarquía clara de alertas.
+  - num: "03"
+    titulo: Proceso
+    texto: >-
+      Mapa del flujo actual, entrevistas con operadores y prototipos de baja a alta
+      fidelidad validados en terreno.
+  - num: "04"
+    titulo: Decisiones de diseño
+    texto: >-
+      Una jerarquía de estado (normal · atención · crítico) con color semántico,
+      densidad de datos ajustable y una vista única priorizada por urgencia.
+  - num: "05"
+    titulo: Resultado
+    texto: Impacto medido tras el lanzamiento.
+metricas:
+  - { valor: −38%, label: tiempo a la primera lectura accionable }
+  - { valor: +24%, label: estaciones revisadas por turno }
+  - { valor: 4.6/5, label: satisfacción de operadores }

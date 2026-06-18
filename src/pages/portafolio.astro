@@ -1,7 +1,11 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../keystatic.config';
 
-const casos = ['Caso 01', 'Caso 02', 'Caso 03', 'Caso 04'];
+const reader = createReader(process.cwd(), keystaticConfig);
+const p = await reader.singletons.portafolio.read();
+if (!p) throw new Error('Falta el contenido de portafolio (src/data/portafolio.yaml).');
 ---
 
 <BaseLayout
@@ -9,16 +13,11 @@ const casos = ['Caso 01', 'Caso 02', 'Caso 03', 'Caso 04'];
   description="Casos de producto y dirección visual, documentados con el sistema. Próximamente."
 >
   <header class="wrap mast">
-    <div class="id">CL · 2026 · producto + dirección visual</div>
-    <h1>Portafolio<br /><span class="blue">próximamente.</span></h1>
-    <p class="thesis">
-      Cuatro casos de producto y dirección visual, documentados con el mismo sistema que ves en el
-      colofón. En construcción — vuelve pronto.
-    </p>
+    <div class="id">{p.id}</div>
+    <h1>{p.titulo}<br /><span class="blue">{p.acento}</span></h1>
+    <p class="thesis">{p.thesis}</p>
     <div class="metaline">
-      <span><b>Estado</b> · en construcción</span>
-      <span><b>Casos</b> · 4 en preparación</span>
-      <span><b>Sistema</b> · <a href="/sistema">ver el design system →</a></span>
+      {p.metaline.map((x) => <span><b>{x.k}</b> · {x.v}</span>)}
     </div>
   </header>
 
@@ -27,13 +26,13 @@ const casos = ['Caso 01', 'Caso 02', 'Caso 03', 'Caso 04'];
     <h2 style="margin-bottom:var(--sp-11)">Lo que viene</h2>
     <div class="clusters">
       {
-        casos.map((c, i) => (
+        p.casos.map((c) => (
           <div class="cluster soon">
-            <div class="num">{String(i + 1).padStart(2, '0')}</div>
-            <h3>{c}</h3>
+            <div class="num">{c.num}</div>
+            <h3>{c.titulo}</h3>
             <div class="prev soon-prev" />
-            <span class="polo cold">próximamente</span>
-            <p>En preparación: problema, proceso, decisiones y resultado.</p>
+            <span class="polo cold">{c.estado}</span>
+            <p>{c.desc}</p>
           </div>
         ))
       }

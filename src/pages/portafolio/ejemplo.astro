@@ -1,9 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { createReader } from '@keystatic/core/reader';
+import keystaticConfig from '../../../keystatic.config';
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const caso = await reader.singletons.casoEjemplo.read();
+if (!caso) throw new Error('Falta el contenido del caso (src/data/caso-ejemplo.yaml).');
 ---
 
 <BaseLayout
-  title="Vega — Portafolio (ejemplo) · Fauve Bellenger"
+  title={`${caso.titulo} — Portafolio (ejemplo) · Fauve Bellenger`}
   description="Caso de ejemplo ficticio para revisar la plantilla de proyecto del portafolio."
 >
   <article>
@@ -11,15 +17,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
       <div class="id">
         <a href="/portafolio">← Portafolio</a> · caso de ejemplo <span class="ph">(ficticio)</span>
       </div>
-      <h1>Vega</h1>
-      <p class="thesis">
-        Panel de monitoreo para estaciones de campo: del dato crudo a una lectura accionable.
-      </p>
+      <h1>{caso.titulo}</h1>
+      <p class="thesis">{caso.bajada}</p>
       <div class="case-meta">
-        <div><span>Rol</span><b>Product Designer · end-to-end</b></div>
-        <div><span>Año</span><b>2025</b></div>
-        <div><span>Equipo</span><b>Diseño + 2 devs</b></div>
-        <div><span>Plataforma</span><b>Web app</b></div>
+        {caso.meta.map((m) => (
+          <div><span>{m.label}</span><b>{m.valor}</b></div>
+        ))}
       </div>
     </header>
 
@@ -28,56 +31,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
     </section>
 
     <section class="wrap case-body">
-      <div class="case-block">
-        <div class="tag"><span class="n">01</span> Contexto</div>
-        <p class="lead">
-          Vega es un caso ficticio para evaluar la plantilla: tipografía, ritmo, figuras y métricas.
-        </p>
-        <p>
-          Equipos en terreno recibían datos de sensores en planillas dispersas, sin una vista única que
-          permitiera decidir rápido. El encargo: una app web que ordene el flujo y haga legible el
-          estado de cada estación. <span class="ph">[reemplazar con contexto real del proyecto]</span>
-        </p>
-      </div>
-
-      <div class="case-block">
-        <div class="tag"><span class="n">02</span> Problema</div>
-        <p>
-          La información existía pero no era accionable: demasiados pasos entre el dato y la decisión, y
-          ninguna jerarquía clara de alertas. <span class="ph">[problema real + evidencia]</span>
-        </p>
-      </div>
-
-      <div class="case-block">
-        <div class="tag"><span class="n">03</span> Proceso</div>
-        <p>
-          Mapa del flujo actual, entrevistas con operadores, y prototipos de baja a alta fidelidad
-          validados en terreno. <span class="ph">[método real]</span>
-        </p>
-        <div class="ph-grid">
-          <figure class="ph-figure"><span>Research · mapa de flujo</span></figure>
-          <figure class="ph-figure"><span>Wireframes</span></figure>
-        </div>
-      </div>
-
-      <div class="case-block">
-        <div class="tag"><span class="n">04</span> Decisiones de diseño</div>
-        <p>
-          Una jerarquía de estado (normal · atención · crítico) con color semántico, densidad de datos
-          ajustable y una vista única priorizada por urgencia. <span class="ph">[decisiones clave]</span>
-        </p>
-        <figure class="ph-figure ph-wide"><span>UI final · pantalla principal</span></figure>
-      </div>
-
-      <div class="case-block">
-        <div class="tag"><span class="n">05</span> Resultado</div>
-        <p>Impacto medido tras el lanzamiento. <span class="ph">[métricas reales]</span></p>
-        <ul class="case-metrics">
-          <li><b>−38%</b><span>tiempo a la primera lectura accionable</span></li>
-          <li><b>+24%</b><span>estaciones revisadas por turno</span></li>
-          <li><b>4.6/5</b><span>satisfacción de operadores</span></li>
-        </ul>
-      </div>
+      {
+        caso.bloques.map((b) => (
+          <div class="case-block">
+            <div class="tag"><span class="n">{b.num}</span> {b.titulo}</div>
+            <p>{b.texto}</p>
+          </div>
+        ))
+      }
+      <ul class="case-metrics">
+        {caso.metricas.map((m) => (
+          <li><b>{m.valor}</b><span>{m.label}</span></li>
+        ))}
+      </ul>
     </section>
 
     <nav class="wrap case-nav" aria-label="Navegación del portafolio">

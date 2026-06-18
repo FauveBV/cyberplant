@@ -1,0 +1,18 @@
+id: CL · 2026 · producto + dirección visual
+titulo: Portafolio
+acento: próximamente.
+thesis: >-
+  Cuatro casos de producto y dirección visual, documentados con el mismo sistema que
+  ves en el colofón. En construcción — vuelve pronto.
+metaline:
+  - k: Estado
+    v: en construcción
+  - k: Casos
+    v: 4 en preparación
+  - k: Sistema
+    v: ver el design system →
+casos:
+  - { num: "01", titulo: Caso 01, desc: "En preparación: problema, proceso, decisiones y resultado.", estado: próximamente }
+  - { num: "02", titulo: Caso 02, desc: "En preparación: problema, proceso, decisiones y resultado.", estado: próximamente }
+  - { num: "03", titulo: Caso 03, desc: "En preparación: problema, proceso, decisiones y resultado.", estado: próximamente }
+  - { num: "04", titulo: Caso 04, desc: "En preparación: problema, proceso, decisiones y resultado.", estado: próximamente }
